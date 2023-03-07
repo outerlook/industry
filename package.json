@@ -1,0 +1,55 @@
+{
+  "name": "industry",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "dependencies": {
+    "@ant-design/icons": "5.0.1",
+    "@astrojs/react": "2.0.2",
+    "antd": "5.3.0",
+    "astro": "2.0.17",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "rxjs": "7.8.0",
+    "tinykeys": "1.4.0"
+  },
+  "devDependencies": {
+    "@storybook/builder-vite": "0.4.2",
+    "@babel/core": "^7.21.0",
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack4": "^6.5.16",
+    "@storybook/manager-webpack4": "^6.5.16",
+    "@storybook/react": "^6.5.16",
+    "@storybook/testing-library": "^0.0.13",
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "14.0.0",
+    "@testing-library/user-event": "14.4.3",
+    "@types/react": "18.0.28",
+    "@types/testing-library__jest-dom": "5.14.5",
+    "astro-integration-windicss": "^0.1.0",
+    "babel-loader": "^8.3.0",
+    "happy-dom": "8.9.0",
+    "typescript": "5.0.1-rc",
+    "vite-plugin-windicss": "^1.8.10",
+    "vitest": "0.29.2",
+    "windicss": "^3.5.6"
+  },
+  "engines": {
+    "node": ">=16.12.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
