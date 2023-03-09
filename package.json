@@ -9,6 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "prebuild": "tsx ./scripts/pre-build.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -38,6 +39,7 @@
   "devDependencies": {
     "@babel/core": "7.21.0",
     "@babel/preset-typescript": "7.21.0",
+    "@types/node": "18.14.6",
     "jest-mock": "29.5.0",
     "@storybook/addon-actions": "7.0.0-beta.62",
     "@storybook/addon-essentials": "7.0.0-beta.62",
@@ -48,6 +50,7 @@
     "@storybook/react": "7.0.0-beta.62",
     "@storybook/react-vite": "7.0.0-beta.62",
     "@storybook/testing-library": "0.0.14-next.1",
+    "@astrojs/vercel": "3.2.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",

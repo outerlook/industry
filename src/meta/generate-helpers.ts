@@ -4,7 +4,8 @@ import * as fs from "fs";
 import * as path from "path";
 import {DIRNAME} from "./important-paths";
 
-const main = async () => {
+
+export const generateHelpers = async () => {
     const routes = readRoutes()
     const routeListStatement = getRouteListStatement(routes)
     const linkToFnStatement = getLinkToFnForRoutesStatement(routes)
@@ -20,8 +21,3 @@ ${linkToFnStatement}
 
     fs.writeFileSync(filePath, fileContent)
 }
-
-main().then(() => {
-    console.log("Done")
-    process.exit(0)
-})

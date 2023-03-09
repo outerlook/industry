@@ -4,7 +4,7 @@ import { fromElementKeyPress } from "../global-shortcuts/from-element-key-press"
 export const focusOnShortcutFromElement = (el$: Observable<HTMLElement>, shortcut: string) => {
   const shortcutPress$ =
     // ssr ready
-    typeof window !== "undefined"
+    typeof document !== "undefined"
       ? fromElementKeyPress(document, shortcut)
       : EMPTY;
 
