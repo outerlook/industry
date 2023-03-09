@@ -1,11 +1,13 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import BaseLayout from '../ui/astro-layouts/BaseLayout.astro';
+import {RootPage} from "../ui/components/page-specific/root/RootPage";
 ---
 
-<Layout title="Welcome to Astro.">
-	<main></main>
-</Layout>
+<BaseLayout title="Industry">
+    <main>
+        <RootPage client:load/>
+    </main>
+</BaseLayout>
 
 
 

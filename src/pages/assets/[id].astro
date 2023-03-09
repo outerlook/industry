@@ -1,0 +1,14 @@
+---
+import {Breadcrumb} from "../../ui/components/common/Breadcrumb";
+import BaseLayout from "../../ui/astro-layouts/BaseLayout.astro";
+import {EntityLayout} from "../../ui/components/layouts/EntityLayout";
+
+const {id} = Astro.params;
+---
+
+
+<BaseLayout>
+    <EntityLayout>
+        <Breadcrumb/>
+    </EntityLayout>
+</BaseLayout>
