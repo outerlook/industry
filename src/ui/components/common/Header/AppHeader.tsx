@@ -1,7 +1,7 @@
 import { Button, Input, Layout, Space } from "antd";
 import { DoubleRightOutlined, SearchOutlined } from "@ant-design/icons";
-import { useObservable } from "../../../lib/react-rxjs/use-observable";
-import { getMainSearchInputEffects } from "../../../lib/global-shortcuts/main-search-input-effects";
+import { useObservable } from "../../../../lib/react-rxjs/use-observable";
+import { getMainSearchInputEffects } from "../../../../lib/global-shortcuts/main-search-input-effects";
 
 const { Header } = Layout;
 
