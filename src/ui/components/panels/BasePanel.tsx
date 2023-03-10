@@ -12,7 +12,7 @@ export const BasePanel = (props: BasePanelProps) => {
   const { titulo, children, span = 24 } = props;
   return (
     <Col  span={span}>
-      <Card  className={'h-full'} title={titulo} bordered={false}>
+      <Card size={'small'}  className={'h-full'} title={titulo} bordered={false}>
         {children}
       </Card>
     </Col>
