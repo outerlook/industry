@@ -15,10 +15,10 @@ const getSafeEnvs = <T extends string>(envNames: readonly T[]): Record<T, string
 }
 
 const envsToGet = [
-    "LINK_GITHUB_PROJECT",
-    "LINK_STORYBOOK",
+    "PUBLIC_LINK_GITHUB_PROJECT",
+    "PUBLIC_LINK_STORYBOOK",
 ] as const
 
-const {LINK_STORYBOOK, LINK_GITHUB_PROJECT} = getSafeEnvs(envsToGet)
+const {PUBLIC_LINK_STORYBOOK, PUBLIC_LINK_GITHUB_PROJECT} = getSafeEnvs(envsToGet)
 
-export {LINK_GITHUB_PROJECT, LINK_STORYBOOK}
+export {PUBLIC_LINK_GITHUB_PROJECT, PUBLIC_LINK_STORYBOOK}
