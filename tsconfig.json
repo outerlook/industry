@@ -4,7 +4,7 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "CommonJS",
+    "module": "ESNext",
     "target": "ES2017"
   },
   "include": ["src"]

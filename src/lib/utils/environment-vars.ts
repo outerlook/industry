@@ -1,6 +1,6 @@
 
 const safeGetEnv = (envName: string ): string => {
-    const env = process.env[envName];
+    const env = import.meta?.env[envName];
     if (env === undefined) {
         throw new Error(`Environment variable ${envName} is not defined`)
     }
