@@ -1,3 +1,27 @@
 ---
+import BaseLayout from '@/ui/astro-layouts/BaseLayout.astro';
+import { CompaniesContent } from "@/ui/components/page-specific/CompaniesContent";
+import { pipe } from "effect";
+import * as OE from "fp-ts-rxjs/ObservableEither";
+import { $api } from "../../lib/api/rxjs-api";
+
+
+const companies = await pipe(
+    $api.Company.all(),
+    OE.fromObservable,
+    OE.chain(OE.fromEither),
+    OE.toTaskEither
+)()
+
+if (companies._tag === "Left") {
+    throw new Error("Failed to fetch companies")
+}
 
 ---
+
+<BaseLayout title="Industry">
+    <CompaniesContent companies={companies.right} client:only/>
+</BaseLayout>
+
+
+

@@ -21,7 +21,7 @@ type TablePanelProps = {
   tableProps: React.ComponentProps<typeof BaseTable>;
 };
 export const TablePanel = WithTableState((props: TablePanelProps) => {
-  const { span = 12, titulo, tableProps } = props;
+  const { span = 24, titulo, tableProps } = props;
 
   const {
     state: { pageSize, page },

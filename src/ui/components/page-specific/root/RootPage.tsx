@@ -45,7 +45,7 @@ export const RootPage = () => {
         />
       </BasePanel>
       <BasePanel span={12} titulo={"Status Gerais"} />
-      <BasePanel span={12} titulo={"Ordem de serviços ativas"} />
+      <BasePanel span={12} titulo={"Ordens de serviço"} />
       <BasePanel span={6} titulo={"Links externos importantes"}>
           <LinksExternosWidget/>
       </BasePanel>

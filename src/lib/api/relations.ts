@@ -97,6 +97,40 @@ export type RelationKeysOf<T extends keyof typeof relations> =
       : never
     : never;
 
+export const companyRelations = (
+  company: t.TypeOf<typeof apiTypes.Company>
+) => {
+  const { id } = company;
+
+  const units$ = pipe(
+    OE.fromObservable($api.Unit.all()),
+    OE.chainW(OE.fromEither),
+    OE.map((e) => e.filter((e) => e.companyId === id))
+  );
+
+  const assets$ = pipe(
+    OE.fromObservable($api.Asset.all()),
+    OE.chainW(OE.fromEither),
+    OE.map((e) => e.filter((e) => e.companyId === id))
+  );
+
+  const workOrders$ = pipe(
+    OE.fromObservable($api.WorkOrder.all()),
+    OE.chainW(OE.fromEither),
+    OE.bindTo("allWorkOrders"),
+    OE.bind("companyAssets", () => assets$),
+    OE.map(({ allWorkOrders, companyAssets }) =>
+      allWorkOrders.filter((e) => companyAssets.some((a) => a.id === e.assetId))
+    )
+  );
+
+  return {
+    units$,
+    assets$,
+    workOrders$,
+  };
+};
+
 export const relations = {
   asset: assetRelations,
   users: usersRelations,
