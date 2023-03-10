@@ -8,7 +8,7 @@ const { Header } = Layout;
 export const AppHeader = () => {
   return (
     <Layout>
-      <Header className="bg-gray-800 sticky h-16 w-full">
+      <Header className="bg-gray-800 sticky h-12 fixed w-full">
         <div className="flex justify-between items-center h-full mx-2">
           <Space direction={"horizontal"} size={"middle"}>
             <div className="text-white text-2xl font-bold">App</div>

@@ -1,7 +1,7 @@
 import { api } from "./fetchAPI";
-import { defer, map } from "rxjs";
+import { defer, map, shareReplay } from "rxjs";
 import type { RequestContext } from "mappersmith";
-import { apiTypes } from "../io-ts/attributes";
+import { apiTypes } from "../io-ts/api-types";
 import * as t from "io-ts";
 
 /**
@@ -19,7 +19,10 @@ const fromAPI =
   ) =>
     defer(() => fn(...args)).pipe(
       map((res) => res.data()),
-      map((v) => codec.decode(v) as t.Validation<t.TypeOf<Codec>>)
+      // here it validates an types from response
+      map((v) => codec.decode(v) as t.Validation<t.TypeOf<Codec>>),
+      // won't fetch twice per downstream observable
+      shareReplay(1)
     );
 
 export const $api = {

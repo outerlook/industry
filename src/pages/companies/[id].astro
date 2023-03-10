@@ -1,3 +1,22 @@
 ---
+import { firstValueFrom } from "rxjs";
+import { $api } from "../../lib/api/rxjs-api";
+import { getOrThrow } from "../../lib/io-ts/get-or-throw";
+import BaseLayout from "../../ui/astro-layouts/BaseLayout.astro";
+import { CompanyContent } from "../../ui/components/page-specific/CompanyContent";
 
+
+const {id} = Astro.params;
+
+if (!id) {
+    throw new Error('No id provided')
+}
+
+const eitherCompany = await firstValueFrom($api.Company.byId({id}))
+const company = getOrThrow(eitherCompany) // TODO: handle with 404 next time
 ---
+
+
+<BaseLayout title={company.name}>
+    <CompanyContent  company={company} client:only/>
+</BaseLayout>

@@ -10,7 +10,7 @@ import { $api } from "../../lib/api/rxjs-api";
 import { getOrThrow } from "../../lib/io-ts/get-or-throw";
 import { pickForkJoin } from "../../lib/rxjs/pick-fork-join";
 import BaseLayout from "../../ui/astro-layouts/BaseLayout.astro";
-import { UserContent } from "../../ui/components/page-specific/UserContent";
+import { UnitContent } from "../../ui/components/page-specific/UnitContent";
 
 const { id } = Astro.params;
 
@@ -18,13 +18,13 @@ if (!id) {
   throw new Error("No id provided");
 }
 
-const eitherUser = await firstValueFrom($api.User.byId({ id }));
-const user = getOrThrow(eitherUser);
+const eitherUnit = await firstValueFrom($api.Unit.byId({ id }));
+const unit = getOrThrow(eitherUnit);
 
-const { company$: company, unit$: unit } = await pipe(
-  eitherUser,
-  E.map(relations.users),
-  E.map((c) => pickForkJoin(c, "company$", "unit$")),
+const { company$: company } = await pipe(
+  eitherUnit,
+  E.map(relations.unit),
+  E.map((c) => pickForkJoin(c, "company$")),
   TE.fromEither,
   TE.chain((v) => pipe(FPO.fromObservable(v), FPO.toTaskEither)),
   TE.chainEitherKW(A.sequenceS(E.Apply)),
@@ -32,8 +32,9 @@ const { company$: company, unit$: unit } = await pipe(
     throw e;
   })
 )();
+
 ---
 
-<BaseLayout title={user.name}>
-  <UserContent unit={unit} user={user} company={company} client:only />
+<BaseLayout title={unit.name}>
+  <UnitContent unit={unit} company={company} client:only />
 </BaseLayout>

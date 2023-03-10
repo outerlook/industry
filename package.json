@@ -11,7 +11,8 @@
     "astro": "astro",
     "prebuild": "tsx ./scripts/pre-build.ts",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "publish-storybook": "chromatic"
   },
   "resolutions": {
     "jest-mock": "29.5.0"
@@ -33,20 +34,23 @@
     "monocle-ts": "2.3.13",
     "effect": "2.0.0-next.13",
     "@effect/match": "0.3.0",
+    "fp-ts-rxjs": "0.6.15",
     "windicss": "3.5.6",
+    "lodash": "4.17.21",
     "io-ts-reporters": "2.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.21.0",
     "@babel/preset-typescript": "7.21.0",
     "@types/node": "18.14.6",
+    "@types/lodash": "4.14.191",
     "jest-mock": "29.5.0",
     "@storybook/addon-actions": "7.0.0-beta.62",
     "@storybook/addon-essentials": "7.0.0-beta.62",
     "@storybook/addon-interactions": "7.0.0-beta.62",
     "@storybook/addon-links": "7.0.0-beta.62",
-    "@storybook/addon-mdx-gfm": "7.0.0-beta.62",
     "@storybook/addon-viewport": "7.0.0-beta.62",
+    "chromatic": "6.17.1",
     "@storybook/react": "7.0.0-beta.62",
     "@storybook/react-vite": "7.0.0-beta.62",
     "@storybook/testing-library": "0.0.14-next.1",
@@ -81,5 +85,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "readme": "ERROR: No README data found!",
+  "_id": "industry@1.0.0"
 }
