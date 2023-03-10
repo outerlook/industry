@@ -1,6 +1,7 @@
 import type { StorybookViteConfig } from "@storybook/builder-vite";
 import { mergeConfig } from "vite";
 import WindiCSS from "vite-plugin-windicss";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 let config = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
@@ -9,7 +10,6 @@ let config = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
     "@storybook/addon-viewport",
-    "@storybook/addon-mdx-gfm",
   ],
   core: {},
   framework: {
@@ -21,7 +21,7 @@ let config = {
       optimizeDeps: {
         include: ["jest-mock"],
       },
-      plugins: [WindiCSS()],
+      plugins: [WindiCSS(), tsconfigPaths()],
     });
   },
   docs: {
