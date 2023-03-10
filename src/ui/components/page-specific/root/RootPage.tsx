@@ -1,9 +1,10 @@
-import { CenteredLayout } from "../../layouts/CenteredLayout";
-import { BasePanel } from "../../panels/BasePanel";
-import { WidgetServicoLink } from "../../widgets/WidgetServicoLink";
-import { BuildOutlined } from "@ant-design/icons";
-import { List } from "antd";
+import {CenteredLayout} from "../../layouts/CenteredLayout";
+import {BasePanel} from "../../panels/BasePanel";
+import {WidgetServicoLink} from "../../common/widgets/WidgetServicoLink";
+import {BuildOutlined} from "@ant-design/icons";
+import {List} from "antd";
 import React from "react";
+import {LinksExternosWidget} from "./LinksExternosWidget";
 
 export const RootPage = () => {
   const servicosELinks = [
@@ -45,7 +46,9 @@ export const RootPage = () => {
       </BasePanel>
       <BasePanel span={12} titulo={"Status Gerais"} />
       <BasePanel span={12} titulo={"Ordem de serviços ativas"} />
-      <BasePanel span={6} titulo={"Alguns numeros"} />
+      <BasePanel span={6} titulo={"Links externos importantes"}>
+          <LinksExternosWidget/>
+      </BasePanel>
       <BasePanel span={6} titulo={"Outros numeros"} />
     </CenteredLayout>
   );

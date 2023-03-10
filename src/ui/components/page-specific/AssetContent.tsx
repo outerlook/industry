@@ -3,7 +3,7 @@ import type * as t from "io-ts";
 import { EntityHeader } from "../common/EntityHeader";
 import type { Action } from "../common/ActionButtons";
 import { EntityLayout } from "../layouts/EntityLayout";
-import { WidgetPresentation } from "../widgets/generic-entities/WidgetPresentation";
+import { WidgetPresentation } from "../common/widgets/generic-entities/WidgetPresentation";
 import { getBreadcrumb } from "../common/Breadcrumb/schema-breadcrumbs";
 import { BasePanel } from "../panels/BasePanel";
 import { getAlert } from "../../../lib/utils/get-alert";

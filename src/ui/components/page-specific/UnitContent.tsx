@@ -6,7 +6,7 @@ import {getBreadcrumb} from "../common/Breadcrumb/schema-breadcrumbs";
 import {EntityHeader} from "../common/EntityHeader";
 import {EntityLayout} from "../layouts/EntityLayout";
 import {BasePanel} from "../panels/BasePanel";
-import {WidgetPresentation} from "../widgets/generic-entities/WidgetPresentation";
+import {WidgetPresentation} from "../common/widgets/generic-entities/WidgetPresentation";
 
 type Props = {
   company: t.TypeOf<typeof apiTypes.Company>;
