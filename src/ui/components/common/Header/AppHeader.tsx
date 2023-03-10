@@ -2,6 +2,7 @@ import { Button, Input, Layout, Space } from "antd";
 import { DoubleRightOutlined, SearchOutlined } from "@ant-design/icons";
 import { useObservable } from "../../../../lib/react-rxjs/use-observable";
 import { getMainSearchInputEffects } from "../../../../lib/global-shortcuts/main-search-input-effects";
+import { SiteLogo } from "../SiteLogo";
 
 const { Header } = Layout;
 
@@ -11,7 +12,9 @@ export const AppHeader = () => {
       <Header className="bg-gray-800 sticky h-12 fixed w-full">
         <div className="flex justify-between items-center h-full mx-2">
           <Space direction={"horizontal"} size={"middle"}>
-            <div className="text-white text-2xl font-bold">App</div>
+            <a href={"/"} className="text-white text-2xl font-bold">
+              <SiteLogo />
+            </a>
             <ServicesButton></ServicesButton>
             <SearchBar />
           </Space>
