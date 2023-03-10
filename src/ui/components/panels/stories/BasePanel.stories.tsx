@@ -1,4 +1,3 @@
-import React from "react";
 import { BasePanel } from "../BasePanel";
 import type { Meta, StoryObj } from "@storybook/react";
 
