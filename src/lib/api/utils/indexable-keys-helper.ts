@@ -1,19 +1,18 @@
-import { pipe } from "effect";
+import { flow } from "effect";
+import * as A from "fp-ts/Array";
 
-const keysToString =
+const arrayFromKeys =
   <T extends Record<string, unknown>>(...keys: (keyof T)[]) =>
   (obj: T) =>
-    keys.map((k) => obj[k]).join(" ");
-const prepend = (prefix: string) => (str: string) => `${prefix} ${str}`;
+    keys.map((k) => obj[k]);
 
 /**
  * this aims to help with the creation of indexable keys, to use on search
  * @param keys
  */
-export const getObjIndexableKeyFromKeys =
-  <T extends Record<string, unknown>, K extends keyof T>(
-    name: string,
-    ...keys: K[]
-  ) =>
-  (obj: T) =>
-    pipe(obj, keysToString(...keys), prepend(name));
+export const getObjectKeywordsFromKeys = <
+  T extends Record<string, unknown>,
+  K extends keyof T & string
+>(
+  ...keys: K[]
+) => flow(arrayFromKeys(...keys), A.map(String));

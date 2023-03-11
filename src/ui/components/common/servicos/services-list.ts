@@ -1,31 +1,31 @@
 import { linkTo } from "@/meta/__GENERATED__/routes";
-import { AimOutlined } from "@ant-design/icons";
+import { entityConfig } from "@/lib/api/config";
 
 export const servicesList = [
   {
     label: "Companies",
     href: linkTo["/companies"]({}),
-    Icon: AimOutlined,
+    Icon: entityConfig["Company"]["Icon"],
   },
   {
     label: "Units",
     href: linkTo["/units"]({}),
-    Icon: AimOutlined,
+    Icon: entityConfig["Unit"]["Icon"],
   },
   {
     label: "Users",
     href: linkTo["/users"]({}),
-    Icon: AimOutlined,
+    Icon: entityConfig["User"]["Icon"],
   },
   {
     label: "Assets",
     href: linkTo["/assets"]({}),
-    Icon: AimOutlined,
+    Icon: entityConfig["Asset"]["Icon"],
   },
   {
     label: "Workorders",
     href: linkTo["/workorders"]({}),
-    Icon: AimOutlined,
+    Icon: entityConfig["Workorder"]["Icon"],
   },
 ] satisfies {
   label: string;

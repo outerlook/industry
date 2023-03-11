@@ -1,16 +1,12 @@
-import { AutoComplete, Button, Input, Layout, Space } from "antd";
-import { DoubleRightOutlined, SearchOutlined } from "@ant-design/icons";
-import { useObservable } from "../../../../lib/react-rxjs/use-observable";
-import { getMainSearchInputEffects } from "../../../../lib/global-shortcuts/main-search-input-effects";
-import { SiteLogo } from "../SiteLogo";
-import { ServicesDropdown } from "@/ui/components/common/Header/ServicosDropdownContent";
-import {
-  entitiesSearchIndex$,
-
-} from "@/lib/api/search-index/search-items";
-import { getOrThrow } from "@/lib/io-ts/get-or-throw";
+import {AutoComplete, Button, Input, Layout, Space} from "antd";
+import {DoubleRightOutlined, SearchOutlined} from "@ant-design/icons";
+import {useObservable} from "../../../../lib/react-rxjs/use-observable";
+import {getMainSearchInputEffects} from "../../../../lib/global-shortcuts/main-search-input-effects";
+import {SiteLogo} from "../SiteLogo";
+import {ServicesDropdown} from "@/ui/components/common/Header/ServicosDropdownContent";
+import {getOrThrow} from "@/lib/io-ts/get-or-throw";
 import React from "react";
-import { pipe } from "effect";
+import {pipe} from "effect";
 import * as E from "fp-ts/Either";
 import {allSearchIndex$, fuseForSearchItems, SearchItem} from "@/lib/search-service/search-item";
 
@@ -40,10 +36,7 @@ export const AppHeader = () => {
 function ServicesButton() {
   return (
     <ServicesDropdown>
-      <Button
-        ghost
-        icon={<DoubleRightOutlined />}
-      >
+      <Button ghost icon={<DoubleRightOutlined />}>
         Services
       </Button>
     </ServicesDropdown>
@@ -106,7 +99,6 @@ function SearchBar() {
       E.getOrElseW(() => [] as never[])
     );
   }, [optionsFuse, value]);
-
 
   if (!eitherOptions) {
     return null;

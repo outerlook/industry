@@ -1,5 +1,5 @@
 import type {Entities, validEntities} from "@/lib/io-ts/valid-types";
-import {getObjIndexableKeyFromKeys} from "@/lib/api/utils/indexable-keys-helper";
+import {getObjectKeywordsFromKeys} from "@/lib/api/utils/indexable-keys-helper";
 import {AimOutlined} from "@ant-design/icons";
 import {linkTo} from "@/meta/__GENERATED__/routes";
 import {flow} from "effect";
@@ -18,31 +18,31 @@ const pickIdToStr = flow(propStr("id"), bindTo("id"));
 
 export const entityConfig = {
   Asset: {
-    toIndexableKey: getObjIndexableKeyFromKeys("asset", "id", "name", "model"),
+    toKeywords: getObjectKeywordsFromKeys("id", "name", "model"),
     Icon: AimOutlined,
     toLabel: propStr("name"),
     toLink: flow(pickIdToStr, linkTo["/assets/:id"]),
   },
   User: {
-    toIndexableKey: getObjIndexableKeyFromKeys("user", "id", "name"),
+    toKeywords: getObjectKeywordsFromKeys("user", "id", "name"),
     Icon: AimOutlined,
     toLabel: propStr("name"),
     toLink: flow(pickIdToStr, linkTo["/users/:id"]),
   },
   Unit: {
-    toIndexableKey: getObjIndexableKeyFromKeys("unit", "id", "name"),
+    toKeywords: getObjectKeywordsFromKeys("unit", "id", "name"),
     Icon: AimOutlined,
     toLabel: propStr("name"),
     toLink: flow(pickIdToStr, linkTo["/units/:id"]),
   },
   Company: {
-    toIndexableKey: getObjIndexableKeyFromKeys("company", "id", "name"),
+    toKeywords: getObjectKeywordsFromKeys("company", "id", "name"),
     Icon: AimOutlined,
     toLabel: propStr("name"),
     toLink: flow(pickIdToStr, linkTo["/companies/:id"]),
   },
   Workorder: {
-    toIndexableKey: getObjIndexableKeyFromKeys("workorder", "id", "title"),
+    toKeywords: getObjectKeywordsFromKeys("workorder", "id", "title"),
     Icon: AimOutlined,
     toLabel: propStr("title"),
     toLink: flow(pickIdToStr, linkTo["/workorders/:id"]),
@@ -50,7 +50,7 @@ export const entityConfig = {
 } satisfies {
   [key in Entities]: {
     toLabel: (entity: validEntities[key]) => string;
-    toIndexableKey: (entity: validEntities[key]) => string;
+    toKeywords: (entity: validEntities[key]) => string[];
     Icon: React.FC;
     toLink: (entity: validEntities[key]) => string;
   };

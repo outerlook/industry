@@ -15,6 +15,7 @@ import type {SearchItem} from "@/lib/search-service/search-item";
 const assetSearchItem = (entity: validTypes["Asset"]): SearchItem => ({
   label: entityConfig["Asset"].toLabel(entity),
   href: linkForAsset(entity).href,
+    keywords: entityConfig["Asset"].toKeywords(entity),
   object: entity,
   type: "Asset",
 });
