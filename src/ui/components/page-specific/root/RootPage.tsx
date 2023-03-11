@@ -1,10 +1,10 @@
-import {CenteredLayout} from "../../layouts/CenteredLayout";
-import {BasePanel} from "../../panels/BasePanel";
-import {WidgetServicoLink} from "../../common/widgets/WidgetServicoLink";
-import {BuildOutlined} from "@ant-design/icons";
-import {List} from "antd";
+import { CenteredLayout } from "../../layouts/CenteredLayout";
+import { BasePanel } from "../../panels/BasePanel";
+import { WidgetServicoLink } from "../../common/widgets/WidgetServicoLink";
+import { BuildOutlined } from "@ant-design/icons";
+import { List } from "antd";
 import React from "react";
-import {LinksExternosWidget} from "./LinksExternosWidget";
+import { LinksExternosWidget } from "./LinksExternosWidget";
 
 export const RootPage = () => {
   const servicosELinks = [
@@ -35,21 +35,21 @@ export const RootPage = () => {
         <List
           dataSource={servicosELinks}
           size={"small"}
-          grid={{column: 2, }}
+          grid={{ column: 2 }}
           split={true}
           renderItem={(props) => (
-            <List.Item >
-              <WidgetServicoLink span={12} {...props} />
+            <List.Item>
+              <WidgetServicoLink colProps={{ span: 12 }} {...props} />
             </List.Item>
           )}
         />
       </BasePanel>
-      <BasePanel span={12} titulo={"Status Gerais"} />
-      <BasePanel span={12} titulo={"Ordens de serviço"} />
-      <BasePanel span={6} titulo={"Links externos"}>
-          <LinksExternosWidget/>
+      <BasePanel span={12} titulo={"General status"} />
+      <BasePanel span={12} titulo={"Work Orders"} />
+      <BasePanel span={6} titulo={"External links"}>
+        <LinksExternosWidget />
       </BasePanel>
-      <BasePanel span={6} titulo={"Números"} />
+      <BasePanel span={6} titulo={"More"} />
     </CenteredLayout>
   );
 };
