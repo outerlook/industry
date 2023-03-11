@@ -25,7 +25,6 @@ export const CompaniesContent = ({
   return (
     <EntityLayout>
       <TablePanel
-        titulo={"Companies"}
         tableProps={{
           dataSource,
           // @ts-ignore shame fixme
