@@ -1,6 +1,13 @@
 import type {Entities, validEntities} from "@/lib/io-ts/valid-types";
 import {getObjectKeywordsFromKeys} from "@/lib/api/utils/indexable-keys-helper";
-import {AimOutlined} from "@ant-design/icons";
+import {
+    AimOutlined,
+    DeploymentUnitOutlined,
+    HomeOutlined,
+    SettingOutlined,
+    ToolOutlined,
+    UsergroupAddOutlined
+} from "@ant-design/icons";
 import {linkTo} from "@/meta/__GENERATED__/routes";
 import {flow} from "effect";
 import {bindTo} from "fp-ts/Identity";
@@ -20,31 +27,31 @@ const pickIdToStr = flow(propStr("id"), bindTo("id"));
 export const entityConfig = {
     Asset: {
         toKeywords: getObjectKeywordsFromKeys("id", "name", "model"),
-        Icon: AimOutlined,
+        Icon: SettingOutlined,
         toLabel: propStr("name"),
         toLink: flow(pickIdToStr, linkTo["/assets/:id"]),
     },
     User: {
         toKeywords: getObjectKeywordsFromKeys("user", "id", "name"),
-        Icon: AimOutlined,
+        Icon: UsergroupAddOutlined,
         toLabel: propStr("name"),
         toLink: flow(pickIdToStr, linkTo["/users/:id"]),
     },
     Unit: {
         toKeywords: getObjectKeywordsFromKeys("unit", "id", "name"),
-        Icon: AimOutlined,
+        Icon: HomeOutlined,
         toLabel: propStr("name"),
         toLink: flow(pickIdToStr, linkTo["/units/:id"]),
     },
     Company: {
         toKeywords: getObjectKeywordsFromKeys("company", "id", "name"),
-        Icon: AimOutlined,
+        Icon: DeploymentUnitOutlined,
         toLabel: propStr("name"),
         toLink: flow(pickIdToStr, linkTo["/companies/:id"]),
     },
     Workorder: {
         toKeywords: getObjectKeywordsFromKeys("workorder", "id", "title"),
-        Icon: AimOutlined,
+        Icon: ToolOutlined,
         toLabel: propStr("title"),
         toLink: flow(pickIdToStr, linkTo["/workorders/:id"]),
     },
