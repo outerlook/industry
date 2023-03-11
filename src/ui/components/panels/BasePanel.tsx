@@ -1,5 +1,4 @@
-import { Card, Col } from "antd";
-import React from "react";
+import {Card, Col} from "antd";
 
 type BasePanelProps = {
   titulo: string;

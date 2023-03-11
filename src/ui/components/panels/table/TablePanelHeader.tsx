@@ -1,5 +1,5 @@
-import { useTableStateContext } from "./table-state";
-import { Col, Pagination, Row, Typography } from "antd";
+import {useTableStateContext} from "./table-state";
+import {Col, Pagination, Row, Typography} from "antd";
 
 export const TablePanelHeader = (props: { title?: string | undefined }) => {
   const { title = "Registros" } = props;

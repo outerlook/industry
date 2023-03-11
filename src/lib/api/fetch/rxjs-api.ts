@@ -1,7 +1,7 @@
-import { api } from "./fetchAPI";
-import { defer, map, shareReplay } from "rxjs";
-import type { RequestContext } from "mappersmith";
-import { apiTypes } from "../../io-ts/api-types";
+import {api} from "./fetchAPI";
+import {defer, map, shareReplay} from "rxjs";
+import type {RequestContext} from "mappersmith";
+import {apiTypes} from "../../io-ts/api-types";
 import * as t from "io-ts";
 
 /**

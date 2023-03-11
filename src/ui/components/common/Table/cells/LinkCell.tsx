@@ -1,5 +1,3 @@
-import React from "react";
-
 type LinkCellProps = {
   href: string;
 };

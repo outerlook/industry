@@ -1,16 +1,13 @@
-import {
-  allSearchIndex$,
-  fuseForSearchItems,
-  SearchItem,
-} from "@/lib/search-service/search-item";
+import type { SearchItem} from "@/lib/search-service/search-item";
+import {allSearchIndex$, fuseForSearchItems} from "@/lib/search-service/search-item";
 import React from "react";
-import { getMainSearchInputEffects } from "@/lib/global-shortcuts/main-search-input-effects";
-import { useObservable } from "@/lib/react-rxjs/use-observable";
-import { getOrThrow } from "@/lib/io-ts/get-or-throw";
-import { pipe } from "effect";
+import {getMainSearchInputEffects} from "@/lib/global-shortcuts/main-search-input-effects";
+import {useObservable} from "@/lib/react-rxjs/use-observable";
+import {getOrThrow} from "@/lib/io-ts/get-or-throw";
+import {pipe} from "effect";
 import * as E from "fp-ts/Either";
-import { AutoComplete, Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import {AutoComplete, Input} from "antd";
+import {SearchOutlined} from "@ant-design/icons";
 
 const renderTitle = (title: string) => <span>{title}</span>;
 const renderItem = (item: SearchItem) => ({

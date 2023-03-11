@@ -1,10 +1,10 @@
-import { CenteredLayout } from "../../layouts/CenteredLayout";
-import { BasePanel } from "../../panels/BasePanel";
-import { WidgetServicoLink } from "../../common/widgets/WidgetServicoLink";
-import { BuildOutlined } from "@ant-design/icons";
-import { List } from "antd";
+import {CenteredLayout} from "../../layouts/CenteredLayout";
+import {BasePanel} from "../../panels/BasePanel";
+import {WidgetServicoLink} from "../../common/widgets/WidgetServicoLink";
+import {BuildOutlined} from "@ant-design/icons";
+import {List} from "antd";
 import React from "react";
-import { LinksExternosWidget } from "./LinksExternosWidget";
+import {LinksExternosWidget} from "./LinksExternosWidget";
 
 export const RootPage = () => {
   const servicosELinks = [

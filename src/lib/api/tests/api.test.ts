@@ -1,10 +1,10 @@
-import { describe, expect, test } from "vitest";
-import { $api } from "../fetch/rxjs-api";
+import {describe, expect, test} from "vitest";
+import {$api} from "../fetch/rxjs-api";
 import * as E from "fp-ts/Either";
-import { firstValueFrom, map } from "rxjs";
-import { pipe } from "effect";
-import { formatValidationErrors } from "io-ts-reporters";
-import { relations } from "../relations";
+import {firstValueFrom, map} from "rxjs";
+import {pipe} from "effect";
+import {formatValidationErrors} from "io-ts-reporters";
+import {relations} from "../relations";
 
 describe("api", () => {
   test("one asset", async () => {

@@ -1,6 +1,6 @@
-import { linkTo } from "../../../../meta/__GENERATED__/routes";
-import type { ItemType } from "antd/es/breadcrumb/Breadcrumb";
-import type { validTypes } from "../../../../lib/io-ts/valid-types";
+import {linkTo} from "../../../../meta/__GENERATED__/routes";
+import type {ItemType} from "antd/es/breadcrumb/Breadcrumb";
+import type {validTypes} from "../../../../lib/io-ts/valid-types";
 
 // change proof
 export type BreadcrumbItem = ItemType;

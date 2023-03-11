@@ -1,7 +1,7 @@
-import { BehaviorSubject, filter, merge } from "rxjs";
-import { blurOnEscFromElement } from "../rxjs/blur-on-esc";
-import { clearOnBlurFromElement } from "../rxjs/clear-on-blur";
-import { focusOnShortcutFromElement } from "../rxjs/focus-on-shortcut";
+import {BehaviorSubject, filter, merge} from "rxjs";
+import {blurOnEscFromElement} from "../rxjs/blur-on-esc";
+import {clearOnBlurFromElement} from "../rxjs/clear-on-blur";
+import {focusOnShortcutFromElement} from "../rxjs/focus-on-shortcut";
 
 type PossibleElement = HTMLInputElement | null | undefined;
 export const getMainSearchInputEffects = () => {

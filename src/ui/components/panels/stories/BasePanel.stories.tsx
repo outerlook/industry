@@ -1,5 +1,5 @@
-import { BasePanel } from "../BasePanel";
-import type { Meta, StoryObj } from "@storybook/react";
+import {BasePanel} from "../BasePanel";
+import type {Meta, StoryObj} from "@storybook/react";
 
 const meta = {
   title: "Panels/BasePanel",

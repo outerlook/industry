@@ -1,10 +1,7 @@
-import { BaseWidget } from "../../common/widgets/BaseWidget";
-import { List, Space, Typography } from "antd";
-import {
-  PUBLIC_LINK_GITHUB_PROJECT,
-  PUBLIC_LINK_STORYBOOK,
-} from "../../../../lib/utils/environment-vars";
-import { BookOutlined, GithubOutlined } from "@ant-design/icons";
+import {BaseWidget} from "../../common/widgets/BaseWidget";
+import {List, Space, Typography} from "antd";
+import {PUBLIC_LINK_GITHUB_PROJECT, PUBLIC_LINK_STORYBOOK,} from "../../../../lib/utils/environment-vars";
+import {BookOutlined, GithubOutlined} from "@ant-design/icons";
 
 const links = [
   {

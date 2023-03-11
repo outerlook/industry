@@ -1,7 +1,6 @@
-import { Col, Layout, Row, Space, theme } from "antd";
-import React from "react";
+import {Col, Layout, Row, Space, theme} from "antd";
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 export const EntityLayout = (
   props: React.PropsWithChildren<{ siderChildren: React.ReactNode }>

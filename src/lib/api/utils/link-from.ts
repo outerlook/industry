@@ -1,5 +1,7 @@
-import type { validTypes } from "../../io-ts/valid-types";
-import { entityConfig } from "@/lib/api/config";
+import type {validTypes} from "../../io-ts/valid-types";
+import {entityConfig} from "@/lib/api/config";
+
+// TODO: not good, specific props creating unnecessary coupling
 
 const getLinkPropsFromIdentifiedObject =
   <E extends { id: string | number }>(
@@ -12,7 +14,7 @@ const getLinkPropsFromIdentifiedObject =
     };
   };
 
-export const linkPropsFromCompany = getLinkPropsFromIdentifiedObject<
+export const linkForCompany = getLinkPropsFromIdentifiedObject<
   validTypes["Company"]
 >(entityConfig.Company.toLink);
 export const linkForAsset = getLinkPropsFromIdentifiedObject<

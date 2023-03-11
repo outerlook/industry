@@ -1,6 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { EntityLayout } from "../EntityLayout";
-import React from "react";
+import type {Meta, StoryObj} from "@storybook/react";
+import {EntityLayout} from "../EntityLayout";
 
 const meta = {
   title: "Layouts/EntityLayout",

@@ -1,22 +1,21 @@
+import type {apiTypes} from "src/lib/io-ts/api-types";
 import type * as t from "io-ts";
-import type { apiTypes } from "../../../lib/io-ts/api-types";
-import type { Action } from "../common/ActionButtons";
-import { getBreadcrumb } from "../common/Breadcrumb/schema-breadcrumbs";
-import { EntityHeader } from "../common/EntityHeader";
-import { EntityLayout } from "../layouts/EntityLayout";
-import { BasePanel } from "../panels/BasePanel";
-import { WidgetPresentation } from "../common/widgets/generic-entities/WidgetPresentation";
-import { notImplementedHalMsg } from "@/lib/utils/not-implemented";
+import {EntityHeader} from "src/ui/components/common/EntityHeader";
+import type {Action} from "src/ui/components/common/ActionButtons";
+import {EntityLayout} from "src/ui/components/layouts/EntityLayout";
+import {WidgetPresentation} from "src/ui/components/common/widgets/generic-entities/WidgetPresentation";
+import {getBreadcrumb} from "src/ui/components/common/Breadcrumb/schema-breadcrumbs";
+import {BasePanel} from "src/ui/components/panels/BasePanel";
+import {notImplementedHalMsg} from "@/lib/utils/not-implemented";
 
 type Props = {
-  company: t.TypeOf<typeof apiTypes.Company>;
-  unit: t.TypeOf<typeof apiTypes.Unit>;
-  workorder: t.TypeOf<typeof apiTypes.Workorder>;
   asset: t.TypeOf<typeof apiTypes.Asset>;
+  unit: t.TypeOf<typeof apiTypes.Unit>;
+  company: t.TypeOf<typeof apiTypes.Company>;
 };
 
-export const WorkorderContent = (props: Props) => {
-  const { company, unit, asset, workorder } = props;
+export const AssetContent = (props: Props) => {
+  const { asset, unit, company } = props;
 
   const actions = [
     {
@@ -28,25 +27,24 @@ export const WorkorderContent = (props: Props) => {
     { label: "other", onClick: notImplementedHalMsg("other") },
   ] satisfies Action[];
 
-  const breadcrumbItems = getBreadcrumb.forWorkorders({
+  const breadcrumbItems = getBreadcrumb.forAssets({
     asset,
     company,
     unit,
-    workorder,
   });
 
   return (
     <EntityLayout
       siderChildren={
         <>
-          <WidgetPresentation title={workorder.title} />
+          <WidgetPresentation image={asset.image} title={asset.name} />
         </>
       }
     >
       <EntityHeader
         breadcrumbProps={{ items: breadcrumbItems }}
         actions={actions}
-        title={workorder.title}
+        title={asset.name}
       />
       <BasePanel titulo="Painel">
         <p>Conteúdo do painel</p>

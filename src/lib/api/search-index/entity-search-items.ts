@@ -1,11 +1,5 @@
 import type {validTypes} from "@/lib/io-ts/valid-types";
-import {
-    linkForAsset,
-    linkForUnit,
-    linkForUser,
-    linkForWorkorder,
-    linkPropsFromCompany,
-} from "@/lib/api/utils/link-from";
+import {linkForAsset, linkForCompany, linkForUnit, linkForUser, linkForWorkorder,} from "@/lib/api/utils/link-from";
 import {entityConfig} from "@/lib/api/config";
 import {allObjects$} from "@/lib/api/fetch/fetch-every-object";
 import * as OE from "fp-ts-rxjs/ObservableEither";
@@ -36,7 +30,7 @@ const unitSearchItem = (entity: validTypes["Unit"]): SearchItem => ({
 
 const companySearchItem = (entity: validTypes["Company"]): SearchItem => ({
   label: entityConfig["Company"].toLabel(entity),
-  href: linkPropsFromCompany(entity).href,
+  href: linkForCompany(entity).href,
   object: entity,
   type: "Company",
 });

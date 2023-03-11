@@ -1,5 +1,5 @@
 import React from "react";
-import type { Observable } from "rxjs";
+import type {Observable} from "rxjs";
 
 export const useObservable = <T>(observable: Observable<T>) => {
   const [state, setState] = React.useState<T>();

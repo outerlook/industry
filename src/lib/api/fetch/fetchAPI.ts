@@ -1,7 +1,6 @@
 import forge from 'mappersmith'
 
 
-
 export const api = forge({
     clientId: 'tractian',
     host: 'https://my-json-server.typicode.com/tractian/fake-api',

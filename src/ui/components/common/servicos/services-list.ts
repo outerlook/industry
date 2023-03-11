@@ -1,5 +1,5 @@
-import { linkTo } from "@/meta/__GENERATED__/routes";
-import { entityConfig } from "@/lib/api/config";
+import {linkTo} from "@/meta/__GENERATED__/routes";
+import {entityConfig} from "@/lib/api/config";
 
 export const servicesList = [
   {

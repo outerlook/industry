@@ -1,8 +1,8 @@
-import { Breadcrumb } from "./Breadcrumb/Breadcrumb";
-import { Col, Row, Space } from "antd";
-import React from "react";
-import { PageTitle } from "./PageTitle";
-import { Action, ActionButtons } from "./ActionButtons";
+import {Breadcrumb} from "./Breadcrumb/Breadcrumb";
+import {Col, Row, Space} from "antd";
+import {PageTitle} from "./PageTitle";
+import type {Action} from "./ActionButtons";
+import { ActionButtons} from "./ActionButtons";
 
 type EntityHeaderProps = {
   title: string;

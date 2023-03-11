@@ -1,5 +1,5 @@
-import type { Observable } from "rxjs";
-import { filter, fromEvent, switchMap, tap } from "rxjs";
+import type {Observable} from "rxjs";
+import {filter, fromEvent, switchMap, tap} from "rxjs";
 
 export const blurOnEscFromElement = (el$: Observable<HTMLInputElement>) => {
   return el$.pipe(

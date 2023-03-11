@@ -1,5 +1,5 @@
-import { BaseWidget } from "../BaseWidget";
-import { Image, Space, Typography } from "antd";
+import {BaseWidget} from "../BaseWidget";
+import {Image, Space, Typography} from "antd";
 
 import React from "react";
 

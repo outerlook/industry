@@ -1,5 +1,4 @@
-import type { apiTypes } from "./api-types";
-import type { entityTypes } from "./api-types";
+import type {apiTypes, entityTypes} from "./api-types";
 import type * as t from "io-ts";
 
 export type validTypes = {

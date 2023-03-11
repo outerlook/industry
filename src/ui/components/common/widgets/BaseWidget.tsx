@@ -1,5 +1,6 @@
 import React from "react";
-import {Col, ColProps, Row, RowProps} from "antd";
+import type { ColProps, RowProps} from "antd";
+import {Col, Row} from "antd";
 
 export type BaseWidgetProps = {colProps?: ColProps, rowProps?: RowProps};
 export const BaseWidget = (props: React.PropsWithChildren<BaseWidgetProps>) => {

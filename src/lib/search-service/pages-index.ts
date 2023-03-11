@@ -1,5 +1,5 @@
-import type { SearchItem } from "@/lib/search-service/search-item";
-import { servicesList } from "@/ui/components/common/servicos/services-list";
+import type {SearchItem} from "@/lib/search-service/search-item";
+import {servicesList} from "@/ui/components/common/servicos/services-list";
 import {isString} from "lodash";
 
 export const pagesIndex = [

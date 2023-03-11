@@ -1,4 +1,4 @@
-import { flow } from "effect";
+import {flow} from "effect";
 import * as A from "fp-ts/Array";
 
 const arrayFromKeys =

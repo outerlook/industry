@@ -1,8 +1,8 @@
-import { flow, pipe } from "effect";
+import {flow, pipe} from "effect";
 import Fuse from "fuse.js";
-import { entitiesSearchIndex$ } from "@/lib/api/search-index/entity-search-items";
+import {entitiesSearchIndex$} from "@/lib/api/search-index/entity-search-items";
 import * as OE from "fp-ts-rxjs/ObservableEither";
-import { pagesIndex } from "@/lib/search-service/pages-index";
+import {pagesIndex} from "@/lib/search-service/pages-index";
 
 export type SearchItem = {
   label: string;

@@ -1,5 +1,6 @@
-import type { ColumnsType } from "antd/es/table";
+import type {ColumnsType} from "antd/es/table";
 
 export type ColumnForData<Data extends any[]> = Data extends (infer U)[]
-  ? ColumnsType<U>
+  ? ColumnsType<U> &
   : never;
+export type ColumnForEntity

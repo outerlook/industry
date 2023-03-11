@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { BaseTable } from "../BaseTable";
-import { testTableData } from "@/ui/components/common/Table/stories/test-table";
+import type {Meta, StoryObj} from "@storybook/react";
+import {BaseTable} from "../BaseTable";
+import {testTableData} from "@/ui/components/common/Table/stories/test-table";
 
 const meta = {
   title: "Components/Table",

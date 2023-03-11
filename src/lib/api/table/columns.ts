@@ -1,42 +1,9 @@
-import { ColumnType } from "antd/es/table";
-import { validTypes } from "@/lib/io-ts/valid-types";
-import { pipe } from "effect";
+import type {ColumnType} from "antd/es/table";
+import {pipe} from "effect";
 import * as A from "fp-ts/Array";
 import * as RA from "fp-ts/ReadonlyArray";
-import { Lens } from "monocle-ts";
-import { L } from "ts-toolbelt";
-import {
-  renderLink,
-  renderPercentile,
-  renderStatus,
-} from "@/lib/api/table/cells/renderers";
-import { linkForAsset } from "@/lib/api/utils/link-from";
-
-const assetColumns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    render: renderLink(linkForAsset),
-  },
-  {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-    render: renderStatus,
-  },
-  {
-    title: "Health",
-    dataIndex: "healthscore",
-    key: "healthscore",
-    render: renderPercentile,
-  },
-  {
-    title: "Model",
-    dataIndex: "model",
-    key: "model",
-  },
-] as const satisfies ReadonlyArray<ColumnType<validTypes["Asset"]>>;
+import {Lens} from "monocle-ts";
+import type {L} from "ts-toolbelt";
 
 const toDefaultIfEmpty =
   <A>(defaultValue: A[]) =>
@@ -54,7 +21,7 @@ type ColumnsThatHasThisKey<
   "contains->"
 >;
 
-const getEntityColumnPicker =
+export const getEntityColumnPicker =
   <
     Columns extends ReadonlyArray<ColumnType<any>>,
     DK extends KeysOfColumns<Columns> & string
@@ -65,6 +32,7 @@ const getEntityColumnPicker =
   <K extends KeysOfColumns<Columns> & string = DK>(
     ...keys: K[]
   ): ColumnsThatHasThisKey<Columns, K> => {
+    // @ts-ignore fixme shame
     const selectedKeys = pipe(keys, toDefaultIfEmpty(defaultKeys));
 
     const columnDataIndexLens = Lens.fromProp<Columns[number]>()("dataIndex");
@@ -86,12 +54,5 @@ const getEntityColumnPicker =
 
     return selectedColumns as any; // guarded by tests FIXME
   };
-
-export const pickAssetColumns = getEntityColumnPicker(assetColumns, [
-  "name",
-  "model",
-  "healthscore",
-  "status",
-]);
 
 type KeysOfColumns<T extends ReadonlyArray<ColumnType<any>>> = T[number]["key"];

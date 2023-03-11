@@ -1,8 +1,8 @@
-import {linkPropsFromCompany} from "@/lib/api/utils/link-from";
+import {linkForCompany} from "@/lib/api/utils/link-from";
 import {LinkCell} from "@/ui/components/common/Table/cells/LinkCell";
-import {ColumnForData} from "@/ui/components/common/Table/table-helper";
+import type {ColumnForData} from "@/ui/components/common/Table/table-helper";
 import {getUser} from "@/lib/api/tests/utils";
-import {validTypes} from "@/lib/io-ts/valid-types";
+import type {validTypes} from "@/lib/io-ts/valid-types";
 
 const dataSource = [
     getUser(),
@@ -20,7 +20,7 @@ const columns = [
         key: "companyId",
         dataIndex: "companyId",
         render: (value) => {
-            const {label, href} = linkPropsFromCompany({
+            const {label, href} = linkForCompany({
                 id: value,
                 name: "My company",
             });

@@ -1,6 +1,6 @@
 import type {validTypes} from "@/lib/io-ts/valid-types";
 import {Tag} from "antd";
-import {apiTypes, customScalars, enumTypes} from "@/lib/io-ts/api-types";
+import {customScalars, enumTypes} from "@/lib/io-ts/api-types";
 
 const colorByStatus = {
     'inAlert': 'red',

@@ -1,4 +1,5 @@
-import {forkJoin, Observable} from "rxjs";
+import type { Observable} from "rxjs";
+import {forkJoin} from "rxjs";
 import _ from "lodash";
 
 export const pickForkJoin = <

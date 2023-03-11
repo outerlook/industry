@@ -1,5 +1,6 @@
-import { expect, test } from "vitest";
-import { pickAssetColumns } from "@/lib/api/table/columns";
+import {expect, test} from "vitest";
+
+import {pickAssetColumns} from "@/lib/api/table/assetColumns";
 
 test("types are working", () => {
   const column = pickAssetColumns("name", "status");

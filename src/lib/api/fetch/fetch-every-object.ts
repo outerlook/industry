@@ -1,7 +1,7 @@
-import { pipe } from "effect";
-import { $api } from "@/lib/api/fetch/rxjs-api";
+import {pipe} from "effect";
+import {$api} from "@/lib/api/fetch/rxjs-api";
 import * as OE from "fp-ts-rxjs/ObservableEither";
-import { apply } from "fp-ts";
+import {apply} from "fp-ts";
 
 export const allObjects$ = () =>
   pipe(
