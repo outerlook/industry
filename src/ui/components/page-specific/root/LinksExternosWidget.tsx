@@ -33,14 +33,14 @@ export function LinksExternosWidget() {
         dataSource={links}
         renderItem={(props) => (
           <List.Item>
-            <Typography.Title level={5} >
+            <Typography.Text>
               <a href={props.href}>
-                <Space direction={"horizontal"}>
+                <Space align={"baseline"} direction={"horizontal"}>
                   {props.icone}
                   <div>{props.title}</div>
                 </Space>
               </a>
-            </Typography.Title>
+            </Typography.Text>
           </List.Item>
         )}
       />

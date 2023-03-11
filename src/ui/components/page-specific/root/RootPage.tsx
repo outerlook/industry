@@ -31,7 +31,7 @@ export const RootPage = () => {
   ];
   return (
     <CenteredLayout>
-      <BasePanel span={12} titulo={"Últimos acessados"}>
+      <BasePanel span={12} titulo={"Last visited"}>
         <List
           dataSource={servicosELinks}
           size={"small"}
@@ -46,10 +46,10 @@ export const RootPage = () => {
       </BasePanel>
       <BasePanel span={12} titulo={"Status Gerais"} />
       <BasePanel span={12} titulo={"Ordens de serviço"} />
-      <BasePanel span={6} titulo={"Links externos importantes"}>
+      <BasePanel span={6} titulo={"Links externos"}>
           <LinksExternosWidget/>
       </BasePanel>
-      <BasePanel span={6} titulo={"Outros numeros"} />
+      <BasePanel span={6} titulo={"Números"} />
     </CenteredLayout>
   );
 };
