@@ -1,6 +1,6 @@
 import type * as t from "io-ts";
 import type {apiTypes} from "../io-ts/api-types";
-import {$api} from "./rxjs-api";
+import {$api} from "./fetch/rxjs-api";
 import type {Observable} from "rxjs";
 import {forkJoin, pluck, share} from "rxjs";
 import * as OE from "fp-ts-rxjs/ObservableEither";

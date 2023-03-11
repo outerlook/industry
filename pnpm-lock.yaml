@@ -43,6 +43,7 @@ specifiers:
   eslint-plugin-react-hooks: 4.6.0
   fp-ts: 2.13.1
   fp-ts-rxjs: 0.6.15
+  fuse.js: 6.6.2
   happy-dom: 8.9.0
   immer: 9.0.19
   io-ts: 2.2.20
@@ -80,6 +81,7 @@ dependencies:
   effect: 2.0.0-next.13
   fp-ts: 2.13.1
   fp-ts-rxjs: 0.6.15_fp-ts@2.13.1+rxjs@7.8.0
+  fuse.js: 6.6.2
   immer: 9.0.19
   io-ts: 2.2.20_fp-ts@2.13.1
   io-ts-reporters: 2.0.1_fp-ts@2.13.1+io-ts@2.2.20
@@ -6492,6 +6494,11 @@ packages:
   /functions-have-names/1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
     dev: true
+
+  /fuse.js/6.6.2:
+    resolution: {integrity: sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==}
+    engines: {node: '>=10'}
+    dev: false
 
   /gauge/3.0.2:
     resolution: {integrity: sha512-+5J6MS/5XksCuXq++uFRsnUd7Ovu1XenbeuIuNRJxYWjgQbPuFhT14lAvsWfqfAmnwluf1OwMjz39HjfLPci0Q==}

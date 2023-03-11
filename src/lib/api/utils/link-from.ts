@@ -1,5 +1,5 @@
 import type { validTypes } from "../../io-ts/valid-types";
-import { linkTo } from "../../../meta/__GENERATED__/routes";
+import { entityConfig } from "@/lib/api/config";
 
 const getLinkPropsFromIdentifiedObject =
   <E extends { id: string | number }>(
@@ -14,16 +14,16 @@ const getLinkPropsFromIdentifiedObject =
 
 export const linkPropsFromCompany = getLinkPropsFromIdentifiedObject<
   validTypes["Company"]
->(linkTo["/companies/:id"]);
-export const linkPropsForAsset = getLinkPropsFromIdentifiedObject<
+>(entityConfig.Company.toLink);
+export const linkForAsset = getLinkPropsFromIdentifiedObject<
   validTypes["Asset"]
->(linkTo["/assets/:id"]);
+>(entityConfig.Asset.toLink);
 export const linkForUnit = getLinkPropsFromIdentifiedObject<validTypes["Unit"]>(
-  linkTo["/units/:id"]
+  entityConfig.Unit.toLink
 );
 export const linkForUser = getLinkPropsFromIdentifiedObject<validTypes["User"]>(
-  linkTo["/users/:id"]
+  entityConfig.User.toLink
 );
 export const linkForWorkorder = getLinkPropsFromIdentifiedObject<
   validTypes["Workorder"]
->(linkTo["/workorders/:id"]);
+>(entityConfig.Workorder.toLink);

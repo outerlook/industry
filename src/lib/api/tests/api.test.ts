@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { $api } from "../rxjs-api";
+import { $api } from "../fetch/rxjs-api";
 import * as E from "fp-ts/Either";
 import { firstValueFrom, map } from "rxjs";
 import { pipe } from "effect";
