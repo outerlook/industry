@@ -1,8 +1,6 @@
 import {BaseWidget} from "../BaseWidget";
 import {Image, Space, Typography} from "antd";
 
-import React from "react";
-
 const { Title } = Typography;
 
 /**

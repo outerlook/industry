@@ -1,6 +1,5 @@
 import type { BaseWidgetProps} from "./BaseWidget";
 import {BaseWidget} from "./BaseWidget";
-import React from "react";
 import {Space} from "antd";
 
 export const WidgetServicoLink = (

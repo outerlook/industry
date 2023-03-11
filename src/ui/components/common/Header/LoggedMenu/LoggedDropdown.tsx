@@ -1,4 +1,3 @@
-import React from "react";
 import {Dropdown} from "antd";
 import {notImplementedHalMsg} from "@/lib/utils/not-implemented";
 
