@@ -38,6 +38,7 @@ specifiers:
   effect: 2.0.0-next.13
   eslint: 8.35.0
   eslint-config-prettier: 8.7.0
+  eslint-plugin-fp-ts: 0.3.2
   eslint-plugin-prettier: 4.2.1
   eslint-plugin-react: 7.32.2
   eslint-plugin-react-hooks: 4.6.0
@@ -123,6 +124,7 @@ devDependencies:
   chromatic: 6.17.1
   eslint: 8.35.0
   eslint-config-prettier: 8.7.0_eslint@8.35.0
+  eslint-plugin-fp-ts: 0.3.2_3gin3cxnkwjddsfadzr6xdfdzm
   eslint-plugin-prettier: 4.2.1_xprnzp4ul2bcpmfe73av4voica
   eslint-plugin-react: 7.32.2_eslint@8.35.0
   eslint-plugin-react-hooks: 4.6.0_eslint@8.35.0
@@ -3970,6 +3972,19 @@ packages:
       - supports-color
     dev: true
 
+  /@typescript-eslint/experimental-utils/5.54.1_3gin3cxnkwjddsfadzr6xdfdzm:
+    resolution: {integrity: sha512-oqSc2Gr4TL/2M0XRJ9abA1o3Wf1cFJTNqWq0kjdStIIvgMQGZ3TSaFFJ2Cvy3Fgqi9UfDZ8u5idbACssIIyHaw==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      '@typescript-eslint/utils': 5.54.1_3gin3cxnkwjddsfadzr6xdfdzm
+      eslint: 8.35.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
+
   /@typescript-eslint/parser/5.54.1_3gin3cxnkwjddsfadzr6xdfdzm:
     resolution: {integrity: sha512-8zaIXJp/nG9Ff9vQNh7TI+C3nA6q6iIsGJ4B4L6MhZ7mHnTMR4YP5vp2xydmFXIy8rpyIVbNAG44871LMt6ujg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -5926,6 +5941,23 @@ packages:
       eslint: 8.35.0
     dev: true
 
+  /eslint-plugin-fp-ts/0.3.2_3gin3cxnkwjddsfadzr6xdfdzm:
+    resolution: {integrity: sha512-xvAeD0cNv323dcDV+kM8pMJg8oNRuATqO4q3EK5fQN1Khw6NX7irCIwtnPawXPPZPaZHeMDytj12dRyMXMviSA==}
+    engines: {node: '>=0.10.0'}
+    peerDependencies:
+      eslint: ^8.0.0
+    dependencies:
+      '@typescript-eslint/experimental-utils': 5.54.1_3gin3cxnkwjddsfadzr6xdfdzm
+      '@typescript-eslint/typescript-estree': 5.54.1_typescript@5.0.1-rc
+      eslint: 8.35.0
+      estraverse: 5.3.0
+      fp-ts: 2.13.1
+      recast: 0.20.5
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
+
   /eslint-plugin-prettier/4.2.1_xprnzp4ul2bcpmfe73av4voica:
     resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
     engines: {node: '>=12.0.0'}
@@ -6440,7 +6472,6 @@ packages:
 
   /fp-ts/2.13.1:
     resolution: {integrity: sha512-0eu5ULPS2c/jsa1lGFneEFFEdTbembJv8e4QKXeVJ3lm/5hyve06dlKZrpxmMwJt6rYen7sxmHHK2CLaXvWuWQ==}
-    dev: false
 
   /fresh/0.5.2:
     resolution: {integrity: sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=}
@@ -9848,6 +9879,16 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
+    dev: true
+
+  /recast/0.20.5:
+    resolution: {integrity: sha512-E5qICoPoNL4yU0H0NoBDntNB0Q5oMSNh9usFctYniLBluTthi3RsQVBXIJNbApOlvSwW/RGxIuokPcAc59J5fQ==}
+    engines: {node: '>= 4'}
+    dependencies:
+      ast-types: 0.14.2
+      esprima: 4.0.1
+      source-map: 0.6.1
+      tslib: 2.5.0
     dev: true
 
   /recast/0.21.5:
