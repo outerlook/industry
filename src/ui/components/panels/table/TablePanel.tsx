@@ -18,9 +18,10 @@ const WithTableState = <T extends {}>(Component: React.ComponentType<T>) => {
 type TablePanelProps = {
   span?: number;
   tableProps: React.ComponentProps<typeof BaseTable>;
+  title?: string
 };
 export const TablePanel = WithTableState((props: TablePanelProps) => {
-  const { span = 24, titulo, tableProps } = props;
+  const { span = 24, title, tableProps } = props;
 
   const {
     state: { pageSize, page },
@@ -49,7 +50,7 @@ export const TablePanel = WithTableState((props: TablePanelProps) => {
     <Col span={span}>
       <Card
         size={"small"}
-        cover={<TablePanelHeader />}
+        cover={<TablePanelHeader title={title} />}
         bordered={false}
         className={"h-full"}
       >

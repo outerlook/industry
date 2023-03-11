@@ -1,15 +1,19 @@
 import { useTableStateContext } from "./table-state";
 import { Col, Pagination, Row, Typography } from "antd";
 
-export const TablePanelHeader = () => {
+export const TablePanelHeader = (props: { title?: string | undefined }) => {
+  const { title = "Registros" } = props;
   const {
     state: { totalItems, page, pageSize },
     setPage,
   } = useTableStateContext();
+
   return (
     <div className={"p-3 border-bottom-2 border-solid border-gray-100"}>
       <Row>
-        <Typography.Title level={4}>Registros ({totalItems})</Typography.Title>
+        <Typography.Title level={4}>
+          {title} ({totalItems})
+        </Typography.Title>
       </Row>
       <Row>
         <Col flex={1}>[Futuros filtros] {/*TODO*/}</Col>

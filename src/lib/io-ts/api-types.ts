@@ -11,6 +11,7 @@ const CelciusTemperature = t.refinement(
 );
 const Power = t.refinement(t.number, (n: number) => n >= 0, "Power");
 const RPM = t.refinement(t.number, (n: number) => n >= 0, "RPM");
+const Percentile = t.refinement(t.number, (n: number) => n >= 0 && n <= 100, "Percentile");
 
 type Weak<T> = { [key in keyof T]: unknown };
 
@@ -49,7 +50,7 @@ const AssetT = t.type({
   assignedUserIds: t.array(ID),
   companyId: ID,
   healthHistory: t.array(HealthHistoryT),
-  healthscore: t.number,
+  healthscore: Percentile,
   id: ID,
   image: t.string,
   metrics: MetricsT,
@@ -96,23 +97,41 @@ const WorkorderT = t.type({
   title: t.string,
 } satisfies Weak<RawAPI["Workorder"]>);
 
-export const apiTypes = {
+
+export const enumTypes = {
   Status: StatusT,
-  Asset: AssetT,
   WorkOrderStatus: WorkOrderStatusT,
+}
+
+/**
+ * Objects that contains ID
+ */
+export const entityTypes = {
+  Asset: AssetT,
   Company: CompanyT,
-  Checklist: ChecklistT,
-  Metrics: MetricsT,
   Unit: UnitT,
   User: UserT,
+  Workorder: WorkorderT,
+}
+export const embededTypes = {
+  Checklist: ChecklistT,
+  Metrics: MetricsT,
   HealthHistory: HealthHistoryT,
   Specifications: SpecificationsT,
-  Workorder: WorkorderT,
-};
+}
 
 export const customScalars = {
   ID,
   CelciusTemperature,
   Power,
   RPM,
+  Percentile
 };
+
+export const apiTypes = {
+  ...enumTypes,
+  ...entityTypes,
+  ...embededTypes,
+  ...customScalars
+};
+

@@ -8,7 +8,7 @@ const tableInitialState = {
     filters: {},
     page: 1,
     totalItems: 0,
-    pageSize: 2
+    pageSize: 10
 }
 
 function produceTableState<T>(fn: (draft: TableState, action: T) => void) {

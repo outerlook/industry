@@ -78,26 +78,7 @@ const unitRelations = (unit: t.TypeOf<typeof apiTypes.Unit>) => {
   };
 };
 
-export type GetRelationsFor<T extends keyof typeof relations> = ReturnType<
-  (typeof relations)[T]
->;
-type UnwrapObservableRecords<T> = {
-  [K in keyof T as K extends `${infer U}$`
-    ? U
-    : never]: T[K] extends Observable<infer U> ? U : never;
-};
-
-export type UnwrapRelations<T extends keyof typeof relations> =
-  UnwrapObservableRecords<GetRelationsFor<T>>;
-
-export type RelationKeysOf<T extends keyof typeof relations> =
-  T extends keyof typeof relations
-    ? keyof GetRelationsFor<T> extends `${infer U}$`
-      ? U
-      : never
-    : never;
-
-export const companyRelations = (
+const companyRelations = (
   company: t.TypeOf<typeof apiTypes.Company>
 ) => {
   const { id } = company;
@@ -131,9 +112,31 @@ export const companyRelations = (
   };
 };
 
+export type GetRelationsFor<T extends keyof typeof relations> = ReturnType<
+  (typeof relations)[T]
+>;
+type UnwrapObservableRecords<T> = {
+  [K in keyof T as K extends `${infer U}$`
+    ? U
+    : never]: T[K] extends Observable<infer U> ? U : never;
+};
+
+export type UnwrapRelations<T extends keyof typeof relations> =
+  UnwrapObservableRecords<GetRelationsFor<T>>;
+
+export type RelationKeysOf<T extends keyof typeof relations> =
+  T extends keyof typeof relations
+    ? keyof GetRelationsFor<T> extends `${infer U}$`
+      ? U
+      : never
+    : never;
+
+
+
 export const relations = {
   asset: assetRelations,
   users: usersRelations,
   workOrder: workOrderRelations,
   unit: unitRelations,
+  company: companyRelations
 };

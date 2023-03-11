@@ -1,10 +1,10 @@
-import type {apiTypes} from "./api-types";
-import type * as t from 'io-ts'
-
+import type { apiTypes } from "./api-types";
+import type { entityTypes } from "./api-types";
+import type * as t from "io-ts";
 
 export type validTypes = {
-    [key in keyof typeof apiTypes]: t.TypeOf<typeof apiTypes[key]>
-}
+  [key in keyof typeof apiTypes]: t.TypeOf<(typeof apiTypes)[key]>;
+};
 
-export type Entities = 'Company' | 'User' | 'Asset' | 'Unit' | 'Workorder';
-export type validEntities = Pick<validTypes, Entities>
+export type Entities = keyof typeof entityTypes;
+export type validEntities = Pick<validTypes, Entities>;

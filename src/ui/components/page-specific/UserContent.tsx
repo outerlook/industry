@@ -1,12 +1,12 @@
 import type * as t from "io-ts";
 import type {apiTypes} from "../../../lib/io-ts/api-types";
-import {getAlert} from "../../../lib/utils/get-alert";
 import type {Action} from "../common/ActionButtons";
 import {getBreadcrumb} from "../common/Breadcrumb/schema-breadcrumbs";
 import {EntityHeader} from "../common/EntityHeader";
 import {EntityLayout} from "../layouts/EntityLayout";
 import {BasePanel} from "../panels/BasePanel";
 import {WidgetPresentation} from "../common/widgets/generic-entities/WidgetPresentation";
+import {notImplementedHalMsg} from "@/lib/utils/not-implemented";
 
 type Props = {
   company: t.TypeOf<typeof apiTypes.Company>;
@@ -20,11 +20,11 @@ export const UserContent = (props: Props) => {
   const actions = [
     {
       label: "edit",
-      onClick: getAlert("edit"),
+      onClick: notImplementedHalMsg("edit"),
     },
-    { label: "delete", onClick: getAlert("delete") },
-    { label: "share", onClick: getAlert("share") },
-    { label: "other", onClick: getAlert("other") },
+    { label: "delete", onClick: notImplementedHalMsg("delete") },
+    { label: "share", onClick: notImplementedHalMsg("share") },
+    { label: "other", onClick: notImplementedHalMsg("other") },
   ] satisfies Action[];
 
   const breadcrumbItems = getBreadcrumb.forUsers({

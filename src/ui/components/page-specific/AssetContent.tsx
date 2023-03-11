@@ -1,12 +1,12 @@
-import type { apiTypes } from "../../../lib/io-ts/api-types";
+import type {apiTypes} from "../../../lib/io-ts/api-types";
 import type * as t from "io-ts";
-import { EntityHeader } from "../common/EntityHeader";
-import type { Action } from "../common/ActionButtons";
-import { EntityLayout } from "../layouts/EntityLayout";
-import { WidgetPresentation } from "../common/widgets/generic-entities/WidgetPresentation";
-import { getBreadcrumb } from "../common/Breadcrumb/schema-breadcrumbs";
-import { BasePanel } from "../panels/BasePanel";
-import { getAlert } from "../../../lib/utils/get-alert";
+import {EntityHeader} from "../common/EntityHeader";
+import type {Action} from "../common/ActionButtons";
+import {EntityLayout} from "../layouts/EntityLayout";
+import {WidgetPresentation} from "../common/widgets/generic-entities/WidgetPresentation";
+import {getBreadcrumb} from "../common/Breadcrumb/schema-breadcrumbs";
+import {BasePanel} from "../panels/BasePanel";
+import {notImplementedHalMsg} from "@/lib/utils/not-implemented";
 
 type Props = {
   asset: t.TypeOf<typeof apiTypes.Asset>;
@@ -20,11 +20,11 @@ export const AssetContent = (props: Props) => {
   const actions = [
     {
       label: "edit",
-      onClick: getAlert("edit"),
+      onClick: notImplementedHalMsg("edit"),
     },
-    { label: "delete", onClick: getAlert("delete") },
-    { label: "share", onClick: getAlert("share") },
-    { label: "other", onClick: getAlert("other") },
+    { label: "delete", onClick: notImplementedHalMsg("delete") },
+    { label: "share", onClick: notImplementedHalMsg("share") },
+    { label: "other", onClick: notImplementedHalMsg("other") },
   ] satisfies Action[];
 
   const breadcrumbItems = getBreadcrumb.forAssets({
