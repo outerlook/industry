@@ -1,24 +1,16 @@
-import type { validTypes } from "@/lib/io-ts/valid-types";
+import type {validTypes} from "@/lib/io-ts/valid-types";
 import {
-  linkForAsset,
-  linkForUnit,
-  linkForUser,
-  linkForWorkorder,
-  linkPropsFromCompany,
+    linkForAsset,
+    linkForUnit,
+    linkForUser,
+    linkForWorkorder,
+    linkPropsFromCompany,
 } from "@/lib/api/utils/link-from";
-import { entityConfig } from "@/lib/api/config";
-import { allObjects$ } from "@/lib/api/fetch/fetch-every-object";
+import {entityConfig} from "@/lib/api/config";
+import {allObjects$} from "@/lib/api/fetch/fetch-every-object";
 import * as OE from "fp-ts-rxjs/ObservableEither";
-import { flow, pipe } from "effect";
-import Fuse from "fuse.js";
-
-export type SearchItem = {
-  label: string;
-  /** this will be used to index the search records */
-  type: keyof validTypes;
-  object: validTypes[keyof validTypes];
-  href: string;
-};
+import {pipe} from "effect";
+import type {SearchItem} from "@/lib/search-service/search-item";
 
 const assetSearchItem = (entity: validTypes["Asset"]): SearchItem => ({
   label: entityConfig["Asset"].toLabel(entity),
@@ -55,7 +47,7 @@ const workOrderSearchItem = (entity: validTypes["Workorder"]): SearchItem => ({
   type: "Workorder",
 });
 
-export const searchIndex$ = pipe(
+export const entitiesSearchIndex$ = pipe(
   allObjects$(),
   (o) => o,
   OE.map(({ assets, companies, users, units, workorders }) => [
@@ -67,15 +59,3 @@ export const searchIndex$ = pipe(
   ])
 );
 
-export const fuseForSearchItems = flow(
-  (items: SearchItem[]) =>
-    new Fuse(items, {
-      keys: ["label", 'object', 'id', 'type', 'object.name', 'object.id', 'object.title'],
-      includeScore: true,
-      threshold: 0.3,
-        distance: 60,
-      minMatchCharLength: 2,
-        ignoreLocation: true,
-      shouldSort: true,
-    })
-);

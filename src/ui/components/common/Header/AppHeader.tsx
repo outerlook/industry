@@ -5,14 +5,14 @@ import { getMainSearchInputEffects } from "../../../../lib/global-shortcuts/main
 import { SiteLogo } from "../SiteLogo";
 import { ServicesDropdown } from "@/ui/components/common/Header/ServicosDropdownContent";
 import {
-  fuseForSearchItems,
-  searchIndex$,
-  SearchItem,
+  entitiesSearchIndex$,
+
 } from "@/lib/api/search-index/search-items";
 import { getOrThrow } from "@/lib/io-ts/get-or-throw";
 import React from "react";
 import { pipe } from "effect";
 import * as E from "fp-ts/Either";
+import {allSearchIndex$, fuseForSearchItems, SearchItem} from "@/lib/search-service/search-item";
 
 const { Header } = Layout;
 
@@ -82,7 +82,7 @@ function SearchBar() {
   const [value, setValue] = React.useState<string>("");
 
   useObservable(activate$);
-  const eitherOptions = useObservable(searchIndex$);
+  const eitherOptions = useObservable(allSearchIndex$);
 
   // more expensive to build index, so we memoize it
   const optionsFuse = React.useMemo(() => {
@@ -107,7 +107,6 @@ function SearchBar() {
     );
   }, [optionsFuse, value]);
 
-  console.log({ searchResults });
 
   if (!eitherOptions) {
     return null;
@@ -120,7 +119,6 @@ function SearchBar() {
       value={value}
       onSelect={(value, option) => {
         const href = option?.item?.href;
-        console.log({href})
         if (href) {
           window.location.href = href ?? "/";
         }
