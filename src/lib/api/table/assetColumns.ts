@@ -2,7 +2,7 @@ import {renderLink, renderPercentile, renderStatus,} from "@/lib/api/table/cells
 import {linkForAsset} from "@/lib/api/utils/link-from";
 import type {ColumnType} from "antd/es/table";
 import type {validTypes} from "@/lib/io-ts/valid-types";
-import {getEntityColumnPicker} from "@/lib/api/table/columns";
+import {generateColumnPicker} from "@/lib/api/table/columns";
 
 const assetColumns = [
   {
@@ -29,7 +29,7 @@ const assetColumns = [
     key: "model",
   },
 ] as const satisfies ReadonlyArray<ColumnType<validTypes["Asset"]>>;
-export const pickAssetColumns = getEntityColumnPicker(assetColumns, [
+export const pickAssetColumns = generateColumnPicker(assetColumns, [
   "name",
   "model",
   "healthscore",

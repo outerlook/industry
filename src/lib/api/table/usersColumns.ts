@@ -1,7 +1,7 @@
 import {renderLink} from "@/lib/api/table/cells/renderers";
 import type {ColumnType} from "antd/es/table";
 import type {validTypes} from "@/lib/io-ts/valid-types";
-import {getEntityColumnPicker} from "@/lib/api/table/columns";
+import {generateColumnPicker} from "@/lib/api/table/columns";
 import {linkForUser} from "@/lib/api/utils/link-from";
 
 const columns = [
@@ -17,7 +17,7 @@ const columns = [
     key: "email",
   },
 ] as const satisfies ReadonlyArray<ColumnType<validTypes["User"]>>;
-export const pickUserColumns = getEntityColumnPicker(columns, [
+export const pickUserColumns = generateColumnPicker(columns, [
   "name",
   "email",
 ]);

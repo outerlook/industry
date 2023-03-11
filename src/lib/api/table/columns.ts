@@ -21,7 +21,7 @@ type ColumnsThatHasThisKey<
   "contains->"
 >;
 
-export const getEntityColumnPicker =
+export const generateColumnPicker =
   <
     Columns extends ReadonlyArray<ColumnType<any>>,
     DK extends KeysOfColumns<Columns> & string
@@ -52,7 +52,7 @@ export const getEntityColumnPicker =
       A.compact
     );
 
-    return selectedColumns as any; // guarded by tests FIXME
+    return selectedColumns as any; // shame, guarded by tests FIXME
   };
 
 type KeysOfColumns<T extends ReadonlyArray<ColumnType<any>>> = T[number]["key"];
