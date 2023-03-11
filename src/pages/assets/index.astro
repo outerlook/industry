@@ -1,3 +1,26 @@
 ---
+import BaseLayout from '@/ui/astro-layouts/BaseLayout.astro';
+import {AssetsContent} from "src/ui/components/page-specific/list-pages/AssetsContent";
+import {pipe} from "effect";
+import * as OE from "fp-ts-rxjs/ObservableEither";
+import {$api} from "../../lib/api/fetch/rxjs-api";
 
+
+const assets = await pipe(
+    $api.Asset.all(),
+    OE.fromObservable,
+    OE.chain(OE.fromEither),
+    OE.toTaskEither
+)()
+
+if (assets._tag === "Left") {
+    throw new Error("Failed to fetch assets")
+}
 ---
+
+<BaseLayout title="Industry">
+    <AssetsContent assets={assets.right} client:only/>
+</BaseLayout>
+
+
+

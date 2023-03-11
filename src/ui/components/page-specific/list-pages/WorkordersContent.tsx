@@ -1,9 +1,9 @@
-import {EntityLayout} from "@/ui/components/layouts/EntityListLayout";
-import {TablePanel} from "@/ui/components/panels/table/TablePanel";
-import type {validTypes} from "@/lib/io-ts/valid-types";
-import {pickWorkorderColumns} from "@/lib/api/table/workordersColumns";
+import { EntityLayout } from "@/ui/components/layouts/EntityListLayout";
+import { TablePanel } from "@/ui/components/panels/table/TablePanel";
+import type { validTypes } from "@/lib/io-ts/valid-types";
+import { pickWorkorderColumns } from "@/lib/api/table/workordersColumns";
 
-export const UnitsContent = ({
+export const WorkordersContent = ({
   workorders,
 }: {
   workorders: validTypes["Workorder"][];
@@ -12,7 +12,7 @@ export const UnitsContent = ({
   const columns = pickWorkorderColumns();
 
   return (
-    <EntityLayout>
+    <EntityLayout title={"Work Orders"}>
       <TablePanel
         tableProps={{
           dataSource,

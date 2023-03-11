@@ -12,7 +12,7 @@ export const AssetsContent = ({
   const columns = pickAssetColumns();
 
   return (
-    <EntityLayout>
+    <EntityLayout title={"Assets"}>
       <TablePanel
         tableProps={{
           dataSource,

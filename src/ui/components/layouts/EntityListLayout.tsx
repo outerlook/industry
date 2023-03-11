@@ -1,8 +1,9 @@
 import {Layout, Space, theme} from "antd";
 import {EntitySiderContent} from "@/ui/components/layouts/EntitySiderContent";
+import {PageTitle} from "@/ui/components/common/PageTitle";
 
-export const EntityLayout = (props: React.PropsWithChildren) => {
-  const { children } = props;
+export const EntityLayout = (props: React.PropsWithChildren<{title: string}>) => {
+  const { children, title } = props;
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -13,6 +14,7 @@ export const EntityLayout = (props: React.PropsWithChildren) => {
       </Layout.Sider>
       <Layout.Content className={`bg-[${colorBgContainer}] p-4`}>
         <Space className={"w-full"} direction={"vertical"} size={"large"}>
+            <PageTitle>{title}</PageTitle>
           {children}
         </Space>
       </Layout.Content>

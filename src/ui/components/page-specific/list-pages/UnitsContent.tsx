@@ -12,7 +12,7 @@ export const UnitsContent = ({
   const columns = pickUnitColumns();
 
   return (
-    <EntityLayout>
+    <EntityLayout title={"Units"}>
       <TablePanel
         tableProps={{
           dataSource,

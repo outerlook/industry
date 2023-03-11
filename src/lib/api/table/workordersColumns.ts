@@ -6,18 +6,10 @@ import { linkForWorkorder } from "@/lib/api/utils/link-from";
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: "Title",
+    dataIndex: "title",
+    key: "title",
     render: renderLink(linkForWorkorder),
   },
-  {
-    title: "email",
-    dataIndex: "email",
-    key: "email",
-  },
 ] as const satisfies ReadonlyArray<ColumnType<validTypes["Workorder"]>>;
-export const pickWorkorderColumns = getEntityColumnPicker(columns, [
-  "name",
-  "email",
-]);
+export const pickWorkorderColumns = getEntityColumnPicker(columns, ["title"]);

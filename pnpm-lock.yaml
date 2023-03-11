@@ -44,6 +44,7 @@ specifiers:
   eslint-plugin-react-hooks: 4.6.0
   fp-ts: 2.13.1
   fp-ts-rxjs: 0.6.15
+  fp-ts-std: 0.15.1
   fuse.js: 6.6.2
   happy-dom: 8.9.0
   immer: 9.0.19
@@ -82,6 +83,7 @@ dependencies:
   effect: 2.0.0-next.13
   fp-ts: 2.13.1
   fp-ts-rxjs: 0.6.15_fp-ts@2.13.1+rxjs@7.8.0
+  fp-ts-std: 0.15.1_sddbbwftoqt3d5g3p7ix53ouca
   fuse.js: 6.6.2
   immer: 9.0.19
   io-ts: 2.2.20_fp-ts@2.13.1
@@ -6468,6 +6470,19 @@ packages:
     dependencies:
       fp-ts: 2.13.1
       rxjs: 7.8.0
+    dev: false
+
+  /fp-ts-std/0.15.1_sddbbwftoqt3d5g3p7ix53ouca:
+    resolution: {integrity: sha512-JvWjUki14fxuse8QAFubdNi4g+o7qWq94n31sxlD8hobl8KbyfguK69yQZBkNQu+q+8b5yYxgyevs003w6sDNA==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      fp-ts: ^2.11.0
+      monocle-ts: ^2.3.0
+      newtype-ts: ^0.3.0
+    dependencies:
+      fp-ts: 2.13.1
+      monocle-ts: 2.3.13_fp-ts@2.13.1
+      newtype-ts: 0.3.5_y4ecnzjsatnzoei5elwf4wjeqa
     dev: false
 
   /fp-ts/2.13.1:
