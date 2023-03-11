@@ -1,4 +1,4 @@
-import type { RawAPI, Status, WorkOrderStatus } from "../api/api-types";
+import type { RawAPI, Status, WorkOrderStatus } from "@/lib/api/raw-api-types";
 import * as t from "io-ts";
 import * as ts from "io-ts-types";
 
