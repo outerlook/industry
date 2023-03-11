@@ -1,3 +1,40 @@
 ---
+import {pipe} from "effect";
+import * as FPO from "fp-ts-rxjs/ObservableEither";
+import * as A from "fp-ts/Apply";
+import * as E from "fp-ts/Either";
+import * as TE from "fp-ts/TaskEither";
+import {firstValueFrom} from "rxjs";
+import {relations} from "../../lib/api/relations";
+import {$api} from "../../lib/api/fetch/rxjs-api";
+import {getOrThrow} from "../../lib/io-ts/get-or-throw";
+import {pickForkJoin} from "../../lib/rxjs/pick-fork-join";
+import BaseLayout from "../../ui/astro-layouts/BaseLayout.astro";
+import {UserContent} from "src/ui/components/page-specific/one-entity-pages/UserContent";
+import {WorkorderContent} from "src/ui/components/page-specific/one-entity-pages/WorkorderContent";
 
+const {id} = Astro.params;
+
+if (!id) {
+    throw new Error("No id provided");
+}
+
+const eitherWorkorder = await firstValueFrom($api.WorkOrder.byId({id}));
+const workorder = getOrThrow(eitherWorkorder);
+
+const {company$: company, unit$: unit, asset$: asset} = await pipe(
+    eitherWorkorder,
+    E.map(relations.workOrder),
+    E.map((c) => pickForkJoin(c, "unit$", "company$", "asset$")),
+    TE.fromEither,
+    TE.chain((v) => pipe(FPO.fromObservable(v), FPO.toTaskEither)),
+    TE.chainEitherKW(A.sequenceS(E.Apply)),
+    TE.getOrElse((e) => {
+        throw e;
+    })
+)();
 ---
+
+<BaseLayout title={workorder.title}>
+    <WorkorderContent unit={unit} workorder={workorder} asset={asset} company={company} client:only/>
+</BaseLayout>
