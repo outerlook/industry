@@ -11,15 +11,18 @@ export const EntityLayout = (
     token: { colorBgContainer },
   } = theme.useToken();
   return (
-    <Layout className={"relative"}>
-      <Content className={`bg-[${colorBgContainer}]`}>
-        <Row>
+    <Layout className={"relative flex"}>
+      <Content className={`flex flex-col bg-[${colorBgContainer}]`}>
+        <Row className={"flex-1"}>
           {/* TODO: verify if SIDER is a better option */}
-          <Col className={"shadow p-4 bg-white left-0 bottom-0 top-0"} flex={"360px"}>
+          <Col
+            className={"shadow p-4 bg-white left-0 bottom-0 top-0"}
+            flex={"360px"}
+          >
             {siderChildren}
           </Col>
-          <Col  flex={1} className={"p-4 overflow-initial"}>
-            <Space className={"w-full"}  direction={"vertical"} size={"large"}>
+          <Col flex={1} className={"p-4 overflow-initial"}>
+            <Space className={"w-full"} direction={"vertical"} size={"large"}>
               {children}
             </Space>
           </Col>

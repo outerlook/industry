@@ -16,7 +16,6 @@ const WithTableState = <T extends {}>(Component: React.ComponentType<T>) => {
 };
 
 type TablePanelProps = {
-  titulo: string;
   span?: number;
   tableProps: React.ComponentProps<typeof BaseTable>;
 };
@@ -53,7 +52,6 @@ export const TablePanel = WithTableState((props: TablePanelProps) => {
         cover={<TablePanelHeader />}
         bordered={false}
         className={"h-full"}
-        title={titulo}
       >
         <BaseTable {...injectedTableProps} />
       </Card>

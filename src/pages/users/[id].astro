@@ -6,7 +6,7 @@ import * as E from "fp-ts/Either";
 import * as TE from "fp-ts/TaskEither";
 import { firstValueFrom } from "rxjs";
 import { relations } from "../../lib/api/relations";
-import { $api } from "../../lib/api/rxjs-api";
+import { $api } from "../../lib/api/fetch/rxjs-api";
 import { getOrThrow } from "../../lib/io-ts/get-or-throw";
 import { pickForkJoin } from "../../lib/rxjs/pick-fork-join";
 import BaseLayout from "../../ui/astro-layouts/BaseLayout.astro";
