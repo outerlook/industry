@@ -1,1 +1,0 @@
-export const getAlert = (str: string) => () => alert(str);
