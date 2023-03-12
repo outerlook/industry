@@ -1,4 +1,4 @@
-import forge from 'mappersmith'
+import forge from 'mappersmith/mappersmith'
 
 
 export const api = forge({
