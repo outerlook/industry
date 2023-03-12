@@ -1,12 +1,19 @@
-import type {apiTypes} from "src/lib/io-ts/api-types";
+import type { apiTypes } from "src/lib/io-ts/api-types";
 import type * as t from "io-ts";
-import {EntityHeader} from "src/ui/components/common/EntityHeader";
-import type {Action} from "src/ui/components/common/ActionButtons";
-import {EntityLayout} from "src/ui/components/layouts/EntityLayout";
-import {WidgetPresentation} from "src/ui/components/common/widgets/generic-entities/WidgetPresentation";
-import {getBreadcrumb} from "src/ui/components/common/Breadcrumb/schema-breadcrumbs";
-import {BasePanel} from "src/ui/components/panels/BasePanel";
-import {notImplementedHalMsg} from "@/lib/utils/not-implemented";
+import { EntityHeader } from "src/ui/components/common/EntityHeader";
+import type { Action } from "src/ui/components/common/ActionButtons";
+import { EntityLayout } from "src/ui/components/layouts/EntityLayout";
+import { WidgetPresentation } from "src/ui/components/common/widgets/generic-entities/WidgetPresentation";
+import { getBreadcrumb } from "src/ui/components/common/Breadcrumb/schema-breadcrumbs";
+import { BasePanel } from "src/ui/components/panels/BasePanel";
+import { notImplementedHalMsg } from "@/lib/utils/not-implemented";
+import { AssetAttributes } from "@/ui/components/widgets/asset-widgets/AssetAttributes";
+import {
+  useAsset,
+  WithAssetProvider,
+} from "@/lib/api/context/entities-context";
+import React from "react";
+import { Divider, Space } from "antd";
 
 type Props = {
   asset: t.TypeOf<typeof apiTypes.Asset>;
@@ -14,8 +21,12 @@ type Props = {
   company: t.TypeOf<typeof apiTypes.Company>;
 };
 
-export const AssetContent = (props: Props) => {
+export const AssetContent = WithAssetProvider((props: Props) => {
   const { asset, unit, company } = props;
+
+  const [_, setAsset] = useAsset();
+
+  React.useEffect(() => setAsset(asset), [setAsset, asset]);
 
   const actions = [
     {
@@ -36,9 +47,11 @@ export const AssetContent = (props: Props) => {
   return (
     <EntityLayout
       siderChildren={
-        <>
+        <Space direction={"vertical"}>
           <WidgetPresentation image={asset.image} title={asset.name} />
-        </>
+          <Divider orientation={"left"}>Attributes</Divider>
+          <AssetAttributes />
+        </Space>
       }
     >
       <EntityHeader
@@ -57,4 +70,4 @@ export const AssetContent = (props: Props) => {
       </BasePanel>
     </EntityLayout>
   );
-};
+});
