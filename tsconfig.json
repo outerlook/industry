@@ -8,6 +8,7 @@
     "target": "ES2017",
     "skipLibCheck": true,
     "baseUrl": ".",
+    "moduleResolution": "node",
     "paths": {
       "@/*": ["src/*"]
     }
