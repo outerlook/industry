@@ -1,5 +1,8 @@
-import forge from 'mappersmith'
+import {configs} from 'mappersmith'
+import forge from 'mappersmith/mappersmith'
+import FetchGateway from "mappersmith/gateway/fetch";
 
+configs.gateway = FetchGateway
 
 export const api = forge({
     clientId: 'tractian',
