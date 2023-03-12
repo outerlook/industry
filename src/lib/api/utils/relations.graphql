@@ -1,0 +1,35 @@
+# mapping of the database schema relations for future usage
+
+type Asset {
+    company: Company!
+    id: ID!
+    users: [User!]!
+    workorders: [Workorder!]!
+}
+
+type Company {
+    id: ID!
+    users: [User!]!
+    assets: [Asset!]!
+    workorders: [Workorder!]!
+}
+
+type Workorder {
+    id: ID!
+    asset: Asset!
+    assignedUsers: [User!]!
+}
+
+type Unit {
+    id: ID!
+    workorders: [Workorder!]!
+    users: [User!]!
+}
+
+type User {
+    id: ID!
+    company: Company!
+    assets: [Asset!]!
+    unit: Unit!
+    workorders: [Workorder!]!
+}

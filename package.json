@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
+  "module": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -11,7 +19,8 @@
     "astro": "astro",
     "prebuild": "tsx ./scripts/pre-build.ts",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "publish-storybook": "chromatic"
   },
   "resolutions": {
     "jest-mock": "29.5.0"
@@ -20,7 +29,7 @@
     "@ant-design/icons": "5.0.1",
     "@astrojs/react": "2.0.2",
     "antd": "5.3.0",
-    "astro": "2.0.17",
+    "astro": "2.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "rxjs": "7.8.0",
@@ -29,24 +38,34 @@
     "io-ts": "2.2.20",
     "io-ts-types": "0.5.19",
     "fp-ts": "2.13.1",
+    "@fastify/deepmerge": "1.3.0",
+    "fuse.js": "6.6.2",
     "newtype-ts": "0.3.5",
     "monocle-ts": "2.3.13",
     "effect": "2.0.0-next.13",
     "@effect/match": "0.3.0",
+    "fp-ts-rxjs": "0.6.15",
+    "fp-ts-std": "0.15.1",
     "windicss": "3.5.6",
+    "immer": "9.0.19",
+    "constate": "3.3.2",
+    "lodash": "4.17.21",
     "io-ts-reporters": "2.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.21.0",
     "@babel/preset-typescript": "7.21.0",
+    "ts-toolbelt": "9.6.0",
+    "vite-tsconfig-paths": "4.0.5",
     "@types/node": "18.14.6",
+    "@types/lodash": "4.14.191",
     "jest-mock": "29.5.0",
     "@storybook/addon-actions": "7.0.0-beta.62",
     "@storybook/addon-essentials": "7.0.0-beta.62",
     "@storybook/addon-interactions": "7.0.0-beta.62",
     "@storybook/addon-links": "7.0.0-beta.62",
-    "@storybook/addon-mdx-gfm": "7.0.0-beta.62",
     "@storybook/addon-viewport": "7.0.0-beta.62",
+    "chromatic": "6.17.1",
     "@storybook/react": "7.0.0-beta.62",
     "@storybook/react-vite": "7.0.0-beta.62",
     "@storybook/testing-library": "0.0.14-next.1",
@@ -60,6 +79,7 @@
     "astro-integration-windicss": "0.1.0",
     "babel-loader": "8.3.0",
     "eslint": "8.35.0",
+    "eslint-plugin-fp-ts": "0.3.2",
     "eslint-config-prettier": "8.7.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-react": "7.32.2",
@@ -81,5 +101,6 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "_id": "industry@1.0.0"
 }

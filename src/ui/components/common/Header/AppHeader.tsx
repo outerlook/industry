@@ -1,54 +1,34 @@
-import { Button, Input, Layout, Space } from "antd";
-import { DoubleRightOutlined, SearchOutlined } from "@ant-design/icons";
-import { useObservable } from "../../../../lib/react-rxjs/use-observable";
-import { getMainSearchInputEffects } from "../../../../lib/global-shortcuts/main-search-input-effects";
+import {Button, Layout, Space} from "antd";
+import {SiteLogo} from "../SiteLogo";
+import {SearchBar} from "@/ui/components/common/Header/SearchBar";
+import {ServicesButton} from "@/ui/components/common/Header/ServicesButton";
+import {LoggedMenu} from "@/ui/components/common/Header/LoggedMenu/LoggedMenu";
+import {QuestionOutlined} from "@ant-design/icons";
+import {notImplementedHalMsg} from "@/lib/utils/not-implemented";
 
 const { Header } = Layout;
 
 export const AppHeader = () => {
+  const isLoggedIn = true; // replaceable
   return (
-    <Layout>
-      <Header className="bg-gray-800 sticky h-16 w-full">
+    <Layout className={"flex-none"}>
+      <Header className="bg-gray-800 sticky h-12 fixed w-full">
         <div className="flex justify-between items-center h-full mx-2">
           <Space direction={"horizontal"} size={"middle"}>
-            <div className="text-white text-2xl font-bold">App</div>
+            <a href={"/"} className="text-white text-2xl font-bold">
+              <SiteLogo />
+            </a>
             <ServicesButton></ServicesButton>
             <SearchBar />
           </Space>
-          <div className="flex items-center">
-            <div className="text-white text-xl font-bold">User</div>
-          </div>
+          <Space>
+            <Button onClick={notImplementedHalMsg('find help')} className={'bg-transparent border-none text-white'} shape={"circle"}>
+              <QuestionOutlined />
+            </Button>
+            {isLoggedIn ? <LoggedMenu /> : "oh no"}
+          </Space>
         </div>
       </Header>
     </Layout>
   );
 };
-
-function ServicesButton() {
-  return (
-    <Button
-      // type="text"
-      // className={'text-gray-100'}
-      ghost
-      icon={<DoubleRightOutlined />}
-    >
-      Serviços
-    </Button>
-  );
-}
-
-function SearchBar() {
-  //  ( Icon INPUT [alt+/] )
-  const { activate$, registerEl, shortcut } = getMainSearchInputEffects();
-
-  useObservable(activate$);
-
-  return (
-    <Input
-      prefix={<SearchOutlined />}
-      placeholder="O que estou buscando?"
-      ref={(r) => registerEl(r?.input)}
-      suffix={<div className="text-gray-400 text-xs">{shortcut}</div>}
-    />
-  );
-}

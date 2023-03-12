@@ -6,4 +6,5 @@ export default defineConfig({
     setupFiles: ["./test-config/basic-setup.ts"],
     environment: "happy-dom",
   },
+  ...(await import('./astro.config.mjs')).default.vite
 });

@@ -1,3 +1,43 @@
 ---
+import {firstValueFrom} from "rxjs";
+import {$api} from "../../lib/api/fetch/rxjs-api";
+import {getOrThrow} from "../../lib/io-ts/get-or-throw";
+import BaseLayout from "../../ui/astro-layouts/BaseLayout.astro";
+import {CompanyContent} from "src/ui/components/page-specific/one-entity-pages/CompanyContent";
+import {pipe} from "effect";
+import {relations} from "src/lib/api/relations";
+import * as E from "fp-ts/Either";
+import * as TE from "fp-ts/TaskEither";
+import {pickForkJoin} from "src/lib/rxjs/pick-fork-join";
+import * as OE from "fp-ts-rxjs/ObservableEither";
+import {apply} from "fp-ts";
+
+
+
+const {id} = Astro.params;
+
+if (!id) {
+    throw new Error('No id provided')
+}
+
+const eitherCompany = await firstValueFrom($api.Company.byId({id}))
+const company = getOrThrow(eitherCompany) // TODO: handle with 404 next time
+
+const {assets$: assets, workOrders$: workorders, units$: units} = await pipe(
+    eitherCompany,
+    E.map(relations.company),
+    E.map((c) => pickForkJoin(c, "assets$", "units$", "workOrders$")),
+    TE.fromEither,
+    TE.chain((v) => pipe(OE.fromObservable(v), OE.toTaskEither)),
+    TE.chainEitherKW(apply.sequenceS(E.Apply)),
+    TE.getOrElse((e) => {
+        throw e;
+    })
+)();
 
 ---
+
+
+<BaseLayout title={company.name}>
+    <CompanyContent units={units} assets={assets}  company={company} client:only/>
+</BaseLayout>

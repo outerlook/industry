@@ -1,4 +1,5 @@
-import {fromEvent, Observable, switchMap, tap} from "rxjs";
+import type { Observable} from "rxjs";
+import {fromEvent, switchMap, tap} from "rxjs";
 
 export const clearOnBlurFromElement = (el$: Observable<HTMLInputElement>) => {
   return el$.pipe(

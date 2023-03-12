@@ -1,17 +1,16 @@
-import { getFocusSearchShortcut } from "../focus-search";
 import { expect, test } from "vitest";
-import React from "react";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useObservable } from "../../react-rxjs/use-observable";
+import { getMainSearchInputEffects } from "@/lib/global-shortcuts/main-search-input-effects";
 
 test("global-shortcuts", async () => {
   const ReactInputComponent = () => {
-    const { activate$, registerInput } = getFocusSearchShortcut();
+    const { activate$, registerEl } = getMainSearchInputEffects();
 
     useObservable(activate$);
 
-    return <input ref={(r) => registerInput(r)} type="text" id="input1" />;
+    return <input ref={(r) => registerEl(r)} type="text" id="input1" />;
   };
 
   const app = render(

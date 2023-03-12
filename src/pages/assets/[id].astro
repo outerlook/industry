@@ -1,14 +1,38 @@
 ---
-import {Breadcrumb} from "../../ui/components/common/Breadcrumb";
+import { pipe } from "effect";
+import * as FPO from "fp-ts-rxjs/ObservableEither";
+import * as A from "fp-ts/Apply";
+import * as E from "fp-ts/Either";
+import * as TE from "fp-ts/TaskEither";
+import { firstValueFrom,} from "rxjs";
+import { relations } from "../../lib/api/relations";
+import { $api } from "../../lib/api/fetch/rxjs-api";
+import { getOrThrow } from "../../lib/io-ts/get-or-throw";
+import { pickForkJoin } from "../../lib/rxjs/pick-fork-join";
 import BaseLayout from "../../ui/astro-layouts/BaseLayout.astro";
-import {EntityLayout} from "../../ui/components/layouts/EntityLayout";
+import { AssetContent } from "src/ui/components/page-specific/one-entity-pages/AssetContent";
 
 const {id} = Astro.params;
+
+if (!id) {
+    throw new Error("No id provided") // better handle invalid request next time
+}
+
+const eitherAsset = await firstValueFrom($api.Asset.byId({id}))
+const {company$: company, unit$: unit} = await pipe(
+    eitherAsset,
+    E.map(relations.asset),
+    E.map((c) => pickForkJoin(c, "unit$", "company$")),
+    TE.fromEither,
+    TE.chain((v) => pipe(FPO.fromObservable(v), FPO.toTaskEither)),
+    TE.chainEitherKW(A.sequenceS(E.Apply)),
+    TE.getOrElse((e) => {
+        throw e;
+    })
+)();
 ---
 
 
-<BaseLayout>
-    <EntityLayout>
-        <Breadcrumb/>
-    </EntityLayout>
+<BaseLayout title="Asset">
+    <AssetContent unit={unit} company={company} asset={getOrThrow(eitherAsset)} client:only/>
 </BaseLayout>

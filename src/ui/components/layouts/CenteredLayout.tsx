@@ -1,5 +1,4 @@
-import { Layout, Row, theme } from "antd";
-import React from "react";
+import {Layout, Row, theme} from "antd";
 
 const { Content } = Layout;
 

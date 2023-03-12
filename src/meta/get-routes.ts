@@ -1,7 +1,7 @@
 import * as path from "path";
-import { pipe } from "effect";
+import {pipe} from "effect";
 import * as fs from "fs";
-import { DIRNAME } from "./important-paths";
+import {DIRNAME} from "./important-paths";
 
 const PAGES_ROOT = path.join(DIRNAME, "../pages");
 const filePathToRoute = (route: string): string => {

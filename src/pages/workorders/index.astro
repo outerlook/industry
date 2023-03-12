@@ -1,3 +1,26 @@
 ---
+import BaseLayout from '@/ui/astro-layouts/BaseLayout.astro';
+import {WorkordersContent} from "@/ui/components/page-specific/list-pages/WorkordersContent";
+import {pipe} from "effect";
+import * as OE from "fp-ts-rxjs/ObservableEither";
+import {$api} from "../../lib/api/fetch/rxjs-api";
 
+
+const workorders = await pipe(
+    $api.WorkOrder.all(),
+    OE.fromObservable,
+    OE.chain(OE.fromEither),
+    OE.toTaskEither
+)()
+
+if (workorders._tag === "Left") {
+    throw new Error("Failed to fetch Workorders")
+}
 ---
+
+<BaseLayout title="Industry">
+    <WorkordersContent workorders={workorders.right} client:only/>
+</BaseLayout>
+
+
+

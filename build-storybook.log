@@ -1,0 +1,69 @@
+@storybook/cli v7.0.0-beta.62
+
+info => Cleaning outputDir: /tmp/chromatic--243152-HUM1ePtlsI24
+info => Loading presets
+WARN The "@storybook/addon-mdx-gfm" addon is meant as a migration assistant for Storybook 7.0; and will likely be removed in a future version.
+WARN It's recommended you read this document:
+WARN https://storybook.js.org/docs/7.0/react/writing-docs/mdx#lack-of-github-flavored-markdown-gfm
+WARN 
+WARN Once you've made the necessary changes, you can remove the addon from your package.json and storybook config.
+info Found existing addon "@storybook/addon-viewport", skipping.
+info Found existing addon "@storybook/addon-viewport", skipping.
+info => Building manager..
+WARN unable to find package.json for effect
+WARN unable to find package.json for @effect/match
+info => Manager built (295 ms)
+info => Copying static files: /home/outerlook/GitHub/industry/node_modules/.pnpm/@storybook+manager@7.0.0-beta.62/node_modules/@storybook/manager/static at /tmp/chromatic--243152-HUM1ePtlsI24/sb-common-assets
+vite v4.1.4 building for production...
+
+./sb-common-assets/fonts.css doesn't exist at build time, it will remain unchanged to be resolved at runtime
+transforming...
+Use of eval in "node_modules/.pnpm/telejson@7.0.4/node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
+Use of eval in "node_modules/.pnpm/telejson@7.0.4/node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
+✓ 3243 modules transformed.
+rendering chunks...
+computing gzip size...
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/iframe.html                                          12.78 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/preview-a7ba58ff.css                           6.11 kB │ gzip:   2.05 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/assert-4cf8988f.js                             0.14 kB │ gzip:   0.15 kB │ map:     0.55 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/preview-c583b5fd.js                            0.18 kB │ gzip:   0.18 kB │ map:     0.52 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/index-d475d2ea.js                              0.21 kB │ gzip:   0.17 kB │ map:     0.85 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/_commonjs-dynamic-modules-302442b1.js          0.30 kB │ gzip:   0.24 kB │ map:     0.12 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/WithTooltip-5WWCYCAA-32081235.js               0.61 kB │ gzip:   0.35 kB │ map:     0.11 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/index-6d7aa4ee.js                              0.62 kB │ gzip:   0.38 kB │ map:     4.31 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/syntaxhighlighter-QTQ2UBB4-0e562f65.js         0.63 kB │ gzip:   0.37 kB │ map:     0.12 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/preview-0435c720.js                            0.69 kB │ gzip:   0.49 kB │ map:     3.95 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/_commonjsHelpers-042e6b4d.js                   0.78 kB │ gzip:   0.44 kB │ map:     0.11 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/index-356e4a49.js                              0.81 kB │ gzip:   0.51 kB │ map:     3.28 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/preview-78126e2d.js                            0.87 kB │ gzip:   0.52 kB │ map:     1.38 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/preview-b1164a2e.js                            0.88 kB │ gzip:   0.58 kB │ map:     2.89 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/extends-3dddc7e3.js                            0.92 kB │ gzip:   0.48 kB │ map:     3.40 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/preview-f658c89a.js                            2.38 kB │ gzip:   1.27 kB │ map:    10.53 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/index-d37d4223.js                              2.63 kB │ gzip:   1.30 kB │ map:     7.50 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/preview-f96f0111.js                            3.29 kB │ gzip:   1.41 kB │ map:    10.26 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/iframe-66582415.js                             4.87 kB │ gzip:   1.77 kB │ map:     5.10 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/row-5a2250c1.js                                6.72 kB │ gzip:   3.05 kB │ map:    31.94 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/index-f1f749bf.js                              7.25 kB │ gzip:   2.96 kB │ map:    15.74 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/preview-62235626.js                            7.69 kB │ gzip:   1.60 kB │ map:    13.84 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/preview-e6f1f377.js                            7.97 kB │ gzip:   3.03 kB │ map:    28.33 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/EntityLayout.stories-f237687c.js               9.47 kB │ gzip:   3.78 kB │ map:    34.40 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/GlobalScrollAreaStyles-XIHNDKUY-af96cf0a.js   10.59 kB │ gzip:   2.43 kB │ map:    15.77 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/index-da07a199.js                             13.66 kB │ gzip:   5.12 kB │ map:    53.20 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/Color-3YIJY6X7-61fe0bb3.js                    17.78 kB │ gzip:   6.83 kB │ map:    59.71 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/useMergedState-4fa1daf2.js                    25.10 kB │ gzip:   9.39 kB │ map:   143.89 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/OverlayScrollbars-VAV6LJAB-c647f409.js        59.17 kB │ gzip:  25.38 kB │ map:   277.64 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/_getPrototype-0be44dcd.js                     78.81 kB │ gzip:  23.65 kB │ map:   328.01 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/preview-a0321b7c.js                          110.23 kB │ gzip:  36.34 kB │ map:   396.58 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/BaseCard.stories-8d96753e.js                 120.18 kB │ gzip:  38.56 kB │ map:   540.44 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/WidgetPresentation.stories-02730f12.js       120.22 kB │ gzip:  39.81 kB │ map:   522.92 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/col-35a1fc2b.js                              127.18 kB │ gzip:  42.23 kB │ map:   551.35 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/index-96c5f47c.js                            134.19 kB │ gzip:  43.27 kB │ map:   328.86 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/config-a25c56ab.js                           214.31 kB │ gzip:  66.71 kB │ map:   808.42 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/DocsRenderer-3XCNZ43T-b8a5bb90.js            501.80 kB │ gzip: 165.49 kB │ map: 1,431.32 kB
+../../../../tmp/chromatic--243152-HUM1ePtlsI24/assets/formatter-MGIGMU7Y-420c0184.js               601.74 kB │ gzip: 185.10 kB │ map: 1,318.22 kB
+
+(!) Some chunks are larger than 500 kBs after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+info => Output directory: /tmp/chromatic--243152-HUM1ePtlsI24

@@ -1,0 +1,40 @@
+---
+import { pipe } from "effect";
+import * as FPO from "fp-ts-rxjs/ObservableEither";
+import * as A from "fp-ts/Apply";
+import * as E from "fp-ts/Either";
+import * as TE from "fp-ts/TaskEither";
+import { firstValueFrom } from "rxjs";
+import { relations } from "../../lib/api/relations";
+import { $api } from "../../lib/api/fetch/rxjs-api";
+import { getOrThrow } from "../../lib/io-ts/get-or-throw";
+import { pickForkJoin } from "../../lib/rxjs/pick-fork-join";
+import BaseLayout from "../../ui/astro-layouts/BaseLayout.astro";
+import { UnitContent } from "src/ui/components/page-specific/one-entity-pages/UnitContent";
+
+const { id } = Astro.params;
+
+if (!id) {
+  throw new Error("No id provided");
+}
+
+const eitherUnit = await firstValueFrom($api.Unit.byId({ id }));
+const unit = getOrThrow(eitherUnit);
+
+const { company$: company } = await pipe(
+  eitherUnit,
+  E.map(relations.unit),
+  E.map((c) => pickForkJoin(c, "company$")),
+  TE.fromEither,
+  TE.chain((v) => pipe(FPO.fromObservable(v), FPO.toTaskEither)),
+  TE.chainEitherKW(A.sequenceS(E.Apply)),
+  TE.getOrElse((e) => {
+    throw e;
+  })
+)();
+
+---
+
+<BaseLayout title={unit.name}>
+  <UnitContent unit={unit} company={company} client:only />
+</BaseLayout>

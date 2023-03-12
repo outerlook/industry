@@ -1,22 +1,23 @@
 import {describe, expect, test} from "vitest";
-import {$api} from "../rxjs-api";
+import {$api} from "../fetch/rxjs-api";
 import * as E from "fp-ts/Either";
-import {firstValueFrom} from "rxjs";
+import {firstValueFrom, map} from "rxjs";
 import {pipe} from "effect";
-import {formatValidationErrors} from 'io-ts-reporters'
+import {formatValidationErrors} from "io-ts-reporters";
+import {relations} from "../relations";
 
 describe("api", () => {
-    test("one asset", async () => {
-        const assetEither = await firstValueFrom($api.Asset.byId({id: "1"}));
-        const asset = pipe(
-            assetEither,
-            E.mapLeft(formatValidationErrors),
-            E.getOrElseW((e) => {
-                throw e
-            })
-        );
+  test("one asset", async () => {
+    const assetEither = await firstValueFrom($api.Asset.byId({ id: "1" }));
+    const asset = pipe(
+      assetEither,
+      E.mapLeft(formatValidationErrors),
+      E.getOrElseW((e) => {
+        throw e;
+      })
+    );
 
-        expect(asset).toMatchInlineSnapshot(`
+    expect(asset).toMatchInlineSnapshot(`
           {
             "assignedUserIds": [
               1,
@@ -68,18 +69,18 @@ describe("api", () => {
             "unitId": 1,
           }
         `);
-    });
+  });
 
-    test("all units", async () => {
-        const eitherUnits = await firstValueFrom($api.Unit.all());
-        const units = pipe(
-            eitherUnits,
-            E.getOrElseW((e) => {
-                throw e
-            })
-        );
+  test("all units", async () => {
+    const eitherUnits = await firstValueFrom($api.Unit.all());
+    const units = pipe(
+      eitherUnits,
+      E.getOrElseW((e) => {
+        throw e;
+      })
+    );
 
-        expect(units).toMatchInlineSnapshot(`
+    expect(units).toMatchInlineSnapshot(`
       [
         {
           "companyId": 1,
@@ -93,5 +94,84 @@ describe("api", () => {
         },
       ]
     `);
-    });
+  });
+
+  test("asset relations", async () => {
+    const asset$ = $api.Asset.byId({ id: "1" });
+    const relations$ = asset$.pipe(
+      map((asset) =>
+        pipe(
+          asset,
+          E.map(relations.asset),
+          E.getOrElseW((e) => {
+            throw e;
+          })
+        )
+      )
+    );
+
+    const { company$, unit$, assignedUsers$ } = await firstValueFrom(
+      relations$
+    );
+
+    const [eitherCompany, eitherUnit, eitherAssignedUsers] = await Promise.all([
+      firstValueFrom(company$),
+      firstValueFrom(unit$),
+      firstValueFrom(assignedUsers$),
+    ] as const);
+
+    expect(eitherCompany).toMatchInlineSnapshot(`
+          {
+            "_tag": "Right",
+            "right": {
+              "id": 1,
+              "name": "The Test Company",
+            },
+          }
+        `);
+    expect(eitherUnit).toMatchInlineSnapshot(`
+          {
+            "_tag": "Right",
+            "right": {
+              "companyId": 1,
+              "id": 1,
+              "name": "Jaguar Unit",
+            },
+          }
+        `);
+    expect(eitherAssignedUsers).toMatchInlineSnapshot(`
+          [
+            {
+              "_tag": "Right",
+              "right": {
+                "companyId": 1,
+                "email": "testerOne@tractian.com",
+                "id": 1,
+                "name": "John Doe",
+                "unitId": 1,
+              },
+            },
+            {
+              "_tag": "Right",
+              "right": {
+                "companyId": 1,
+                "email": "testerTwo@tractian.com",
+                "id": 2,
+                "name": "Jane Doe",
+                "unitId": 1,
+              },
+            },
+            {
+              "_tag": "Right",
+              "right": {
+                "companyId": 1,
+                "email": "testerThree@tractian.com",
+                "id": 3,
+                "name": "Bob Smith",
+                "unitId": 1,
+              },
+            },
+          ]
+        `);
+  });
 });

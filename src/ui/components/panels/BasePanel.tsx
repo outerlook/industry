@@ -1,5 +1,4 @@
-import {Card, Col, Row} from "antd";
-import React from "react";
+import {Card, Col} from "antd";
 
 type BasePanelProps = {
   titulo: string;
@@ -7,12 +6,11 @@ type BasePanelProps = {
   span?: number;
 };
 
-// panel like aws
 export const BasePanel = (props: BasePanelProps) => {
-  const { titulo, children, span = 8 } = props;
+  const { titulo, children, span = 24 } = props;
   return (
-    <Col  span={span}>
-      <Card  className={'h-full'} title={titulo} bordered={false}>
+    <Col span={span}>
+      <Card size={"small"} bordered={false} className={"h-full"} title={titulo}>
         {children}
       </Card>
     </Col>
