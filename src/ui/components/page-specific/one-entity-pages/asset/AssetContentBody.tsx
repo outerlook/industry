@@ -26,7 +26,7 @@ export function AssetContentBody(props: {
       </BasePanel>
       <BasePanel
         title={
-          <Row align={"center"} justify={"space-between"}>
+          <Row align={"middle"} justify={"space-between"}>
             <div>Work orders</div>
             <Button
               onClick={notImplementedHalMsg("add a work order")}
