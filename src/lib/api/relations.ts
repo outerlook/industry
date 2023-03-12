@@ -20,10 +20,17 @@ const assetRelations = (asset: t.TypeOf<typeof apiTypes.Asset>) => {
     assignedUserIds.map((id) => $api.User.byId({ id: id.toString() }))
   );
 
+  const workorders$ = pipe(
+    OE.fromObservable($api.WorkOrder.all()),
+    OE.chainW(OE.fromEither),
+    OE.map((e) => e.filter((e) => e.assetId === asset.id))
+  );
+
   return {
     company$,
     unit$,
     assignedUsers$,
+      workorders$
   };
 };
 
@@ -78,9 +85,7 @@ const unitRelations = (unit: t.TypeOf<typeof apiTypes.Unit>) => {
   };
 };
 
-const companyRelations = (
-  company: t.TypeOf<typeof apiTypes.Company>
-) => {
+const companyRelations = (company: t.TypeOf<typeof apiTypes.Company>) => {
   const { id } = company;
 
   const units$ = pipe(
@@ -131,12 +136,10 @@ export type RelationKeysOf<T extends keyof typeof relations> =
       : never
     : never;
 
-
-
 export const relations = {
   asset: assetRelations,
   users: usersRelations,
   workOrder: workOrderRelations,
   unit: unitRelations,
-  company: companyRelations
+  company: companyRelations,
 };

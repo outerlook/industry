@@ -2,8 +2,8 @@ import constate from 'constate'
 import {useState} from "react";
 
 
-const useEntity = <Entity extends any>() => {
-    const [entity, setEntity] = useState<Entity>()
+const useEntity = <Entity extends any>(props: { initialState?: Entity }) => {
+    const [entity, setEntity] = useState<Entity | undefined>(props.initialState)
     return [entity, setEntity] as const
 }
 

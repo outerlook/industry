@@ -16,7 +16,7 @@ export const TablePanelHeader = (props: { title?: string | undefined }) => {
         </Typography.Title>
       </Row>
       <Row>
-        <Col flex={1}>[Futuros filtros] {/*TODO*/}</Col>
+        <Col className={'text-slate-500'} flex={1}>[Imagine some filters here] {/*TODO*/}</Col>
         <Col>
           <Pagination
             size={"small"}

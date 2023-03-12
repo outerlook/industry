@@ -44,13 +44,13 @@ export const UnitContent = (props: Props) => {
         actions={actions}
         title={unit.name}
       />
-      <BasePanel titulo="Painel">
+      <BasePanel title="Painel">
         <p>Conteúdo do painel</p>
       </BasePanel>
-      <BasePanel titulo="Painel">
+      <BasePanel title="Painel">
         <p>Conteúdo do painel</p>
       </BasePanel>
-      <BasePanel titulo="Painel">
+      <BasePanel title="Painel">
         <p>Conteúdo do painel</p>
       </BasePanel>
     </EntityLayout>

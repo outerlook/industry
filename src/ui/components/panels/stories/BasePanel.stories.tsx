@@ -6,11 +6,11 @@ const meta = {
   component: BasePanel,
   // user to control span value
   args: {
-    titulo: "Titulo",
+    title: "Titulo",
     span: 8,
   },
   argTypes: {
-    titulo: {
+    title: {
       type: "string",
       description: "Titulo do painel",
       control: {

@@ -1,16 +1,16 @@
 ---
-import { pipe } from "effect";
+import {pipe} from "effect";
 import * as FPO from "fp-ts-rxjs/ObservableEither";
 import * as A from "fp-ts/Apply";
 import * as E from "fp-ts/Either";
 import * as TE from "fp-ts/TaskEither";
-import { firstValueFrom,} from "rxjs";
-import { relations } from "../../lib/api/relations";
-import { $api } from "../../lib/api/fetch/rxjs-api";
-import { getOrThrow } from "../../lib/io-ts/get-or-throw";
-import { pickForkJoin } from "../../lib/rxjs/pick-fork-join";
+import {firstValueFrom,} from "rxjs";
+import {relations} from "../../lib/api/relations";
+import {$api} from "../../lib/api/fetch/rxjs-api";
+import {getOrThrow} from "../../lib/io-ts/get-or-throw";
+import {pickForkJoin} from "../../lib/rxjs/pick-fork-join";
 import BaseLayout from "../../ui/astro-layouts/BaseLayout.astro";
-import { AssetContent } from "src/ui/components/page-specific/one-entity-pages/AssetContent";
+import {AssetContent} from "src/ui/components/page-specific/one-entity-pages/asset/AssetContent";
 
 const {id} = Astro.params;
 
@@ -19,10 +19,10 @@ if (!id) {
 }
 
 const eitherAsset = await firstValueFrom($api.Asset.byId({id}))
-const {company$: company, unit$: unit} = await pipe(
+const {company$: company, unit$: unit, workorders$: workorders} = await pipe(
     eitherAsset,
     E.map(relations.asset),
-    E.map((c) => pickForkJoin(c, "unit$", "company$")),
+    E.map((c) => pickForkJoin(c, "unit$", "company$", "workorders$")),
     TE.fromEither,
     TE.chain((v) => pipe(FPO.fromObservable(v), FPO.toTaskEither)),
     TE.chainEitherKW(A.sequenceS(E.Apply)),
@@ -34,5 +34,5 @@ const {company$: company, unit$: unit} = await pipe(
 
 
 <BaseLayout title="Asset">
-    <AssetContent unit={unit} company={company} asset={getOrThrow(eitherAsset)} client:only/>
+    <AssetContent unit={unit} company={company} workorders={workorders} asset={getOrThrow(eitherAsset)} client:only/>
 </BaseLayout>
