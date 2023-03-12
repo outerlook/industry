@@ -1,3 +1,7 @@
+/**
+ * @see https://en.wikipedia.org/wiki/Hal_9000
+ * @param action
+ */
 export const notImplementedHalMsg =
     (action = "do that") =>
         () =>
