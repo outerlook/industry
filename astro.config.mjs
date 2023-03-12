@@ -12,7 +12,7 @@ export default defineConfig({
   vite: {
     plugins: [WindiCSS(), tsconfigPaths()],
     ssr: {
-      noExternal: ["tinykeys"],
+      noExternal: ["tinykeys", "fp-ts-rxjs"],
     },
   },
 });
