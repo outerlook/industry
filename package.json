@@ -29,7 +29,7 @@
     "@ant-design/icons": "5.0.1",
     "@astrojs/react": "2.0.2",
     "antd": "5.3.0",
-    "astro": "2.0.17",
+    "astro": "2.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "rxjs": "7.8.0",
@@ -102,6 +102,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "readme": "ERROR: No README data found!",
   "_id": "industry@1.0.0"
 }
