@@ -1,9 +1,12 @@
-import forge from 'mappersmith/mappersmith'
+import forge from 'mappersmith'
 
 
 export const api = forge({
     clientId: 'tractian',
     host: 'https://my-json-server.typicode.com/tractian/fake-api',
+
+    // gatewayConfigs: FetchGateway,
+
     resources: {
         Asset: {
             byId: {path: '/assets/{id}'},
