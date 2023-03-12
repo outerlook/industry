@@ -1,7 +1,5 @@
-import {BaseWidget} from "../BaseWidget";
-import {Image, Space, Typography} from "antd";
-
-const { Title } = Typography;
+import { BaseWidget } from "../BaseWidget";
+import { Image, Typography } from "antd";
 
 /**
  * |``| Titulo
@@ -29,10 +27,8 @@ export const WidgetPresentation = (
       )}
       <BaseWidget colProps={{ flex: 1 }}>
         <div className={"p-2"}>
-          <Space direction={"vertical"}>
-            <Title level={3}>{props.title}</Title>
-            <Title level={4}>{props.extra}</Title>
-          </Space>
+          <Typography.Title level={3}>{props.title}</Typography.Title>
+          <Typography.Text>{props.extra}</Typography.Text>
         </div>
       </BaseWidget>
     </BaseWidget>

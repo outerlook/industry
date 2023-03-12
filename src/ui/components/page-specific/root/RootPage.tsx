@@ -8,7 +8,7 @@ import { servicesList } from "@/ui/components/common/servicos/services-list";
 export const RootPage = () => {
   return (
     <CenteredLayout>
-      <BasePanel span={12} titulo={"Last visited"}>
+      <BasePanel span={12} title={"Last visited"}>
         <List
             // todo: make it really last visited localStorage or something
           dataSource={servicesList.map((p) => ({
@@ -26,12 +26,12 @@ export const RootPage = () => {
           )}
         />
       </BasePanel>
-      <BasePanel span={12} titulo={"General status"} />
-      <BasePanel span={12} titulo={"Work Orders"} />
-      <BasePanel span={6} titulo={"External links"}>
+      <BasePanel span={12} title={"General status"} />
+      <BasePanel span={12} title={"Work Orders"} />
+      <BasePanel span={6} title={"External links"}>
         <LinksExternosWidget />
       </BasePanel>
-      <BasePanel span={6} titulo={"More"} />
+      <BasePanel span={6} title={"More"} />
     </CenteredLayout>
   );
 };

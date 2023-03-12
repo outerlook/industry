@@ -1,6 +1,4 @@
-import {Col, Layout, Row, Space, theme} from "antd";
-
-const { Content } = Layout;
+import { Layout, Space, theme } from "antd";
 
 export const EntityLayout = (
   props: React.PropsWithChildren<{ siderChildren: React.ReactNode }>
@@ -10,23 +8,15 @@ export const EntityLayout = (
     token: { colorBgContainer },
   } = theme.useToken();
   return (
-    <Layout className={"relative flex"}>
-      <Content className={`flex flex-col bg-[${colorBgContainer}]`}>
-        <Row className={"flex-1"}>
-          {/* TODO: verify if SIDER is a better option */}
-          <Col
-            className={"shadow p-4 bg-white left-0 bottom-0 top-0"}
-            flex={"360px"}
-          >
-            {siderChildren}
-          </Col>
-          <Col flex={1} className={"p-4 overflow-initial"}>
-            <Space className={"w-full"} direction={"vertical"} size={"large"}>
-              {children}
-            </Space>
-          </Col>
-        </Row>
-      </Content>
+    <Layout hasSider className={"relative "}>
+      <Layout.Sider theme={'light'}  width={360} className={"shadow"}>
+        <div className={"p-4"}>{siderChildren}</div>
+      </Layout.Sider>
+      <Layout.Content className={`bg-[${colorBgContainer}] p-4`}>
+        <Space className={"w-full overflow-hidden"} direction={"vertical"} size={"large"}>
+          {children}
+        </Space>{" "}
+      </Layout.Content>
     </Layout>
   );
 };

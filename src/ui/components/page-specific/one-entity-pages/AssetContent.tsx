@@ -13,16 +13,21 @@ import {
   WithAssetProvider,
 } from "@/lib/api/context/entities-context";
 import React from "react";
-import { Divider, Space } from "antd";
+import { Button, Divider, Row, Space } from "antd";
+import { renderStatus } from "@/lib/api/table/cells/renderers";
+import { BaseWidget } from "@/ui/components/common/widgets/BaseWidget";
+import { NotImplementedChart } from "@/ui/components/common/widgets/NotImplementedChart";
+import { WorkorderTag } from "@/ui/components/common/widgets/workorder/WorkorderTag";
 
 type Props = {
   asset: t.TypeOf<typeof apiTypes.Asset>;
   unit: t.TypeOf<typeof apiTypes.Unit>;
   company: t.TypeOf<typeof apiTypes.Company>;
+  workorders: t.TypeOf<typeof apiTypes.Workorder>[];
 };
 
 export const AssetContent = WithAssetProvider((props: Props) => {
-  const { asset, unit, company } = props;
+  const { asset, unit, company, workorders } = props;
 
   const [_, setAsset] = useAsset();
 
@@ -48,7 +53,11 @@ export const AssetContent = WithAssetProvider((props: Props) => {
     <EntityLayout
       siderChildren={
         <Space direction={"vertical"}>
-          <WidgetPresentation image={asset.image} title={asset.name} />
+          <WidgetPresentation
+            extra={renderStatus(asset.status)}
+            image={asset.image}
+            title={asset.name}
+          ></WidgetPresentation>
           <Divider orientation={"left"}>Attributes</Divider>
           <AssetAttributes />
         </Space>
@@ -59,14 +68,35 @@ export const AssetContent = WithAssetProvider((props: Props) => {
         actions={actions}
         title={asset.name}
       />
-      <BasePanel titulo="Painel">
-        <p>Conteúdo do painel</p>
+      <BasePanel title="General health">
+        <BaseWidget colProps={{ span: 12 }}>
+          Something about uptime
+          <NotImplementedChart title={"Uptime"} />
+        </BaseWidget>
+        <BaseWidget colProps={{ span: 12 }}>
+          Something about status history
+          <NotImplementedChart title={"Status"} />
+        </BaseWidget>
       </BasePanel>
-      <BasePanel titulo="Painel">
-        <p>Conteúdo do painel</p>
-      </BasePanel>
-      <BasePanel titulo="Painel">
-        <p>Conteúdo do painel</p>
+      <BasePanel
+        title={
+          <Row justify={"space-between"}>
+            <div>Work orders</div>
+            <Button onClick={notImplementedHalMsg('add a work order')} type={'link'}>Add</Button>
+          </Row>
+        }
+      >
+        <BaseWidget colProps={{ span: 12 }}>
+          <BaseWidget>
+            {workorders.length > 0 ? (
+              workorders.map((workorder) => (
+                <WorkorderTag key={workorder.id} workorder={workorder} />
+              ))
+            ) : (
+              <div>No registered work orders for this asset</div>
+            )}
+          </BaseWidget>
+        </BaseWidget>
       </BasePanel>
     </EntityLayout>
   );
