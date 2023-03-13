@@ -31,7 +31,7 @@ const formatters = {
     },
     {
       label: () => "HP",
-      value: (v) => (v.power ? scalarFormatters.HorsePower(v.power) : "-"),
+      value: (v) => (v.power ? scalarFormatters.Power(v.power) : "-"),
     },
   ],
 } satisfies FormatterDict<validTypes["Asset"]>;
