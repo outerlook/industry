@@ -4,6 +4,7 @@ import * as O from "fp-ts/Option";
 import { BaseWidget } from "@/ui/components/common/widgets/BaseWidget";
 import type { validTypes } from "@/lib/io-ts/valid-types";
 import { AttributeWidget } from "@/ui/components/widgets/generic-entities/AttributeWidget";
+import { scalarFormatters } from "@/lib/api/renders/text";
 
 type FormatFn<T, K extends keyof T> = (a: T[K]) => string;
 
@@ -16,13 +17,22 @@ type FormatterDict<T> = {
   [key in keyof T]?: FormatterRec<T, key>[];
 };
 const formatters = {
-  name: [{ label: () => "Name", value: (a) => a }],
-  model: [{ label: () => "Model", value: (a) => a }],
+  name: [{ label: () => "Name", value: scalarFormatters.String }],
+  model: [{ label: () => "Model", value: scalarFormatters.String }],
   sensors: [{ label: () => "Sensors", value: (a) => a[0] ?? "" }],
   specifications: [
-    { label: () => "Max. Temp.", value: (a) => a.maxTemp.toString() },
-    { label: () => "RPM", value: (a) => a.rpm?.toString() ?? "-" },
-    { label: () => "HP", value: (a) => a.power?.toString() ?? "-" },
+    {
+      label: () => "Max. Temp.",
+      value: (v) => scalarFormatters.CelciusTemperature(v.maxTemp),
+    },
+    {
+      label: () => "RPM",
+      value: (v) => (v.rpm ? scalarFormatters.RPM(v.rpm) : "-"),
+    },
+    {
+      label: () => "HP",
+      value: (v) => (v.power ? scalarFormatters.HorsePower(v.power) : "-"),
+    },
   ],
 } satisfies FormatterDict<validTypes["Asset"]>;
 

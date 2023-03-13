@@ -1,3 +1,4 @@
+import * as A from "fp-ts/Array";
 import type * as t from "io-ts";
 import type {apiTypes} from "../io-ts/api-types";
 import {$api} from "./fetch/rxjs-api";
@@ -5,6 +6,7 @@ import type {Observable} from "rxjs";
 import {forkJoin, pluck, share} from "rxjs";
 import * as OE from "fp-ts-rxjs/ObservableEither";
 import {pipe} from "effect";
+import {fromEitherObservable} from "@/lib/rxjs/fp-ts/from-either-observable";
 
 /*
  * Advantage of using observables:
@@ -15,22 +17,19 @@ const assetRelations = (asset: t.TypeOf<typeof apiTypes.Asset>) => {
 
   const company$ = $api.Company.byId({ id: companyId.toString() });
   const unit$ = $api.Unit.byId({ id: unitId.toString() });
-  // Observable<User[]>
   const assignedUsers$ = forkJoin(
     assignedUserIds.map((id) => $api.User.byId({ id: id.toString() }))
   );
 
   const workorders$ = pipe(
-    OE.fromObservable($api.WorkOrder.all()),
-    OE.chainW(OE.fromEither),
-    OE.map((e) => e.filter((e) => e.assetId === asset.id))
+    fromEitherObservable($api.WorkOrder.all()),
+    OE.map(A.filter((e) => e.assetId === asset.id))
   );
-
   return {
     company$,
     unit$,
     assignedUsers$,
-      workorders$
+    workorders$,
   };
 };
 
@@ -55,8 +54,7 @@ const workOrderRelations = (workOrder: t.TypeOf<typeof apiTypes.Workorder>) => {
   );
 
   const subRelations$ = pipe(
-    OE.fromObservable(asset$),
-    OE.chainW((e) => OE.fromEither(e)),
+    fromEitherObservable(asset$),
     OE.map((e) => assetRelations(e)),
     OE.chainW((e) => pipe(forkJoin(e), OE.fromObservable)),
     OE.getOrElse((e) => {
@@ -89,20 +87,17 @@ const companyRelations = (company: t.TypeOf<typeof apiTypes.Company>) => {
   const { id } = company;
 
   const units$ = pipe(
-    OE.fromObservable($api.Unit.all()),
-    OE.chainW(OE.fromEither),
+    fromEitherObservable($api.Unit.all()),
     OE.map((e) => e.filter((e) => e.companyId === id))
   );
 
   const assets$ = pipe(
-    OE.fromObservable($api.Asset.all()),
-    OE.chainW(OE.fromEither),
+    fromEitherObservable($api.Asset.all()),
     OE.map((e) => e.filter((e) => e.companyId === id))
   );
 
   const workOrders$ = pipe(
-    OE.fromObservable($api.WorkOrder.all()),
-    OE.chainW(OE.fromEither),
+    fromEitherObservable($api.WorkOrder.all()),
     OE.bindTo("allWorkOrders"),
     OE.bind("companyAssets", () => assets$),
     OE.map(({ allWorkOrders, companyAssets }) =>
