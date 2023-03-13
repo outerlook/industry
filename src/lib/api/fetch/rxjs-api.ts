@@ -1,8 +1,11 @@
-import {api} from "./fetchAPI";
-import {defer, map, shareReplay} from "rxjs";
-import type {RequestContext} from "mappersmith";
-import {apiTypes} from "../../io-ts/api-types";
+import { api } from "./fetchAPI";
+import { defer, map, shareReplay } from "rxjs";
+import type { RequestContext } from "mappersmith";
+import { apiTypes } from "../../io-ts/api-types";
 import * as t from "io-ts";
+import * as TE from "fp-ts/TaskEither";
+import * as E from "fp-ts/Either";
+import { toFetchError } from "@/lib/errors/fetch-error";
 
 /**
  * Makes our client typesafe, rxjs friendly and with a nice api
@@ -16,14 +19,19 @@ const fromAPI =
     ...args: Params extends undefined
       ? [any?, RequestContext?]
       : [Params, RequestContext?]
-  ) =>
-    defer(() => fn(...args)).pipe(
-      map((res) => res.data()),
-      // here it validates an types from response
-      map((v) => codec.decode(v) as t.Validation<t.TypeOf<Codec>>),
-      // won't fetch twice per downstream observable
+  ) => {
+    // transforms into a taskeither to preserve fetch error
+    const executeFn = () => fn(...args);
+    const taskEitherFn = TE.tryCatch(executeFn, toFetchError);
+    return defer(taskEitherFn).pipe(
+      map(E.map((d) => d.data())),
+      // here it validates an types from response transforming unknown to the codec type
+      map(E.chainW((v) => codec.decode(v) as t.Validation<t.TypeOf<Codec>>)),
+      // map((v) => codec.decode(v) as t.Validation<t.TypeOf<Codec>>),
+      // so it won't fetch twice per downstream observable
       shareReplay(1)
     );
+  };
 
 export const $api = {
   Asset: {
