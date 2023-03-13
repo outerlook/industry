@@ -5,7 +5,7 @@ import vercel from "@astrojs/vercel/serverless";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 const noExternal = ["tinykeys", "fp-ts-rxjs", "fp-ts"];
-if (import.meta.env.PROD) {
+if (import.meta.env?.PROD) {
   // won't work locally
   noExternal.push("mappersmith");
 }
