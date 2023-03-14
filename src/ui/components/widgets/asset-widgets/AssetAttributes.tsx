@@ -1,10 +1,13 @@
 import { useAsset } from "@/lib/api/context/entities-context";
-import { pipe } from "effect";
+import { flow, pipe } from "effect";
 import * as O from "fp-ts/Option";
 import { BaseWidget } from "@/ui/components/common/widgets/BaseWidget";
 import type { validTypes } from "@/lib/io-ts/valid-types";
 import { AttributeWidget } from "@/ui/components/widgets/generic-entities/AttributeWidget";
 import { scalarFormatters } from "@/lib/api/renders/text";
+import * as E from "fp-ts/Either";
+import { propOrDash } from "@/lib/utils/prop-or-dash";
+import * as A from "fp-ts/Array";
 
 type FormatFn<T, K extends keyof T> = (a: T[K]) => string;
 
@@ -16,10 +19,19 @@ type FormatterRec<T, K extends keyof T> = {
 type FormatterDict<T> = {
   [key in keyof T]?: FormatterRec<T, key>[];
 };
+
 const formatters = {
   name: [{ label: () => "Name", value: scalarFormatters.String }],
   model: [{ label: () => "Model", value: scalarFormatters.String }],
-  sensors: [{ label: () => "Sensors", value: (a) => a[0] ?? "" }],
+  sensors: [
+    {
+      label: () => "Sensors",
+      value: flow(
+        A.head,
+        O.getOrElse(() => "-")
+      ),
+    },
+  ],
   specifications: [
     {
       label: () => "Max. Temp.",
@@ -27,11 +39,15 @@ const formatters = {
     },
     {
       label: () => "RPM",
-      value: (v) => (v.rpm ? scalarFormatters.RPM(v.rpm) : "-"),
+      value: flow(propOrDash("rpm"), E.map(scalarFormatters.RPM), E.toUnion),
     },
     {
       label: () => "HP",
-      value: (v) => (v.power ? scalarFormatters.Power(v.power) : "-"),
+      value: flow(
+        propOrDash("power"),
+        E.map(scalarFormatters.Power),
+        E.toUnion
+      ),
     },
   ],
 } satisfies FormatterDict<validTypes["Asset"]>;
