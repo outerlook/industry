@@ -1,5 +1,5 @@
 import {expect, test} from "vitest";
-import {assetFormatters} from "@/lib/api/renders/asset-formatters";
+import {assetFormatters} from "@/lib/api/renders/formatters/asset-formatters";
 import type {validTypes} from "@/lib/io-ts/valid-types";
 
 test('asset formatters work', () => {

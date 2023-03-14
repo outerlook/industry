@@ -1,8 +1,9 @@
-import { scalarFormatters } from "@/lib/api/renders/text";
-import { flow } from "effect";
+import {scalarFormatters} from "@/lib/api/renders/text";
+import {flow} from "effect";
 import * as O from "fp-ts/Option";
-import { Lens } from "monocle-ts";
-import type { validTypes } from "@/lib/io-ts/valid-types";
+import {Lens} from "monocle-ts";
+import type {validTypes} from "@/lib/io-ts/valid-types";
+import type {FormatterRecord} from "@/lib/api/renders/formatters/type";
 
 type FormatFn<T> = (a: T) => string;
 
@@ -82,14 +83,11 @@ const keyToAssetFormatter =
 export const assetFormatters = {
   name: keyToAssetFormatter("name"),
   model: keyToAssetFormatter("model"),
-  sensors: keyToAssetFormatter('sensors'),
+  sensors: keyToAssetFormatter("sensors"),
   maxTemp: keyToAssetFormatter("maxTemp"),
   rpm: keyToAssetFormatter("rpm"),
   power: keyToAssetFormatter("power"),
-} satisfies Record<
+} as const satisfies Record<
   keyof typeof valueFormatters,
-  (v: validTypes["Asset"]) => {
-    label: string;
-    value: string;
-  }
+  FormatterRecord<validTypes["Asset"]>
 >;
