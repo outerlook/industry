@@ -1,6 +1,7 @@
 import type {validTypes} from "@/lib/io-ts/valid-types";
 import {Tag} from "antd";
 import {customScalars, enumTypes} from "@/lib/io-ts/api-types";
+import {scalarFormatters} from "@/lib/api/renders/text";
 
 const colorByStatus = {
     'inAlert': 'red',
@@ -31,10 +32,5 @@ export const renderLink = <T extends any>(fn: (a: T)=> ({label: string, href: st
     const {href, label} = fn(a)
     return <a href={href}>{label}</a>;
 }
-
-export const renderPercentile = (percentile: validTypes['Percentile']) => percentile + "%" // todo could render percentile cell bar
-
-const typesToRender = {
-    status: enumTypes.Status,
-    percentile: customScalars.Percentile,
-}
+export const toReactLink = ({href, label}: {href: string, label: string}) => <a href={href}>{label}</a>
+export const renderPercentile = scalarFormatters.Percentile // todo could render percentile cell bar

@@ -1,11 +1,11 @@
 import * as t from "io-ts";
-import { apiTypes } from "@/lib/io-ts/api-types";
-import { BasePanel } from "@/ui/components/panels/BasePanel";
-import { BaseWidget } from "@/ui/components/common/widgets/BaseWidget";
-import { NotImplementedChart } from "@/ui/components/common/widgets/NotImplementedChart";
-import { Button, Row, Space } from "antd";
-import { notImplementedHalMsg } from "@/lib/utils/not-implemented";
-import { WorkorderTag } from "@/ui/components/common/widgets/workorder/WorkorderTag";
+import {apiTypes} from "@/lib/io-ts/api-types";
+import {BasePanel} from "@/ui/components/panels/BasePanel";
+import {BaseWidget} from "@/ui/components/common/widgets/BaseWidget";
+import {NotImplementedChart} from "@/ui/components/common/widgets/NotImplementedChart";
+import {Button, Row, Space} from "antd";
+import {notImplementedHalMsg} from "@/lib/utils/not-implemented";
+import {WorkorderTag} from "@/ui/components/common/widgets/workorder/WorkorderTag";
 
 export function AssetContentBody(props: {
   workorders: t.TypeOf<typeof apiTypes.Workorder>[];

@@ -1,4 +1,4 @@
-import { linkForCompany } from "@/lib/api/utils/link-from";
+import { linkFromCompany } from "@/lib/api/utils/link-from";
 import { LinkCell } from "@/ui/components/common/Table/cells/LinkCell";
 import type { ColumnForData } from "@/ui/components/common/Table/table-helper";
 import { getUser } from "@/lib/api/tests/utils";
@@ -20,7 +20,7 @@ const columns = [
     key: "companyId",
     dataIndex: "companyId",
     render: (value: validTypes["User"]["companyId"]) => {
-      const { label, href } = linkForCompany({
+      const { label, href } = linkFromCompany({
         id: value,
         name: "My company",
       });
