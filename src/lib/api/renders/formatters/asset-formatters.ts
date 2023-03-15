@@ -1,14 +1,12 @@
-import { scalarFormatters } from "@/lib/api/renders/text";
-import { flow } from "effect";
+import {scalarFormatters} from "@/lib/api/renders/text";
+import {flow} from "effect";
 import * as O from "fp-ts/Option";
-import { Lens } from "monocle-ts";
-import type { validTypes } from "@/lib/io-ts/valid-types";
-import type { FormatterRecord } from "@/lib/api/renders/formatters/generic";
+import type {validTypes} from "@/lib/io-ts/valid-types";
+import type {FormatterRecord} from "@/lib/api/renders/formatters/generic";
 import * as NEA from "fp-ts/NonEmptyArray";
+import {assetLens} from "@/lib/api/lenses/asset-lens";
 
 type FormatFn<T> = (a: T) => string;
-
-const assetLens = Lens.fromPath<validTypes["Asset"]>();
 
 const mapTransform =
   <T>(transformers: Array<FormatFn<T>>) =>

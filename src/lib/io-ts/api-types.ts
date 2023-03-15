@@ -112,7 +112,7 @@ const UserT = t.type({
 
 const WorkorderT = t.type({
     assetId: ID,
-    assignedUserIds: t.array(t.number),
+    assignedUserIds: t.array(ID),
     checklist: t.array(ChecklistT),
     description: t.string,
     id: ID,
