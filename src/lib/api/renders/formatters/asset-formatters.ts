@@ -1,48 +1,48 @@
-import {scalarFormatters} from "@/lib/api/renders/text";
-import {flow} from "effect";
+import { scalarFormatters } from "@/lib/api/renders/text";
+import { flow } from "effect";
 import * as O from "fp-ts/Option";
-import {Lens} from "monocle-ts";
-import type {validTypes} from "@/lib/io-ts/valid-types";
-import type {FormatterRecord} from "@/lib/api/renders/formatters/type";
+import { Lens } from "monocle-ts";
+import type { validTypes } from "@/lib/io-ts/valid-types";
+import type { FormatterRecord } from "@/lib/api/renders/formatters/generic";
+import * as NEA from "fp-ts/NonEmptyArray";
 
 type FormatFn<T> = (a: T) => string;
 
 const assetLens = Lens.fromPath<validTypes["Asset"]>();
 
-const fromTransformers =
+const mapTransform =
   <T>(transformers: Array<FormatFn<T>>) =>
   (a: T) =>
     transformers.map((t) => t(a));
 
 /**
  * [First sensor name] +[n] if there are more than 1 sensors
+ * "-" if there are no sensors
  */
 const sensorsValueFormatter = flow(
-  fromTransformers([
-    flow(assetLens(["sensors", 0]).get, scalarFormatters.String),
-    flow(
-      assetLens(["sensors"]).get,
-      (a) => a.length,
-      O.fromPredicate((n) => n > 1),
-      O.fold(
-        () => "",
-        (p) => ` +${p - 1}`
-      )
-    ),
-  ]),
-  (a) => a.join("")
+  assetLens(["sensors"]).get,
+  NEA.fromArray, // non empty array conversion, so head will be typesafe
+  O.map(
+    mapTransform([
+      flow(NEA.head, scalarFormatters.String),
+      flow(
+        (a) => a.length,
+        O.fromPredicate((n) => n > 1), // if there are more than 1 sensors, lets add the count
+        O.fold(
+          () => "",
+          (p) => ` +${p - 1}`
+        )
+      ),
+    ])
+  ),
+  O.map((a) => a.join("")),
+  O.getOrElse(() => "-") // no sensors
 );
-
-// declare const fromTransformers: <T>(
-//   transformers: Array<FormatFn<T>>
-// ) => (a: T) => string[];
 
 const valueFormatters = {
   name: flow(assetLens(["name"]).get, scalarFormatters.String),
-  // model: [{ label: () => "Model", value: scalarFormatters.String }],
   model: flow(assetLens(["model"]).get, scalarFormatters.String),
   sensors: sensorsValueFormatter,
-  // assetLens(["sensors", 0]).get, scalarFormatters.String
   maxTemp: flow(
     assetLens(["specifications", "maxTemp"]).get,
     scalarFormatters.CelciusTemperature
