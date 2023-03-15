@@ -23,7 +23,7 @@ const sensorsValueFormatter = flow(
   assetLens(["sensors"]).get,
   NEA.fromArray, // non empty array conversion, so head will be typesafe
   O.map(
-    mapTransform([
+    mapTransform([ // it uses 2 transformers, and at end we will join them
       flow(NEA.head, scalarFormatters.String),
       flow(
         (a) => a.length,
