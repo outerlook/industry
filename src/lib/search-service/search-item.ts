@@ -1,8 +1,8 @@
-import {flow, pipe} from "effect";
-import Fuse from "fuse.js";
-import {entitiesSearchIndex$} from "@/lib/api/search-index/entity-search-items";
-import * as OE from "fp-ts-rxjs/ObservableEither";
-import {pagesIndex} from "@/lib/search-service/pages-index";
+import {flow, pipe} from 'effect';
+import Fuse from 'fuse.js';
+import {entitiesSearchIndex$} from '@domain/lib/entities/search-index/entity-search-items';
+import * as OE from 'fp-ts-rxjs/ObservableEither';
+import {pagesIndex} from './pages-index';
 
 export type SearchItem = {
   label: string;
@@ -16,21 +16,21 @@ export type SearchItem = {
 export const allSearchIndex$ = pipe(
   entitiesSearchIndex$,
   // concat with pagesIndex
-  OE.map((items) => [...items, ...pagesIndex])
+  OE.map(items => [...items, ...pagesIndex])
 );
 
 export const fuseForSearchItems = flow(
   (items: SearchItem[]) =>
     new Fuse(items, {
       keys: [
-        { name: "label", weight: 2 },
-        "object",
-        "type",
+        { name: 'label', weight: 2 },
+        'object',
+        'type',
         {
-          name: "keywords",
-          getFn: (item) =>
+          name: 'keywords',
+          getFn: item =>
             // user types: "asset list" then should find the page list for assets
-            [...(item.keywords ?? []), item.type, item.label].join(" "),
+            [...(item.keywords ?? []), item.type, item.label].join(' '),
         },
       ],
       includeScore: true,

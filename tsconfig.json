@@ -8,7 +8,13 @@
     "target": "ES2017",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@ui/*": ["src/ui/*"],
+      "@lib/*": ["src/lib/*"],
+      "@code-generators/*": ["src/code-generators/*"],
+      "@services/*": ["src/services/*"],
+      "@domain/*": ["src/domain/*"],
+      "@domain-lib/*": ["src/domain-lib/*"],
+      "@domain-components": ["src/domain-components/*"]
     }
   },
   "include": ["src"]

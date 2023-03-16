@@ -1,4 +1,4 @@
-import { Layout, Space, theme } from "antd";
+import {Layout, Space, theme} from "antd";
 
 export const EntityLayout = (
   props: React.PropsWithChildren<{ siderChildren: React.ReactNode }>

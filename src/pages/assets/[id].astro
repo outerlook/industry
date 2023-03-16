@@ -5,12 +5,12 @@ import * as A from "fp-ts/Apply";
 import * as E from "fp-ts/Either";
 import * as TE from "fp-ts/TaskEither";
 import {firstValueFrom,} from "rxjs";
-import {relations} from "../../lib/api/relations";
-import {$api} from "../../lib/api/fetch/rxjs-api";
-import {getOrThrow} from "../../lib/io-ts/get-or-throw";
+import {relations} from "src/services/api/relations";
+import {$api} from "src/services/api/fetch/rxjs-api";
+import {getOrThrow} from "../../lib/fp-ts/get-or-throw";
 import {pickForkJoin} from "../../lib/rxjs/pick-fork-join";
 import BaseLayout from "../../ui/astro-layouts/BaseLayout.astro";
-import {AssetContent} from "src/ui/components/page-specific/one-entity-pages/asset/AssetContent";
+import {AssetContent} from "@domain/components/assets/asset/AssetContent";
 
 const {id} = Astro.params;
 

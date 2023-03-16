@@ -1,11 +1,11 @@
 ---
 import {firstValueFrom} from "rxjs";
-import {$api} from "../../lib/api/fetch/rxjs-api";
-import {getOrThrow} from "../../lib/io-ts/get-or-throw";
+import {$api} from "src/services/api/fetch/rxjs-api";
+import {getOrThrow} from "../../lib/fp-ts/get-or-throw";
 import BaseLayout from "../../ui/astro-layouts/BaseLayout.astro";
-import {CompanyContent} from "src/ui/components/page-specific/one-entity-pages/CompanyContent";
+import {CompanyContent} from "@domain/components/companies/CompanyContent";
 import {pipe} from "effect";
-import {relations} from "src/lib/api/relations";
+import {relations} from "src/services/api/relations";
 import * as E from "fp-ts/Either";
 import * as TE from "fp-ts/TaskEither";
 import {pickForkJoin} from "src/lib/rxjs/pick-fork-join";

@@ -1,6 +1,6 @@
-import type { MenuProps } from "antd";
-import { Button, Dropdown, Space } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import type {MenuProps} from "antd";
+import {Button, Dropdown, Space} from "antd";
+import {DownOutlined} from "@ant-design/icons";
 
 export type Action = {
   label: string;

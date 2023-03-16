@@ -1,5 +1,5 @@
 import {pipe} from "effect";
-import {prop} from "@/lib/utils/prop";
+import {prop} from "./prop";
 import * as E from "fp-ts/Either";
 
 export const propOrDash =

@@ -1,4 +1,4 @@
-import type { Observable} from "rxjs";
+import type {Observable} from "rxjs";
 import {combineLatestWith, EMPTY, tap} from "rxjs";
 import {fromElementKeyPress} from "../global-shortcuts/from-element-key-press";
 
