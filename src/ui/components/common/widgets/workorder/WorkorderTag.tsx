@@ -1,8 +1,8 @@
-import type { validTypes } from "@/lib/io-ts/valid-types";
-import { Tag, Typography } from "antd";
-import { pipe } from "effect";
+import type {validTypes} from "@services/api/validation/valid-types";
+import {Tag, Typography} from "antd";
+import {pipe} from "effect";
 import * as A from "fp-ts/Array";
-import { entityConfig } from "@/lib/api/config";
+import {entityConfig} from "@domain/lib/entities/entities-mapping";
 
 export const WorkorderTag = (props: { workorder: validTypes["Workorder"] }) => {
   const { title, checklist, status } = props.workorder;

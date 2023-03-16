@@ -1,4 +1,4 @@
-import type { BaseWidgetProps} from "./BaseWidget";
+import type {BaseWidgetProps} from "./BaseWidget";
 import {BaseWidget} from "./BaseWidget";
 import {Space} from "antd";
 

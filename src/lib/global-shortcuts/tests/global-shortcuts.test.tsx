@@ -1,8 +1,8 @@
-import { expect, test } from "vitest";
-import { render } from "@testing-library/react";
+import {expect, test} from "vitest";
+import {render} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useObservable } from "../../react-rxjs/use-observable";
-import { getMainSearchInputEffects } from "@/lib/global-shortcuts/main-search-input-effects";
+import {useObservable} from "../../rxjs/use-observable";
+import {getMainSearchInputEffects} from "../main-search-input-effects";
 
 test("global-shortcuts", async () => {
   const ReactInputComponent = () => {

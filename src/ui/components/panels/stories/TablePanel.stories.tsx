@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from "@storybook/react";
 import {TablePanel} from "../table/TablePanel";
-import {testTableData} from "@/ui/components/common/Table/stories/test-table";
+import {testTableData} from "@ui/components/common/Table/stories/test-table";
 
 
 const meta = {

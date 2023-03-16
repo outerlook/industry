@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '@/ui/astro-layouts/BaseLayout.astro';
-import {WorkordersContent} from "@/ui/components/page-specific/list-pages/WorkordersContent";
+import BaseLayout from '@ui/astro-layouts/BaseLayout.astro';
+import {WorkordersContent} from "@domain/components/workorders/WorkordersContent";
 import {pipe} from "effect";
 import * as OE from "fp-ts-rxjs/ObservableEither";
-import {$api} from "../../lib/api/fetch/rxjs-api";
+import {$api} from "src/services/api/fetch/rxjs-api";
 
 
 const workorders = await pipe(

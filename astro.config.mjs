@@ -7,7 +7,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 const noExternal = ["tinykeys", "fp-ts-rxjs", "fp-ts"];
 
 
-if (import.meta.env.PROD) { // will make vitest fail :( FIXME
+if (import.meta.env.PROD) {
   // won't work locally
   noExternal.push("mappersmith");
 }

@@ -1,4 +1,4 @@
-import { generateHelpers } from "../src/meta/generate-helpers";
+import { generateHelpers } from "../src/code-generators/generate-helpers";
 
 async function main() {
   await generateHelpers();

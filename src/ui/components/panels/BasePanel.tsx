@@ -1,4 +1,4 @@
-import { Card, Col, Row } from "antd";
+import {Card, Col, Row} from "antd";
 
 type BasePanelProps = {
   title: React.ReactNode;

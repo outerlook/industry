@@ -1,5 +1,5 @@
-import { BaseWidget } from "../BaseWidget";
-import { Image, Typography } from "antd";
+import {BaseWidget} from "../BaseWidget";
+import {Image, Typography} from "antd";
 
 /**
  * |``| Titulo
