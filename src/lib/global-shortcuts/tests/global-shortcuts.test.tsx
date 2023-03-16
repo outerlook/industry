@@ -1,7 +1,7 @@
 import {expect, test} from "vitest";
 import {render} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import {useObservable} from "../../react-rxjs/use-observable";
+import {useObservable} from "../../rxjs/use-observable";
 import {getMainSearchInputEffects} from "../main-search-input-effects";
 
 test("global-shortcuts", async () => {

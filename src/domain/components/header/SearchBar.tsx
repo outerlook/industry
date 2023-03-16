@@ -1,16 +1,16 @@
 import type { SearchItem } from '@lib/search-service/search-item';
 import {
-  allSearchIndex$,
   fuseForSearchItems,
 } from '@lib/search-service/search-item';
 import React from 'react';
 import { getMainSearchInputEffects } from '@lib/global-shortcuts/main-search-input-effects';
-import { useObservable } from '@lib/react-rxjs/use-observable';
+import { useObservable } from '@lib/rxjs/use-observable';
 import { getOrThrow } from '@lib/fp-ts/get-or-throw';
 import { pipe } from 'effect';
 import * as E from 'fp-ts/Either';
 import { AutoComplete, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import {appSearchIndex$} from "../../lib/search/app-search-index";
 
 const renderTitle = (title: string) => <span>{title}</span>;
 const renderItem = (item: SearchItem) => ({
@@ -40,7 +40,7 @@ export function SearchBar() {
   const [value, setValue] = React.useState<string>('');
 
   useObservable(activate$);
-  const eitherOptions = useObservable(allSearchIndex$);
+  const eitherOptions = useObservable(appSearchIndex$);
 
   // more expensive to build index, so we memoize it
   const optionsFuse = React.useMemo(() => {

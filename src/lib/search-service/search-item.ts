@@ -1,8 +1,5 @@
-import {flow, pipe} from 'effect';
+import {flow} from 'effect';
 import Fuse from 'fuse.js';
-import {entitiesSearchIndex$} from '@domain/lib/entities/search-index/entity-search-items';
-import * as OE from 'fp-ts-rxjs/ObservableEither';
-import {pagesIndex} from './pages-index';
 
 export type SearchItem = {
   label: string;
@@ -12,12 +9,6 @@ export type SearchItem = {
   object?: any;
   href: string;
 };
-
-export const allSearchIndex$ = pipe(
-  entitiesSearchIndex$,
-  // concat with pagesIndex
-  OE.map(items => [...items, ...pagesIndex])
-);
 
 export const fuseForSearchItems = flow(
   (items: SearchItem[]) =>

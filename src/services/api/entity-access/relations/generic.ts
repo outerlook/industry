@@ -4,7 +4,7 @@ import {forkJoin, map} from 'rxjs';
 import {flow, pipe} from 'effect';
 import * as A from 'fp-ts/Array';
 import {bindTo} from 'fp-ts/Identity';
-import {fromEitherObservable} from '@lib/rxjs/fp-ts/from-either-observable';
+import {fromEitherObservable} from '@lib/rxjs/from-either-observable';
 import * as E from 'fp-ts/Either';
 import type {customScalars} from '../../validation/api-types';
 import type * as t from 'io-ts';
