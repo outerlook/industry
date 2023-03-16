@@ -1,7 +1,7 @@
 import {expect, test} from "vitest";
-import {fluentApiFrom} from "@/lib/api/fluent-api/index";
-import type {FluentSchema, GetFnForFluentAccessor} from "@/lib/api/fluent-api/fluent-builder";
-import {buildFluentAccess, buildFluentSchema} from "@/lib/api/fluent-api/fluent-builder";
+import {fluentApiFrom} from "@/lib/api/experimental-fluent-api/index";
+import type {FluentSchema, GetFnForFluentAccessor} from "@/lib/api/experimental-fluent-api/fluent-builder";
+import {buildFluentAccess, buildFluentSchema} from "@/lib/api/experimental-fluent-api/fluent-builder";
 
 type ASSET = 'ASSET';
 type WORKORDER = "WORKORDER";
