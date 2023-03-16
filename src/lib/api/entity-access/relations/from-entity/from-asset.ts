@@ -2,29 +2,28 @@ import { assetLens } from '@/lib/api/lenses/entityLenses';
 import type { validTypes } from '@/lib/io-ts/valid-types';
 import { flow } from 'effect';
 import { $api } from '@/lib/api/fetch/rxjs-api';
-import * as OE from 'fp-ts-rxjs/ObservableEither';
 import {
   entitiesFromIdLens,
-  entityFromId,
   entityFromIdLens,
-} from '@/lib/api/relations/generic';
+} from '@/lib/api/entity-access/relations/generic';
+import type {
+  DirectRelationsRecord,
+  IndirectRelationsRecord,
+} from '@/lib/api/entity-access/relations/relation-types';
+import { getRelatedEntitiesByIdKey } from '@/lib/api/entity-access/relations/compare/relates-to-entity';
+import { workorderApi } from '@/lib/api/entity-access/self/workorder';
 
 // Types
-export type AssetRelations = {
+export type AssetDirectRelations = {
   company: validTypes['Company'];
   unit: validTypes['Unit'];
   assignedUsers: validTypes['User'][];
-  workorders: validTypes['Workorder'][];
 };
 
 // Lenses
 const assetCompanyIdLens = assetLens(['companyId']);
 const assetUnitIdLens = assetLens(['unitId']);
 const assetAssignedUserIdsLens = assetLens(['assignedUserIds']);
-
-// self
-const assetFromId = entityFromId($api.Asset.byId);
-const allAssets = OE.fromObservable($api.Asset.all());
 
 // direct relations
 const companyFromAsset = flow(
@@ -37,20 +36,19 @@ const assignedUsersFromAsset = flow(
   entitiesFromIdLens(assetAssignedUserIdsLens, $api.User.byId)
 );
 
-// indirect relations (task inside task)
-declare const workordersFromAsset: (
-  asset: validTypes['Asset']
-) => OE.ObservableEither<'error', validTypes['Workorder'][]>;
-
-// exports
-export const fromAsset = {
+const directRelations = {
   company: companyFromAsset,
   unit: unitFromAsset,
   assignedUsers: assignedUsersFromAsset,
-  workorders: workordersFromAsset,
-};
+} satisfies DirectRelationsRecord<'Asset'>;
 
-export const assetApi = {
-  assetFromId,
-  allAssets,
+// indirect relations
+const indirectRelations = {
+  workorder: getRelatedEntitiesByIdKey(workorderApi.all, 'assetId'),
+} satisfies IndirectRelationsRecord<'Asset'>;
+
+// exports
+export const fromAsset = {
+  ...directRelations,
+  ...indirectRelations,
 };

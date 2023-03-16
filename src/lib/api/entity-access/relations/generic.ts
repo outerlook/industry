@@ -1,12 +1,13 @@
-import { Lens } from 'monocle-ts';
-import { forkJoin, map, Observable } from 'rxjs';
-import { flow, pipe } from 'effect';
+import type {Lens} from 'monocle-ts';
+import type { Observable} from 'rxjs';
+import {forkJoin, map} from 'rxjs';
+import {flow, pipe} from 'effect';
 import * as A from 'fp-ts/Array';
-import { bindTo } from 'fp-ts/Identity';
-import { fromEitherObservable } from '@/lib/rxjs/fp-ts/from-either-observable';
+import {bindTo} from 'fp-ts/Identity';
+import {fromEitherObservable} from '@/lib/rxjs/fp-ts/from-either-observable';
 import * as E from 'fp-ts/Either';
-import { customScalars } from '@/lib/io-ts/api-types';
-import * as t from 'io-ts';
+import type {customScalars} from '@/lib/io-ts/api-types';
+import type * as t from 'io-ts';
 
 export const entityFromId =
   <V, Er>(api: (arg: { id: string }) => Observable<E.Either<Er, V>>) =>
