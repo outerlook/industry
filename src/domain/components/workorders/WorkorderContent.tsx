@@ -5,7 +5,7 @@ import {getBreadcrumb} from "@ui/components/common/Breadcrumb/schema-breadcrumbs
 import {EntityHeader} from "@ui/components/common/EntityHeader";
 import {EntityLayout} from "@ui/components/layouts/EntityLayout";
 import {BasePanel} from "@ui/components/panels/BasePanel";
-import {WidgetPresentation} from "@ui/components/common/widgets/generic-entities/WidgetPresentation";
+import {WidgetPresentation} from "@ui/components/widgets/generic-entities/WidgetPresentation";
 import {notImplementedHalMsg} from "@lib/utils/not-implemented";
 
 type Props = {

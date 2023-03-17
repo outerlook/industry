@@ -1,4 +1,4 @@
-import {BaseWidget} from "@ui/components/common/widgets/BaseWidget";
+import {BaseWidget} from "@ui/components/widgets/BaseWidget";
 import {List, Space, Typography} from "antd";
 import {PUBLIC_LINK_GITHUB_PROJECT, PUBLIC_LINK_STORYBOOK,} from "@lib/utils/environment-vars";
 import {BookOutlined, GithubOutlined} from "@ant-design/icons";

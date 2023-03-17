@@ -6,6 +6,6 @@ import {fromEitherObservable} from "@lib/rxjs/from-either-observable";
 const companyFromId = entityFromId($api.Company.byId);
 const allCompanies = fromEitherObservable($api.Company.all());
 export const companyApi = {
-    companyFromId,
-    allCompanies
+    fromId: companyFromId,
+    all: allCompanies
 }

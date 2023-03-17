@@ -1,24 +1,39 @@
 import { CenteredLayout } from '@ui/components/layouts/CenteredLayout';
 import { BasePanel } from '@ui/components/panels/BasePanel';
-import { WidgetServicoLink } from '@ui/components/common/widgets/WidgetServicoLink';
+import { WidgetServicoLink } from '@ui/components/widgets/WidgetServicoLink';
 import { Col, List, Row } from 'antd';
 import { LinksExternosWidget } from './LinksExternosWidget';
 import { servicesList } from '../../lib/entities/services-list';
 import { WorkorderPizzaByStatus } from '../../lib/entities/renders/formatters/workorders/workorder-formatters';
 import { workorderApi } from '@services/api/entity-access/self/workorder';
 import { useObservable } from '@lib/rxjs/use-observable';
-import { pipe } from 'effect';
+import { flow, pipe } from 'effect';
 import * as E from 'fp-ts/Either';
 import * as A from 'fp-ts/Array';
 import { ArrayCountWidget } from '@ui/components/widgets/from/arrays';
+import { companyApi } from '@services/api/entity-access/self/company';
+import { unitApi } from '@services/api/entity-access/self/unit';
+import { assetApi } from '@services/api/entity-access/self/asset';
+import { CompanyTreeMap } from '@ui/components/widgets/charts/CompanyTreeMap';
 
 export const RootPage = () => {
   const eitherWorkorders = useObservable(workorderApi.all) ?? E.right([]);
+  const eitherCompanies = useObservable(companyApi.all) ?? E.right([]);
+  const eitherUnits = useObservable(unitApi.all) ?? E.right([]);
+  const eitherAssets = useObservable(assetApi.all) ?? E.right([]);
 
-  const workorders = pipe(
-    eitherWorkorders,
-    E.getOrElseW(() => [] as never)
-  );
+  // const workorders = pipe(
+  //   eitherWorkorders,
+  //   E.getOrElseW(() => [] as never)
+  // );
+
+  const orEmpty = flow(E.getOrElseW(() => [] as never));
+
+  const workorders = orEmpty(eitherWorkorders);
+  const companies = orEmpty(eitherCompanies);
+  const units = orEmpty(eitherUnits);
+  const assets = orEmpty(eitherAssets);
+
   const { left: completeWO, right: incompleteWO } = pipe(
     workorders,
     A.partition(f => f.status === 'in progress')
@@ -44,7 +59,11 @@ export const RootPage = () => {
           )}
         />
       </BasePanel>
-      <BasePanel span={12} title={'General status'} />
+      <BasePanel span={12} title={'Assets health overview'}>
+        <div className={'h-64'}>
+          <CompanyTreeMap companies={companies} units={units} assets={assets} />
+        </div>
+      </BasePanel>
       <BasePanel span={12} title={'Work Orders'}>
         <Row align={'middle'} justify={'center'}>
           <Col className={'items-center flex flex-col'} span={6}>

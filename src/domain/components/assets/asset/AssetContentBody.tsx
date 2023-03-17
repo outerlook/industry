@@ -1,11 +1,11 @@
 import type * as t from 'io-ts';
 import type { apiTypes } from '@services/api/validation/api-types';
 import { BasePanel } from '@ui/components/panels/BasePanel';
-import { BaseWidget } from '@ui/components/common/widgets/BaseWidget';
-import { NotImplementedChart } from '@ui/components/common/widgets/NotImplementedChart';
+import { BaseWidget } from '@ui/components/widgets/BaseWidget';
+import { NotImplementedChart } from '@ui/components/widgets/charts/NotImplementedChart';
 import { Button, Col, Row, Space } from 'antd';
 import { notImplementedHalMsg } from '@lib/utils/not-implemented';
-import { WorkorderTag } from '@ui/components/common/widgets/workorder/WorkorderTag';
+import { WorkorderTag } from '@ui/components/widgets/workorder/WorkorderTag';
 
 export function AssetContentBody(props: {
   workorders: t.TypeOf<typeof apiTypes.Workorder>[];
