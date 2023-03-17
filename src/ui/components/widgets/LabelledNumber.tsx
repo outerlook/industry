@@ -1,4 +1,4 @@
-import {BaseWidget} from '../common/widgets/BaseWidget';
+import {BaseWidget} from './BaseWidget';
 import {Typography} from 'antd';
 
 type LabelNumberProps = { n: number; label: string };

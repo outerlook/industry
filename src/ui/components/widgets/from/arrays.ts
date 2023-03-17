@@ -2,7 +2,7 @@ import {flow, pipe} from 'effect';
 import * as I from 'fp-ts/Identity';
 import {LabelledNumber} from '../LabelledNumber';
 import * as R from 'fp-ts/Record';
-import {PieChart} from '../PieChart';
+import {PieChart} from '../charts/PieChart';
 import type {Object} from 'ts-toolbelt';
 import * as A from 'fp-ts/Array';
 import _ from 'lodash';
