@@ -1,7 +1,7 @@
 import {useAsset} from "../../../lib/entities/context/entities-context";
 import {pipe} from "effect";
 import * as O from "fp-ts/Option";
-import {BaseWidget} from "@ui/components/common/widgets/BaseWidget";
+import {BaseWidget} from "@ui/components/widgets/BaseWidget";
 import {AttributeWidget} from "@ui/components/widgets/AttributeWidget";
 import {assetFormatters} from "../../../lib/entities/renders/formatters/asset-formatters";
 import {getAttributeRecords} from "../../../lib/entities/renders/formatters/generic";

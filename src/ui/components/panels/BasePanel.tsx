@@ -11,7 +11,7 @@ export const BasePanel = (props: BasePanelProps) => {
   return (
     <Col span={span}>
       <Card size={"small"} bordered={false} className={"h-full"} title={title}>
-        <Row>{children}</Row>
+       {children}
       </Card>
     </Col>
   );

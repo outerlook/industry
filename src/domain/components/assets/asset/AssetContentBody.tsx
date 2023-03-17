@@ -1,11 +1,11 @@
 import type * as t from 'io-ts';
 import type { apiTypes } from '@services/api/validation/api-types';
 import { BasePanel } from '@ui/components/panels/BasePanel';
-import { BaseWidget } from '@ui/components/common/widgets/BaseWidget';
-import { NotImplementedChart } from '@ui/components/common/widgets/NotImplementedChart';
-import { Button, Row, Space } from 'antd';
+import { BaseWidget } from '@ui/components/widgets/BaseWidget';
+import { NotImplementedChart } from '@ui/components/widgets/charts/NotImplementedChart';
+import { Button, Col, Row, Space } from 'antd';
 import { notImplementedHalMsg } from '@lib/utils/not-implemented';
-import { WorkorderTag } from '@ui/components/common/widgets/workorder/WorkorderTag';
+import { WorkorderTag } from '@ui/components/widgets/workorder/WorkorderTag';
 
 export function AssetContentBody(props: {
   workorders: t.TypeOf<typeof apiTypes.Workorder>[];
@@ -15,14 +15,16 @@ export function AssetContentBody(props: {
   return (
     <Space size={'large'} className={'w-full'} direction={'vertical'}>
       <BasePanel title="General health">
-        <BaseWidget colProps={{ span: 12 }}>
-          Something about uptime
-          <NotImplementedChart title={'Uptime'} />
-        </BaseWidget>
-        <BaseWidget colProps={{ span: 12 }}>
-          Something about status history
-          <NotImplementedChart title={'Status'} />
-        </BaseWidget>
+        <Row>
+          <Col span={12}>
+            Something about uptime
+            <NotImplementedChart title={'Uptime'} />
+          </Col>
+          <Col span={12}>
+            Something about status history
+            <NotImplementedChart title={'Status'} />
+          </Col>
+        </Row>
       </BasePanel>
       <BasePanel
         title={

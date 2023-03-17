@@ -1,6 +1,6 @@
 import {useAsset} from "../../../lib/entities/context/entities-context";
 import {Divider, Space} from "antd";
-import {WidgetPresentation} from "@ui/components/common/widgets/generic-entities/WidgetPresentation";
+import {WidgetPresentation} from "@ui/components/widgets/generic-entities/WidgetPresentation";
 import {renderStatus} from "../../../lib/entities/table/cells/renderers";
 import {AssetAttributes} from "../widgets/AssetAttributes";
 

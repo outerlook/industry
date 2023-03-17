@@ -4,7 +4,7 @@ import type {apiTypes} from "@services/api/validation/api-types";
 import type {Action} from "@ui/components/common/ActionButtons";
 import {getBreadcrumb} from "@ui/components/common/Breadcrumb/schema-breadcrumbs";
 import {EntityHeader} from "@ui/components/common/EntityHeader";
-import {WidgetPresentation} from "@ui/components/common/widgets/generic-entities/WidgetPresentation";
+import {WidgetPresentation} from "@ui/components/widgets/generic-entities/WidgetPresentation";
 import {EntityLayout} from "@ui/components/layouts/EntityLayout";
 import {BasePanel} from "@ui/components/panels/BasePanel";
 import {notImplementedHalMsg} from "@lib/utils/not-implemented";

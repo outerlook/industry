@@ -38,7 +38,7 @@ export const NotImplementedChart = ({
 }) => {
   // return null;
   return (
-    <div className={'w-full'}>
+    <div>
       <HighchartReact highcharts={Chart} options={options({ title })} />
     </div>
   );

@@ -1,4 +1,4 @@
-import {BaseWidget} from "../common/widgets/BaseWidget";
+import {BaseWidget} from "./BaseWidget";
 import {Space, Typography} from "antd";
 
 export const AttributeWidget = (
