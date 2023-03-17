@@ -15,7 +15,7 @@ const processPieOptions = ({
 
     pie: {
       dataLabels: {
-        enabled: false,
+        enabled: false
       },
     },
   },
@@ -27,6 +27,7 @@ const processPieOptions = ({
 
   series: [
     {
+      name: 'Count',
       data: data.map(({ name, value }) => [name, value]),
       type: 'pie',
     },
