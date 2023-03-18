@@ -1,20 +1,22 @@
-import { CenteredLayout } from '@ui/components/layouts/CenteredLayout';
-import { BasePanel } from '@ui/components/panels/BasePanel';
-import { WidgetServicoLink } from '@ui/components/widgets/WidgetServicoLink';
-import { Col, List, Row } from 'antd';
-import { LinksExternosWidget } from './LinksExternosWidget';
-import { servicesList } from '../../lib/entities/services-list';
-import { WorkorderPizzaByStatus } from '../../lib/entities/renders/formatters/workorders/workorder-formatters';
-import { workorderApi } from '@services/api/entity-access/self/workorder';
-import { useObservable } from '@lib/rxjs/use-observable';
-import { flow, pipe } from 'effect';
+import {CenteredLayout} from '@ui/components/layouts/CenteredLayout';
+import {BasePanel} from '@ui/components/panels/BasePanel';
+import {WidgetServicoLink} from '@ui/components/widgets/WidgetServicoLink';
+import {Col, List, Row} from 'antd';
+import {LinksExternosWidget} from './LinksExternosWidget';
+import {servicesList} from '../../lib/entities/services-list';
+import {WorkorderPizzaByStatus} from '../../lib/entities/renders/formatters/workorders/workorder-formatters';
+import {workorderApi} from '@services/api/entity-access/self/workorder';
+import {useObservable} from '@lib/rxjs/use-observable';
+import {flow, pipe} from 'effect';
 import * as E from 'fp-ts/Either';
 import * as A from 'fp-ts/Array';
-import { ArrayCountWidget } from '@ui/components/widgets/from/arrays';
-import { companyApi } from '@services/api/entity-access/self/company';
-import { unitApi } from '@services/api/entity-access/self/unit';
-import { assetApi } from '@services/api/entity-access/self/asset';
-import { CompanyTreeMap } from '@ui/components/widgets/charts/CompanyTreeMap';
+import {ArrayCountWidget} from '@ui/components/widgets/from/arrays';
+import {companyApi} from '@services/api/entity-access/self/company';
+import {unitApi} from '@services/api/entity-access/self/unit';
+import {assetApi} from '@services/api/entity-access/self/asset';
+import {CompanyTreeMap} from '@ui/components/widgets/charts/CompanyTreeMap';
+import {linkTo} from "@code-generators/__GENERATED__/routes";
+import {navigate} from "@lib/utils/navigate";
 
 export const RootPage = () => {
   const eitherWorkorders = useObservable(workorderApi.all) ?? E.right([]);
@@ -61,7 +63,15 @@ export const RootPage = () => {
       </BasePanel>
       <BasePanel span={12} title={'Assets health overview'}>
         <div className={'h-64'}>
-          <CompanyTreeMap companies={companies} units={units} assets={assets} />
+          <CompanyTreeMap
+            onClick={e => {
+              console.log(e);
+              navigate(linkTo['/assets/:id']({ id: e.point.options.originalId }));
+            }}
+            companies={companies}
+            units={units}
+            assets={assets}
+          />
         </div>
       </BasePanel>
       <BasePanel span={12} title={'Work Orders'}>

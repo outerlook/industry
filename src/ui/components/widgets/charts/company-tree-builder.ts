@@ -1,16 +1,15 @@
 import * as E from 'fp-ts/Either';
-import { validTypes } from '@services/api/validation/valid-types';
-import { Axis, ColorAxisOptions, Series } from 'highcharts';
-import { pipe } from 'effect';
+import type {validTypes} from '@services/api/validation/valid-types';
+import type {Axis, ColorAxisOptions, Series} from 'highcharts';
+import {pipe} from 'effect';
 import * as A from 'fp-ts/Array';
-import { deepMergeMonoid } from '@lib/fp-ts/deep-merge-monoid';
-import deepmerge from '@fastify/deepmerge';
-import { Object } from 'ts-toolbelt';
-import { Lens } from 'monocle-ts';
+import {deepMergeMonoid} from '@lib/fp-ts/deep-merge-monoid';
+import type {Object} from 'ts-toolbelt';
+import {Lens} from 'monocle-ts';
 import * as O from 'fp-ts/Option';
 import * as I from 'fp-ts/Identity';
-import type { TreeMapProps } from './CompanyTreeMap';
-import { prepend } from 'fp-ts-std/String';
+import type {TreeMapProps} from './CompanyTreeMap';
+import {prepend} from 'fp-ts-std/String'; // TODO Ugly file
 
 // TODO Ugly file
 // - but ugly logics too
@@ -30,7 +29,7 @@ type Element = {
   colorValue?: number | undefined;
 } & IdentifiableObject;
 
-type TreeElement = Element & { children?: TreeElement[] | undefined };
+export type TreeElement = Element & { children?: TreeElement[] | undefined };
 
 type ColorRange = [minColor: string, maxColor: string];
 
@@ -163,9 +162,9 @@ const groupByParent = <Child extends { parent: string }>(
 ): Record<string, Child[]> =>
   pipe(
     cs,
-    A.reduce({} as Record<string, Child[]>, (prev, c) =>
-      deepmerge({ all: true })(prev, { [c.parent]: [c] })
-    )
+    A.foldMap(deepMergeMonoid<Record<string, Child[]>>(true))(c => ({
+      [c.parent]: [c],
+    }))
   );
 
 // Tree to config helpers
@@ -230,7 +229,7 @@ const buildTreeFromChildOrElement =
       originalId: parentOrChild.originalId,
       parent: parentOrChild.parent,
       value: parentOrChild.value,
-        type: parentOrChild.type,
+      type: parentOrChild.type,
       colorValue: parentOrChild.value, // Here we add color value to the element
       children: children?.length
         ? children.map(buildTreeFromChildOrElement(elementGroups))
