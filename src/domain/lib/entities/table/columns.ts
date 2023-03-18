@@ -1,9 +1,9 @@
-import type {ColumnType} from "antd/es/table";
-import {pipe} from "effect";
-import * as A from "fp-ts/Array";
-import * as RA from "fp-ts/ReadonlyArray";
-import {Lens} from "monocle-ts";
-import type {L} from "ts-toolbelt";
+import type { ColumnType } from 'antd/es/table';
+import { pipe } from 'effect';
+import * as A from 'fp-ts/Array';
+import * as RA from 'fp-ts/ReadonlyArray';
+import { Lens } from 'monocle-ts';
+import type { L } from 'ts-toolbelt';
 
 const toDefaultIfEmpty =
   <A>(defaultValue: A[]) =>
@@ -18,7 +18,7 @@ type ColumnsThatHasThisKey<
   {
     readonly dataIndex: K;
   },
-  "contains->"
+  'contains->'
 >;
 
 export const generateColumnPicker =
@@ -35,16 +35,16 @@ export const generateColumnPicker =
     // @ts-ignore fixme shame
     const selectedKeys = pipe(keys, toDefaultIfEmpty(defaultKeys));
 
-    const columnDataIndexLens = Lens.fromProp<Columns[number]>()("dataIndex");
+    const columnKey = Lens.fromProp<Columns[number]>()('key');
 
     const columnHasKey =
       (key: K) =>
       // @ts-ignore shame, but guarded by tests FIXME
       (column: Columns[number]): column is ColumnsThatHasThisKey<Columns, K> =>
-        columnDataIndexLens.get(column) === key;
+        columnKey.get(column) === key;
 
     const findColumnByKey = (key: KeysOfColumns<Columns>) =>
-        // @ts-ignore guarded by tests FIXME
+      // @ts-ignore guarded by tests FIXME
       pipe(columns as Columns, RA.findFirst(columnHasKey(key)));
 
     const selectedColumns = pipe(
@@ -56,4 +56,4 @@ export const generateColumnPicker =
     return selectedColumns as any; // shame, guarded by tests FIXME
   };
 
-type KeysOfColumns<T extends ReadonlyArray<ColumnType<any>>> = T[number]["key"];
+type KeysOfColumns<T extends ReadonlyArray<ColumnType<any>>> = T[number]['key'];

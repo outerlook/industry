@@ -1,6 +1,6 @@
 export type FormatterRecord<T> = (t: T) => {
   label: string;
-  value: string;
+  value: React.ReactNode;
 };
 
 export type FormatterRecords<T> = {

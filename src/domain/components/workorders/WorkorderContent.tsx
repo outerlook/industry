@@ -1,12 +1,17 @@
-import type * as t from "io-ts";
-import type {apiTypes} from "@services/api/validation/api-types";
-import type {Action} from "@ui/components/common/ActionButtons";
-import {getBreadcrumb} from "@ui/components/common/Breadcrumb/schema-breadcrumbs";
-import {EntityHeader} from "@ui/components/common/EntityHeader";
-import {EntityLayout} from "@ui/components/layouts/EntityLayout";
-import {BasePanel} from "@ui/components/panels/BasePanel";
-import {WidgetPresentation} from "@ui/components/widgets/generic-entities/WidgetPresentation";
-import {notImplementedHalMsg} from "@lib/utils/not-implemented";
+import type * as t from 'io-ts';
+import * as I from 'fp-ts/Identity';
+import type { apiTypes } from '@services/api/validation/api-types';
+import type { Action } from '@ui/components/common/ActionButtons';
+import { getBreadcrumb } from '@ui/components/common/Breadcrumb/schema-breadcrumbs';
+import { EntityHeader } from '@ui/components/common/EntityHeader';
+import { EntityLayout } from '@ui/components/layouts/EntityLayout';
+import { BasePanel } from '@ui/components/panels/BasePanel';
+import { WidgetPresentation } from '@ui/components/widgets/generic-entities/WidgetPresentation';
+import { notImplementedHalMsg } from '@lib/utils/not-implemented';
+import type { validTypes } from '@services/api/validation/valid-types';
+import { pipe } from 'effect';
+import { assetFormatters } from '../../lib/entities/renders/formatters/asset-formatters';
+import { SiderAttributes } from '@ui/components/common/SiderAttributes';
 
 type Props = {
   company: t.TypeOf<typeof apiTypes.Company>;
@@ -20,12 +25,12 @@ export const WorkorderContent = (props: Props) => {
 
   const actions = [
     {
-      label: "edit",
-      onClick: notImplementedHalMsg("edit"),
+      label: 'edit',
+      onClick: notImplementedHalMsg('edit'),
     },
-    { label: "delete", onClick: notImplementedHalMsg("delete") },
-    { label: "share", onClick: notImplementedHalMsg("share") },
-    { label: "other", onClick: notImplementedHalMsg("other") },
+    { label: 'delete', onClick: notImplementedHalMsg('delete') },
+    { label: 'share', onClick: notImplementedHalMsg('share') },
+    { label: 'other', onClick: notImplementedHalMsg('other') },
   ] satisfies Action[];
 
   const breadcrumbItems = getBreadcrumb.forWorkorders({
@@ -40,6 +45,7 @@ export const WorkorderContent = (props: Props) => {
       siderChildren={
         <>
           <WidgetPresentation title={workorder.title} />
+          <SiderAttributes attributes={toSideAttributesProps({ asset })} />
         </>
       }
     >
@@ -60,3 +66,12 @@ export const WorkorderContent = (props: Props) => {
     </EntityLayout>
   );
 };
+
+const toSideAttributesProps = ({ asset }: { asset: validTypes['Asset'] }) =>
+  pipe(
+    I.Do,
+    I.bind('assetName', () => assetFormatters.nameLink(asset)),
+
+    // reorder
+    I.map(({ assetName }) => [assetName])
+  );
