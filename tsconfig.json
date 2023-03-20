@@ -6,6 +6,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "ESNext",
     "target": "ES2017",
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
       "@ui/*": ["src/ui/*"],
