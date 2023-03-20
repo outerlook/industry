@@ -29,8 +29,9 @@ const {company$: company, unit$: unit} = await pipe(
     TE.fromEither,
     TE.chain((v) => pipe(FPO.fromObservable(v), FPO.toTaskEither)),
     TE.chainEitherKW(A.sequenceS(E.Apply)),
-    getOrThrow
-)();
+    TE.getOrElse((e) => {
+        throw e;
+    }))();
 ---
 
 <BaseLayout title={user.name}>
