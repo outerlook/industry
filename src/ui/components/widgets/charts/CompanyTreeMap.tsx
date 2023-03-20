@@ -21,6 +21,9 @@ const baseOptions = {
   plotOptions: {
     treemap: {
       layoutAlgorithm: 'squarified',
+      tooltip: {
+        valueSuffix: '%',
+      },
       alternateStartingDirection: true,
       /* TODO
        * when we aggregate, we should take mean of all values, not the sum

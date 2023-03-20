@@ -12,6 +12,7 @@ import type {TreeMapProps} from './CompanyTreeMap';
 import {prepend} from 'fp-ts-std/String'; // TODO Ugly file
 import {treeElementToTree} from './generic-tree';
 import * as Tree from 'fp-ts/Tree';
+import Highcharts from "highcharts";
 
 // TODO Ugly file
 // - but ugly logics too
@@ -114,6 +115,8 @@ const toElement =
       const id = pipe(idLens.get(t), String);
       const globalUniqueId = pipe(id, prepend(type));
 
+
+
       return pipe(
         I.Do,
         I.bind('id', () => globalUniqueId),
@@ -167,6 +170,7 @@ const treeElementToSeries = (
   type: 'treemap',
   xAxis: axisNumber,
   colorAxis: axisNumber,
+
   data: pipe(
     treeElement,
     Tree.reduce([] as Element[], (prev, cur: Element) => [...prev, cur]),
@@ -222,7 +226,7 @@ const propsToElements = (props: TreeMapProps) =>
     A.concat(props.units.map(unitToElement)),
     A.concat(props.assets.map(assetToElement))
   );
-export const propsToCompanyTree = flow(
+export const  propsToCompanyTree = flow(
   propsToElements,
   // if there's no element, no need for it to process things
   A.match(() => E.right([]), treeElementToTree('company'))
