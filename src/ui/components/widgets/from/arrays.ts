@@ -5,8 +5,8 @@ import * as R from 'fp-ts/Record';
 import {PieChart} from '../charts/PieChart';
 import type {Object} from 'ts-toolbelt';
 import * as A from 'fp-ts/Array';
-import _ from 'lodash';
 import {Lens} from "monocle-ts";
+import {groupBy} from "@lib/utils/group-by";
 
 export const arrayToCountWidget = (label: string) => (arr: any[]) =>
   pipe(
@@ -21,14 +21,6 @@ export const ArrayCountWidget = flow(
   countLens(['title', 'items']).get,
   I.map(({ title, items }) => arrayToCountWidget(title)(items))
 );
-
-const groupBy =
-  <T extends { [key: string]: any }, K extends keyof T>(
-    key: K & Object.SelectKeys<T, string>
-  ) =>
-  (arr: T[]): Record<T[K], T[]> => {
-    return _.groupBy(arr, key) as Record<T[K], T[]>;
-  };
 
 export const toPieChartByKey =
   <T extends { [key: string]: any }>(
