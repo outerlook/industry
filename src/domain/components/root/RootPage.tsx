@@ -1,7 +1,7 @@
 import {CenteredLayout} from '@ui/components/layouts/CenteredLayout';
 import {BasePanel} from '@ui/components/panels/BasePanel';
 import {WidgetServicoLink} from '@ui/components/widgets/WidgetServicoLink';
-import {Col, List, Row} from 'antd';
+import {Col, List, Row, Space, Typography} from 'antd';
 import {LinksExternosWidget} from './LinksExternosWidget';
 import {servicesList} from '../../lib/entities/services-list';
 import {WorkorderPizzaByStatus} from '../../lib/entities/renders/formatters/workorders/workorder-formatters';
@@ -17,12 +17,15 @@ import {assetApi} from '@services/api/entity-access/self/asset';
 import {CompanyTreeMap} from '@ui/components/widgets/charts/CompanyTreeMap';
 import {linkTo} from '@code-generators/__GENERATED__/routes';
 import {navigate} from '@lib/utils/navigate';
+import {UsersAndWorkloads} from '@ui/components/widgets/charts/user-workload/UsersAndWorkloads';
+import {userApi} from '@services/api/entity-access/self/user';
 
 export const RootPage = () => {
     const eitherWorkorders = useObservable(workorderApi.all) ?? E.right([]);
     const eitherCompanies = useObservable(companyApi.all) ?? E.right([]);
     const eitherUnits = useObservable(unitApi.all) ?? E.right([]);
     const eitherAssets = useObservable(assetApi.all) ?? E.right([]);
+    const eitherUsers = useObservable(userApi.all) ?? E.right([]);
 
     // const workorders = pipe(
     //   eitherWorkorders,
@@ -35,6 +38,7 @@ export const RootPage = () => {
     const companies = orEmpty(eitherCompanies);
     const units = orEmpty(eitherUnits);
     const assets = orEmpty(eitherAssets);
+    const users = orEmpty(eitherUsers);
 
     const {left: completeWO, right: incompleteWO} = pipe(
         workorders,
@@ -83,12 +87,19 @@ export const RootPage = () => {
                     <Col className={'items-center flex flex-col'} span={6}>
                         <ArrayCountWidget title={'Completed'} items={completeWO}/>
                         <ArrayCountWidget title={'Pending'} items={incompleteWO}/>
+                        <Space  align={'center'} direction={'vertical'}>
+                            <UsersAndWorkloads users={users} workorders={workorders}/>
+                            <Typography.Text className={'text-slate-600 text-small'}>
+                                Users
+                            </Typography.Text>
+                        </Space>
                     </Col>
                     <Col span={12} offset={1} className={'h-64'} flex={1}>
                         {/*TODO onClick go to pending workorders list*/}
                         <WorkorderPizzaByStatus workorders={workorders}/>{' '}
                     </Col>
                 </Row>
+                <Row></Row>
             </BasePanel>
             <BasePanel span={6} title={'External links'}>
                 <LinksExternosWidget/>

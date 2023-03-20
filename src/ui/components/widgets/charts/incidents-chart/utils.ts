@@ -1,15 +1,23 @@
-import type { IncidentChartTypes } from './codecs';
-import * as E from "fp-ts/Either";
-import { IncidentChartCodecs } from './codecs';
+import type {IncidentChartTypes} from './codecs';
+import {IncidentChartCodecs} from './codecs';
+import * as O from 'fp-ts/Option';
+import * as S from 'fp-ts/string';
+import * as R from 'fp-ts/Record';
+import * as t from 'io-ts';
+import * as E from 'fp-ts/Either';
 import * as I from 'fp-ts/Identity';
-import type { validTypes } from '@services/api/validation/valid-types';
-import { pipe } from 'effect';
+import type {validTypes} from '@services/api/validation/valid-types';
+import {flow, pipe} from 'effect';
 import * as A from 'fp-ts/Array';
 import dayjs from 'dayjs';
-import * as O from 'fp-ts/Option';
-import { groupByMap } from '@lib/utils/group-by';
-import {getOrThrow} from "@lib/fp-ts/get-or-throw";
-import {apply} from "fp-ts";
+import {Grouped} from '@lib/utils/group-by';
+import {getOrThrow} from '@lib/fp-ts/get-or-throw';
+import type {NonEmptyArray} from 'fp-ts/NonEmptyArray';
+import * as NEA from 'fp-ts/NonEmptyArray';
+import {byNth} from '@lib/fp-ts/ord/tuple';
+import {statusCriticalOrd} from '@domain/lib/entities/ord/statusCriticalOrd';
+import {healthHistoryDateOrd} from '@domain/lib/entities/ord/health-history';
+import {getDaysBetween} from '@lib/utils/get-days-between';
 
 const { IncidentDay } = IncidentChartCodecs;
 const ISO_ONLY_DATE = 'YYYY-MM-DD';
@@ -17,47 +25,72 @@ const ISO_ONLY_DATE = 'YYYY-MM-DD';
 const groupHistoryByDate = (healthHistory: validTypes['HealthHistory'][]) =>
   pipe(
     healthHistory,
-    groupByMap(p => dayjs(p.timestamp).format(ISO_ONLY_DATE))
+    NEA.groupBy(p => dayjs(p.timestamp).format(ISO_ONLY_DATE))
   );
 
 const toIncidentDays =
-  (historyGroupedByDay: Record<string, validTypes['HealthHistory'][]>) =>
+  (historyGroupedByDay: Grouped<validTypes['HealthHistory'], string>) =>
   (daysInRange: dayjs.Dayjs[]): Array<IncidentChartTypes['IncidentDay']> =>
     pipe(
       daysInRange,
-      A.map(day => ({
-        date: day,
-        events: historyGroupedByDay[day.format(ISO_ONLY_DATE)] ?? [],
-      })),
-      A.map(v =>
-        IncidentDay.decode({
-          ...v,
-          date: v.date.format(ISO_ONLY_DATE),
+      A.map(day => {
+        const formattedDay = day.format(ISO_ONLY_DATE);
+        const events = historyGroupedByDay[formattedDay] ?? [];
+        return {
+          date: formattedDay,
+          events: events.map(e => ({
+            statusId: e.status,
+            date: dayjs(e.timestamp),
+          })),
           statusId: pipe(
-            v.events,
-            A.match(
+            events,
+            A.matchW(
               // if there's no event on this day, the last event before it should be used to represent
               // this day
-              () => lastEventBefore(v.date)(historyGroupedByDay),
+              () => lastEventBefore(day)(historyGroupedByDay),
               // if there are events, the most critical one should be used to represent this day
-              v => pickMostCriticalEvent(v)
+              e => pickMostCriticalEvent(e)
             )
           ),
-        })
-      ),
-        A.traverse(E.)
+        } as t.TypeOf<typeof IncidentDay>;
+      }),
+      A.map(IncidentDay.decode),
+      A.sequence(E.Applicative), // Either<Errors, Result>[] -> Either<Errors, Result[]>
+      getOrThrow // in this we are abdicating of handling our error
     );
 
-declare const lastEventBefore: (
-  day: dayjs.Dayjs
-) => (
-  historyGroupedByDay: Record<string, validTypes['HealthHistory'][]>
-) => (history: validTypes['HealthHistory'][]) => validTypes['Status'];
+const lastEventBefore =
+  (day: dayjs.Dayjs) =>
+  (historyGroupedByDay: Grouped<validTypes['HealthHistory'], string>) => {
+    return pipe(
+      historyGroupedByDay,
+      R.toEntries, // -> [dateStr, obj]
+      A.filter(([datestr]) => dayjs(datestr).isBefore(day)), // removes days after what we want
+      A.sort(byNth(S.Ord, 0)), // sort by datestr
+      A.last,
+      E.fromOption(() => ({ type: 'NO_DAY_BEFORE_CHOOSEN_DAY' as const })),
+      E.map(
+        flow(
+          ([, history]) => history,
+          NEA.sort(healthHistoryDateOrd),
+          NEA.last,
+          a => a.status
+        )
+      )
+    );
+  };
 
-declare const pickMostCriticalEvent: (
-  history: validTypes['HealthHistory'][]
-) => validTypes['Status'];
+const pickMostCriticalEvent: (
+  history: NonEmptyArray<validTypes['HealthHistory']>
+) => validTypes['Status'] = history =>
+  pipe(
+    history,
+    NEA.map(n => n.status),
+    NEA.sort(statusCriticalOrd),
+    NEA.last
+  );
 
+const today = dayjs();
 export const historyToDays: (
   healthHistory: validTypes['HealthHistory'][]
 ) => IncidentChartTypes['IncidentDay'][] = healthHistory =>
@@ -70,7 +103,7 @@ export const historyToDays: (
       pipe(
         A.head(healthHistory),
         O.map(d => dayjs(d.timestamp)),
-        O.map(getDaysSince),
+        O.map(getDaysBetween(today)),
         O.getOrElse(() => [] as dayjs.Dayjs[])
       )
     ),
@@ -78,5 +111,3 @@ export const historyToDays: (
       return toIncidentDays(historyGroupedByDay)(daysInRange);
     }
   );
-
-declare const getDaysSince: (day: dayjs.Dayjs) => dayjs.Dayjs[];
