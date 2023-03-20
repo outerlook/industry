@@ -1,7 +1,7 @@
 import * as E from 'fp-ts/Either';
 import type {validTypes} from '@services/api/validation/valid-types';
 import type {Axis, ColorAxisOptions, Series} from 'highcharts';
-import {pipe} from 'effect';
+import {flow, pipe} from 'effect';
 import * as A from 'fp-ts/Array';
 import {deepMergeMonoid} from '@lib/fp-ts/deep-merge-monoid';
 import type {Object} from 'ts-toolbelt';
@@ -10,6 +10,8 @@ import * as O from 'fp-ts/Option';
 import * as I from 'fp-ts/Identity';
 import type {TreeMapProps} from './CompanyTreeMap';
 import {prepend} from 'fp-ts-std/String'; // TODO Ugly file
+import {treeElementToTree} from './generic-tree';
+import * as Tree from 'fp-ts/Tree';
 
 // TODO Ugly file
 // - but ugly logics too
@@ -23,13 +25,13 @@ type IdentifiableObject = {
   type: string;
 };
 
-type Element = {
+export type Element = {
   parent?: string | undefined;
   value?: number | undefined;
   colorValue?: number | undefined;
 } & IdentifiableObject;
 
-export type TreeElement = Element & { children?: TreeElement[] | undefined };
+// export type TreeElement = Element & { children?: TreeElement[] | undefined };
 
 type ColorRange = [minColor: string, maxColor: string];
 
@@ -119,20 +121,10 @@ const toElement =
         I.bind('type', () => type),
         I.bind('name', () => nameLens.get(t)),
         bindOptionIfExists('parent', parentIdOption),
-        bindOptionIfExists('value', valueOption)
+        bindOptionIfExists('value', valueOption),
+        bindOptionIfExists('colorValue', valueOption)
       );
     };
-
-const flattenTree = (tree: TreeElement): TreeElement[] => {
-  const children = tree.children;
-  return children?.length
-    ? pipe(
-        children,
-        A.map(flattenTree),
-        A.reduce([tree], (prev, curr) => [...prev, ...curr])
-      )
-    : [tree];
-};
 
 // enity helpers
 const assetToElement = toElement(
@@ -157,7 +149,7 @@ const companyToElement = toElement('company')<validTypes['Company']>({
   nameProp: 'name',
 });
 
-const groupByParent = <Child extends { parent: string }>(
+export const groupByParent = <Child extends { parent: string }>(
   cs: Child[]
 ): Record<string, Child[]> =>
   pipe(
@@ -169,13 +161,17 @@ const groupByParent = <Child extends { parent: string }>(
 
 // Tree to config helpers
 const treeElementToSeries = (
-  treeElement: TreeElement,
+  treeElement: Tree.Tree<Element>,
   axisNumber: number
 ): Series => ({
   type: 'treemap',
   xAxis: axisNumber,
   colorAxis: axisNumber,
-  data: flattenTree(treeElement),
+  data: pipe(
+    treeElement,
+    Tree.reduce([] as Element[], (prev, cur: Element) => [...prev, cur]),
+    o => o
+  ),
 });
 
 const treeElementToXAxis = (totalAxis: number, axisNumber: number): Axis => {
@@ -203,8 +199,8 @@ const treeElementToHighchartsOptions =
   (baseColors: ColorRange[]) =>
   (
     axisNumber: number,
-    treeElement: TreeElement,
-    allTreeElements: TreeElement[]
+    treeElement: Tree.Tree<Element>,
+    allTreeElements: Tree.Forest<Element>
   ) => {
     const series = treeElementToSeries(treeElement, axisNumber);
     const xAxis = treeElementToXAxis(allTreeElements.length, axisNumber);
@@ -219,39 +215,18 @@ const treeElementToHighchartsOptions =
     };
   };
 
-const buildTreeFromChildOrElement =
-  (elementGroups: Record<string, Element[]>) =>
-  (parentOrChild: Element): TreeElement => {
-    const children = elementGroups[parentOrChild.id];
-    return {
-      id: parentOrChild.id,
-      name: parentOrChild.name,
-      originalId: parentOrChild.originalId,
-      parent: parentOrChild.parent,
-      value: parentOrChild.value,
-      type: parentOrChild.type,
-      colorValue: parentOrChild.value, // Here we add color value to the element
-      children: children?.length
-        ? children.map(buildTreeFromChildOrElement(elementGroups))
-        : undefined,
-    };
-  };
-export const propsToCompanyTree = (props: TreeMapProps) =>
+const propsToElements = (props: TreeMapProps) =>
   pipe(
     props.companies,
     A.map(companyToElement),
-    A.map(
-      buildTreeFromChildOrElement(
-        groupByParent(
-          pipe(
-            [] as Element[],
-            A.concat(props.units.map(unitToElement)),
-            A.concat(props.assets.map(assetToElement))
-          )
-        ) as Record<string, Element[]>
-      )
-    )
+    A.concat(props.units.map(unitToElement)),
+    A.concat(props.assets.map(assetToElement))
   );
+export const propsToCompanyTree = flow(
+  propsToElements,
+  // if there's no element, no need for it to process things
+  A.match(() => E.right([]), treeElementToTree('company'))
+);
 export const toTreemapData =
   (baseColors: ColorRange[]) =>
   <
@@ -261,12 +236,13 @@ export const toTreemapData =
       xAxis: Array<Axis>;
     }
   >(
-    parents: TreeElement[]
+    parents: Tree.Tree<Element>[]
   ): Result =>
     pipe(
       parents,
       A.mapWithIndex((i, v) =>
         treeElementToHighchartsOptions(baseColors)(i, v, parents)
       ),
+      // deep merge all array
       A.foldMap(deepMergeMonoid<Result>(true))(a => a)
     );

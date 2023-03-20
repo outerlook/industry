@@ -1,3 +1,4 @@
+import * as E from 'fp-ts/Either';
 import Highcharts from 'highcharts';
 import * as O from 'fp-ts/Option';
 import * as I from 'fp-ts/Identity';
@@ -11,6 +12,7 @@ import * as A from 'fp-ts/Array';
 import type {Endomorphism} from 'fp-ts/Endomorphism';
 import {deepmergeC} from '@lib/utils/deepmergeC';
 import type {Object} from 'ts-toolbelt';
+import {getOrThrow} from '@lib/fp-ts/get-or-throw';
 
 const baseOptions = {
   title: {
@@ -113,24 +115,28 @@ const configureClickEventIfPresent: (
 export const CompanyTreeMap = (props: TreeMapProps) => {
   const axisOptions = pipe(
     propsToCompanyTree(props),
-    toTreemapData([
-      // red to green in all, hardcoded but could have
-      // different colors for different companies
-      ['#ff0000', '#00ff00'],
-      ['#ff0000', '#00ff00'],
-      ['#ff0000', '#00ff00'],
-      ['#ff0000', '#00ff00'],
-      ['#ff0000', '#00ff00'],
-      ['#ff0000', '#00ff00'],
-      ['#ff0000', '#00ff00'],
-    ])
+    E.map(
+      toTreemapData([
+        // red to green in all, hardcoded but could have
+        // different colors for different companies
+        ['#ff0000', '#00ff00'],
+        ['#ff0000', '#00ff00'],
+        ['#ff0000', '#00ff00'],
+        ['#ff0000', '#00ff00'],
+        ['#ff0000', '#00ff00'],
+        ['#ff0000', '#00ff00'],
+        ['#ff0000', '#00ff00'],
+      ])
+    ),
+    getOrThrow,
   );
 
   const options = pipe(
     [baseOptions, axisOptions],
     A.foldMap(deepMergeMonoid<Highcharts.Options>(true))(I.of),
-    configureClickEventIfPresent(props)
+    configureClickEventIfPresent(props),
   );
 
+  // return null
   return <TreeMapChart {...options} />;
 };

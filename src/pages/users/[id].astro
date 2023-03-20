@@ -1,39 +1,38 @@
 ---
-import { pipe } from "effect";
+import {pipe} from "effect";
 import * as FPO from "fp-ts-rxjs/ObservableEither";
 import * as A from "fp-ts/Apply";
 import * as E from "fp-ts/Either";
 import * as TE from "fp-ts/TaskEither";
-import { firstValueFrom } from "rxjs";
-import { relations } from "src/services/api/relations";
-import { $api } from "src/services/api/fetch/rxjs-api";
-import { getOrThrow } from "../../lib/fp-ts/get-or-throw";
-import { pickForkJoin } from "../../lib/rxjs/pick-fork-join";
+import {firstValueFrom} from "rxjs";
+import {relations} from "src/services/api/relations";
+import {$api} from "src/services/api/fetch/rxjs-api";
+import {getOrThrow} from "../../lib/fp-ts/get-or-throw";
+import {pickForkJoin} from "../../lib/rxjs/pick-fork-join";
 import BaseLayout from "../../ui/astro-layouts/BaseLayout.astro";
-import { UserContent } from "@domain/components/users/UserContent";
+import {UserContent} from "@domain/components/users/UserContent";
+import {fromUser} from "../../services/api/entity-access/relations/from-entity/from-user";
 
-const { id } = Astro.params;
+const {id} = Astro.params;
 
 if (!id) {
-  throw new Error("No id provided");
+    throw new Error("No id provided");
 }
 
-const eitherUser = await firstValueFrom($api.User.byId({ id }));
+const eitherUser = await firstValueFrom($api.User.byId({id}));
 const user = getOrThrow(eitherUser);
 
-const { company$: company, unit$: unit } = await pipe(
-  eitherUser,
-  E.map(relations.users),
-  E.map((c) => pickForkJoin(c, "company$", "unit$")),
-  TE.fromEither,
-  TE.chain((v) => pipe(FPO.fromObservable(v), FPO.toTaskEither)),
-  TE.chainEitherKW(A.sequenceS(E.Apply)),
-  TE.getOrElse((e) => {
-    throw e;
-  })
+const {company$: company, unit$: unit} = await pipe(
+    eitherUser,
+    E.map(relations.users),
+    E.map((c) => pickForkJoin(c, "company$", "unit$")),
+    TE.fromEither,
+    TE.chain((v) => pipe(FPO.fromObservable(v), FPO.toTaskEither)),
+    TE.chainEitherKW(A.sequenceS(E.Apply)),
+    getOrThrow
 )();
 ---
 
 <BaseLayout title={user.name}>
-  <UserContent unit={unit} user={user} company={company} client:only />
+    <UserContent unit={unit} user={user} company={company} client:only/>
 </BaseLayout>

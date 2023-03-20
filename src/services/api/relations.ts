@@ -1,12 +1,12 @@
 import * as A from 'fp-ts/Array';
 import type * as t from 'io-ts';
-import type { apiTypes } from './validation/api-types';
-import { $api } from './fetch/rxjs-api';
-import type { Observable } from 'rxjs';
-import { forkJoin, pluck, share } from 'rxjs';
+import type {apiTypes} from './validation/api-types';
+import {$api} from './fetch/rxjs-api';
+import type {Observable} from 'rxjs';
+import {forkJoin, pluck, share} from 'rxjs';
 import * as OE from 'fp-ts-rxjs/ObservableEither';
-import { pipe } from 'effect';
-import { fromEitherObservable } from '@lib/rxjs/from-either-observable';
+import {pipe} from 'effect';
+import {fromEitherObservable} from '@lib/rxjs/from-either-observable';
 
 /*
  * Advantage of using observables:
@@ -131,6 +131,10 @@ export type RelationKeysOf<T extends keyof typeof relations> =
       : never
     : never;
 
+/**
+ * @deprecated use fromCompany, fromAsset, from X
+ *  @see fromAsset
+ */
 export const relations = {
   asset: assetRelations,
   users: usersRelations,
