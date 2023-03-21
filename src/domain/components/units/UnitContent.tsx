@@ -44,15 +44,6 @@ export const UnitContent = (props: Props) => {
         actions={actions}
         title={unit.name}
       />
-      <BasePanel title="Painel">
-        <p>Conteúdo do painel</p>
-      </BasePanel>
-      <BasePanel title="Painel">
-        <p>Conteúdo do painel</p>
-      </BasePanel>
-      <BasePanel title="Painel">
-        <p>Conteúdo do painel</p>
-      </BasePanel>
     </EntityLayout>
   );
 };
