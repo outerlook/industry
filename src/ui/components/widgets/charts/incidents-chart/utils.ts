@@ -1,23 +1,24 @@
 import type {IncidentChartTypes} from './codecs';
 import {IncidentChartCodecs} from './codecs';
-import * as O from 'fp-ts/Option';
 import * as S from 'fp-ts/string';
 import * as R from 'fp-ts/Record';
-import * as t from 'io-ts';
+import type * as t from 'io-ts';
 import * as E from 'fp-ts/Either';
 import * as I from 'fp-ts/Identity';
 import type {validTypes} from '@services/api/validation/valid-types';
 import {flow, pipe} from 'effect';
 import * as A from 'fp-ts/Array';
+import type {Dayjs} from 'dayjs';
 import dayjs from 'dayjs';
-import {Grouped} from '@lib/utils/group-by';
-import {getOrThrow} from '@lib/fp-ts/get-or-throw';
+import type {Grouped} from '@lib/utils/group-by';
 import type {NonEmptyArray} from 'fp-ts/NonEmptyArray';
 import * as NEA from 'fp-ts/NonEmptyArray';
 import {byNth} from '@lib/fp-ts/ord/tuple';
 import {statusCriticalOrd} from '@domain/lib/entities/ord/statusCriticalOrd';
 import {healthHistoryDateOrd} from '@domain/lib/entities/ord/health-history';
 import {getDaysBetween} from '@lib/utils/get-days-between';
+import {traceWithValue} from 'fp-ts-std/Debug';
+import {formatValidationErrors} from 'io-ts-reporters';
 
 const { IncidentDay } = IncidentChartCodecs;
 const ISO_ONLY_DATE = 'YYYY-MM-DD';
@@ -30,7 +31,7 @@ const groupHistoryByDate = (healthHistory: validTypes['HealthHistory'][]) =>
 
 const toIncidentDays =
   (historyGroupedByDay: Grouped<validTypes['HealthHistory'], string>) =>
-  (daysInRange: dayjs.Dayjs[]): Array<IncidentChartTypes['IncidentDay']> =>
+  (daysInRange: Dayjs[]): Array<IncidentChartTypes['IncidentDay']> =>
     pipe(
       daysInRange,
       A.map(day => {
@@ -49,18 +50,23 @@ const toIncidentDays =
               // this day
               () => lastEventBefore(day)(historyGroupedByDay),
               // if there are events, the most critical one should be used to represent this day
-              e => pickMostCriticalEvent(e)
-            )
+              e => E.right(pickMostCriticalEvent(e))
+            ),
+            E.mapLeft((a: any) => undefined),
+            E.toUnion
           ),
         } as t.TypeOf<typeof IncidentDay>;
       }),
+      traceWithValue('here'),
       A.map(IncidentDay.decode),
       A.sequence(E.Applicative), // Either<Errors, Result>[] -> Either<Errors, Result[]>
-      getOrThrow // in this we are abdicating of handling our error
+      E.getOrElseW(e => {
+        throw formatValidationErrors(e); // choosing to throw here, but we could take this on
+      })
     );
 
 const lastEventBefore =
-  (day: dayjs.Dayjs) =>
+  (day: Dayjs) =>
   (historyGroupedByDay: Grouped<validTypes['HealthHistory'], string>) => {
     return pipe(
       historyGroupedByDay,
@@ -91,23 +97,18 @@ const pickMostCriticalEvent: (
   );
 
 const today = dayjs();
-export const historyToDays: (
-  healthHistory: validTypes['HealthHistory'][]
-) => IncidentChartTypes['IncidentDay'][] = healthHistory =>
-  pipe(
-    I.Do,
-    // later to be able to get history events by date in format YYYY-MM-DD
-    I.bind('historyGroupedByDay', () => groupHistoryByDate(healthHistory)),
-    // Later to use to map and transform into day types of our range
-    I.bind('daysInRange', () =>
-      pipe(
-        A.head(healthHistory),
-        O.map(d => dayjs(d.timestamp)),
-        O.map(getDaysBetween(today)),
-        O.getOrElse(() => [] as dayjs.Dayjs[])
-      )
-    ),
-    ({ daysInRange, historyGroupedByDay }) => {
-      return toIncidentDays(historyGroupedByDay)(daysInRange);
-    }
-  );
+export const historyToDays =
+  (startDate: Dayjs) =>
+  (
+    healthHistory: validTypes['HealthHistory'][]
+  ): IncidentChartTypes['IncidentDay'][] =>
+    pipe(
+      I.Do,
+      // later to be able to get history events by date in format YYYY-MM-DD
+      I.bind('historyGroupedByDay', () => groupHistoryByDate(healthHistory)),
+      // Later to use to map and transform into day types of our range
+      I.bind('daysInRange', () => pipe(startDate, getDaysBetween(today))),
+      ({ daysInRange, historyGroupedByDay }) => {
+        return toIncidentDays(historyGroupedByDay)(daysInRange);
+      }
+    );

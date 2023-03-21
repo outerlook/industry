@@ -9,12 +9,20 @@ export const IncidentsChart = <
 }) => {
   const { days, statusColors } = props;
   return (
-    <div className={'grid grid-rows-7 grid-flow-col'}>
+    <div className={'grid grid-rows-7 text-[12px] gap-1 justify-start grid-flow-col'}>
+      <div>Sun</div>
+      <div></div>
+      <div></div>
+      <div>Wed</div>
+      <div></div>
+      <div></div>
+      <div>Sat</div>
       {days.map(d => {
         return (
           <IncidentDay
             key={d.date}
             date={d.date}
+            statusId={d.statusId}
             color={
               statusColors[d.statusId as keyof typeof statusColors] ?? 'gray'
             }
@@ -25,3 +33,4 @@ export const IncidentsChart = <
     </div>
   );
 };
+

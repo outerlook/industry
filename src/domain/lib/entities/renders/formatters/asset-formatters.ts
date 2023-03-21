@@ -10,8 +10,7 @@ import {linkFromAsset} from '../../link-from';
 import {toReactLink} from '../../table/cells/renderers';
 import {applyFunctions} from '@lib/fp-ts/apply-functions';
 import * as A from 'fp-ts/Array';
-
-type FormatFn<T> = (a: T) => React.ReactNode;
+import type {FormatFn} from "./types";
 
 const orEmptyString = O.getOrElse(() => '-'); // isolating if we want to change the string later
 
