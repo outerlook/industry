@@ -1,0 +1,1 @@
+export type FormatFn<T> = (a: T) => React.ReactNode;

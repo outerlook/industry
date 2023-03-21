@@ -61,7 +61,7 @@ export const UserContent = (props: Props) => {
         actions={actions}
         title={user.name}
       />
-      <BasePanel title="Painel">
+      <BasePanel title="Work orders">
         {workorders.length > 0 ? (
             workorders.map(workorder => (
                 <WorkorderTag key={workorder.id} workorder={workorder} />
@@ -69,12 +69,6 @@ export const UserContent = (props: Props) => {
         ) : (
             <div>No registered work orders for this user</div>
         )}
-      </BasePanel>
-      <BasePanel title="Painel">
-        <p>Conteúdo do painel</p>
-      </BasePanel>
-      <BasePanel title="Painel">
-        <p>Conteúdo do painel</p>
       </BasePanel>
     </EntityLayout>
   );

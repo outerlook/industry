@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import * as E from 'fp-ts/Either';
 import * as t from 'io-ts';
 import { pipe } from 'effect';
@@ -8,19 +8,13 @@ import { pipe } from 'effect';
 // if there's an event on a day, there's a blue dot on top of it
 
 // scalars
-const DateDayjs = new t.Type<dayjs.Dayjs, string, unknown>(
+const DateDayjs = new t.Type<Dayjs, any, Dayjs>(
   'DateDayjs',
-  (u): u is dayjs.Dayjs => u instanceof dayjs.Dayjs,
+  dayjs.isDayjs,
   (u, c) => {
-    const validation = t.string.validate(u, c);
-    if (validation._tag === 'Left') {
-      return validation;
-    } else {
-      const day = dayjs(validation.right);
-      return day.isValid() ? t.success(day) : t.failure(u, c);
-    }
+    return dayjs.isDayjs(u) ? t.success(u) : t.failure(u, c);
   },
-  a => a.toISOString()
+  a => a
 );
 
 /**
@@ -58,7 +52,8 @@ type Event = t.TypeOf<typeof Event>;
 
 const Day = t.type({
   events: t.array(Event),
-  statusId: t.string, // one status to represent this day, even if there are many kind of events on a day
+  statusId: t.union([t.string, t.undefined]), // one status to represent this day, even if there are many kind of
+  // events on a day
   date: dateString,
 });
 type Day = t.TypeOf<typeof Day>;
